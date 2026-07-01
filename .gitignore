@@ -1,3 +1,33 @@
+# Projeto completo de desenvolvimento — não versionar
 fedlearn
+.agents
+.opencode
 .goals
+AGENTS.md
+opencode.json
+.solicitacao_banca
+
+
+# Artefatos do pipeline — não versionar resultados intermediários
+.harness
+
+# Verificação — outputs JSON não devem ser versionados
 .verification
+
+# Skills lock — gerado localmente
+skills-lock.json
+
+# LaTeX aux files
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.xdv
+*.pdf
