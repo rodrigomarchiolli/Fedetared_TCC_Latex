@@ -149,7 +149,7 @@ The search was conducted in Web of Science, Scopus, PubMed, and IEEE Xplore data
     \end{itemize}
 \end{itemize}
 
-The review process began with 90 articles from the Web of Science, Scopus, PubMed, and IEEE Xplore databases. The RAYYAN tool was used to assist in the selection \cite{nastasha_johnson_93d644ed}. After removing 29 duplicates, 61 articles were screened. Of these, 34 were excluded based on the title and abstract. The remaining 27 were retrieved in full and assessed using the inclusion and exclusion criteria. Sixteen articles were excluded for not meeting the criteria or being out of scope. Ultimately, 11 articles were included in the systematic review. The PRISMA flow diagram in Figure~\ref{fig:prisma} details this selection process.
+The review process began with 90 articles from the Web of Science, Scopus, PubMed, and IEEE Xplore databases. The RAYYAN tool was used to assist in the selection \cite{nastasha_johnson_93d644ed}. After removing 29 duplicates, 61 articles were screened. Of these, 34 were excluded based on the title and abstract. The remaining 27 were retrieved in full and assessed using the inclusion and exclusion criteria. Sixteen articles were excluded for not meeting the criteria or being out of scope. Ultimately, 11 articles were included in the systematic review. The PRISMA flow diagram in Figure~\ref{fig:prisma} details this selection process. Table~\ref{tab:included_articles} summarizes these 11 articles, their focus, algorithms, datasets, and relationship to the implemented prototype.
 
 \begin{figure}[H]
     \centering
@@ -158,15 +158,62 @@ The review process began with 90 articles from the Web of Science, Scopus, PubMe
     \label{fig:prisma}
 \end{figure}
 
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.08}
+
+\begin{longtable}{p{3.2cm} p{3.8cm} p{2.5cm} p{3cm} p{1.8cm}}
+\caption{Summary of articles included in the systematic review.}
+\label{tab:included_articles} \\
+
+\toprule
+\textbf{Reference} & \textbf{Focus} & \textbf{ML/FL Algorithm} & \textbf{Physiological Data/Dataset} & \textbf{Relationship} \\ \midrule
+\endfirsthead
+
+\caption[]{Summary of articles included in the systematic review. (Continued)} \\
+
+\toprule
+\textbf{Reference} & \textbf{Focus} & \textbf{ML/FL Algorithm} & \textbf{Physiological Data/Dataset} & \textbf{Relationship} \\ \midrule
+\endhead
+
+\bottomrule
+\endfoot
+
+\cite{abdulrahman_alahmadi_32bc288c} & Privacy-preserved IoMT stress detection & FL, ANN, RF, k-NN & WESAD (ECG, EDA, EMG, Resp, TEMP) & Direta \\ \midrule
+
+\cite{ahmad_almadhor_8cc2e670} & FL-based stress detection with edge computing & FL, DNN & WESAD (EDA) & Direta \\ \midrule
+
+\cite{yekta_said_can_3e1184b6} & Privacy-preserving FL for wearable IoT & FL, Deep Learning & Heart activity (smart bands) & Direta \\ \midrule
+
+\cite{neha_gahlan_d8b04f5d} & FL inspired privacy sensitive emotion recognition & FL, CNN & Multi-modal physiological sensors & Parcial \\ \midrule
+
+\cite{jayant_vyas_bcd9860b} & Driver recommendation using FL & FL, Multi-task Learning & UAH-DriveSet, HCI Lab, PhysioNet & Parcial \\ \midrule
+
+\cite{m__bharathi_b0a198b0} & FL for healthcare IoT: origins and applications & FL, ML & Healthcare IoT & Parcial \\ \midrule
+
+\cite{mohamed_benouis_35501772} & FL for mental health monitoring & FL, Multi-task Learning & Multimodal physiological signals & Parcial \\ \midrule
+
+\cite{jessica_chia_liu_cd0e0973} & FL for health data privacy & FL (simulation) & Wearable physiological and motion data & Contextual \\ \midrule
+
+\cite{nastasha_johnson_93d644ed} & RAYYAN systematic review tool & N/A & N/A & Contextual \\ \midrule
+
+\cite{adam_sadilek_c59c73f4} & Privacy-first health research with FL & FL, Differential Privacy & Multi-site health studies & Contextual \\ \midrule
+
+\cite{chuan_ma_e07241ba} & Data privacy and security in FL & FL, privacy techniques & Simulated data & Contextual \\
+
+\end{longtable}
+
+\endgroup
 
 \section{Main Results and Discussion}
 
 \subsection{\textit{RQ1}: How can data security and privacy be ensured in the context of federated learning?}
 
 
-Federated learning (FL) provides inherent advantages for preserving data privacy by ensuring that sensitive information remains decentralized, a crucial requirement when dealing with confidential healthcare datasets \cite{adam_sadilek_c59c73f4}. This approach minimizes the risks associated with data breaches and unauthorized access, aligning with stringent data protection regulations such as the General Data Protection Regulation (GDPR) and HIPAA \cite{m__bharathi_b0a198b0}. Several strategies enhance data security and privacy within federated learning frameworks, including differential privacy, homomorphic encryption, and secure multi-party computation \cite{jie_xu_193cbfb6}. 
+Federated learning (FL) provides inherent advantages for preserving data privacy by ensuring that sensitive information remains decentralized, a crucial requirement when dealing with confidential healthcare datasets \cite{adam_sadilek_c59c73f4} [Contextual]. This approach minimizes the risks associated with data breaches and unauthorized access, aligning with stringent data protection regulations such as the General Data Protection Regulation (GDPR) and HIPAA \cite{m__bharathi_b0a198b0} [Parcial]. Several strategies enhance data security and privacy within federated learning frameworks, including differential privacy, homomorphic encryption, and secure multi-party computation \cite{jie_xu_193cbfb6}. 
 
-In addition, regulations such as GDPR reinforce the importance of privacy-preserving technologies, highlighting the crucial role of FL in complying with specific data protection legislation. In this context, complementary techniques have been explored to strengthen security and privacy in FL, including physical transmission layer security mechanisms, such as leveraging the unique properties of wireless channels to protect communications between local devices and central servers. By focusing on safeguarding both the client and server sides, federated learning addresses critical aspects such as convergence, data poisoning, scaling, and model aggregation \cite{chuan_ma_e07241ba}.
+In addition, regulations such as GDPR reinforce the importance of privacy-preserving technologies, highlighting the crucial role of FL in complying with specific data protection legislation. In this context, complementary techniques have been explored to strengthen security and privacy in FL, including physical transmission layer security mechanisms, such as leveraging the unique properties of wireless channels to protect communications between local devices and central servers. By focusing on safeguarding both the client and server sides, federated learning addresses critical aspects such as convergence, data poisoning, scaling, and model aggregation \cite{chuan_ma_e07241ba} [Contextual].
 
 Other advanced techniques have also been incorporated into FL to increase the protection of shared data. For example, the use of Generative Adversarial Networks (GANs) for data augmentation and Graph Attention Networks (GATs) have been explored in the literature to improve learning from distributed data while limiting the amount of information exchanged, further reducing the possibility of inferring sensitive information through reverse engineering. \cite{shiyi_jiang_49d728e9}.
 
@@ -174,7 +221,7 @@ Therefore, FL ensures data security and privacy mainly by keeping raw informatio
     
 \subsection{\textit{RQ2}: What types of machine learning algorithms are commonly employed in federated learning for occupational stress analysis?}
 
-There is no universal approach when developing artificial intelligence models applied to federated learning (FL) for occupational stress analysis. Specialized literature suggests various algorithms commonly used due to their proven capability to handle specific federated learning challenges, such as data decentralization, information privacy, and device heterogeneity \cite{adam_sadilek_c59c73f4}.
+There is no universal approach when developing artificial intelligence models applied to federated learning (FL) for occupational stress analysis. Specialized literature suggests various algorithms commonly used due to their proven capability to handle specific federated learning challenges, such as data decentralization, information privacy, and device heterogeneity \cite{adam_sadilek_c59c73f4} [Contextual].
 
 Among the most employed algorithms are \textit{Artificial Neural Networks (ANN)}, \textit{Random Forest (RF)}, \textit{Support Vector Machines (SVM)}, \textit{k-Nearest Neighbors (k-NN)}, and \textit{Logistic Regression (LR)}. Each of these techniques has distinct characteristics and advantages suitable for practical applications in federated environments for occupational stress analysis.
 
@@ -182,7 +229,7 @@ A visual comparison summarizing the main algorithms discussed can be observed in
 
 \subsubsection{Artificial Neural Networks (ANN)}
 
-Artificial Neural Networks are highly versatile algorithms inspired by the human brain's structure, capable of modeling complex relationships between input data (e.g., physiological signals acquired by wearable sensors) and outputs (e.g., detected stress levels). ANNs are particularly valued for their ability to extract non-linear patterns from multidimensional and heterogeneous data \cite{abdulrahman_alahmadi_32bc288c}. In federated learning contexts, they are widely adopted due to their flexibility in handling diverse physiological data types, such as electrocardiogram (ECG), electrodermal activity (EDA), and electromyography (EMG), along with effective adaptation to edge devices with computational resource constraints \cite{abdulrahman_alahmadi_32bc288c}.
+Artificial Neural Networks are highly versatile algorithms inspired by the human brain's structure, capable of modeling complex relationships between input data (e.g., physiological signals acquired by wearable sensors) and outputs (e.g., detected stress levels). ANNs are particularly valued for their ability to extract non-linear patterns from multidimensional and heterogeneous data \cite{abdulrahman_alahmadi_32bc288c} [Direta]. In federated learning contexts, they are widely adopted due to their flexibility in handling diverse physiological data types, such as electrocardiogram (ECG), electrodermal activity (EDA), and electromyography (EMG), along with effective adaptation to edge devices with computational resource constraints \cite{abdulrahman_alahmadi_32bc288c}.
 
 \textbf{Typical metrics:} High accuracy (85-95\%), high precision and recall.\\
 \textbf{Challenges:} Requires large data volume and high local computational resources.
@@ -217,7 +264,7 @@ Logistic Regression is a classic method for binary classification problems, mode
 
 \subsubsection{Other Relevant Algorithms}
 
-Beyond the mentioned techniques, there is growing interest in using more complex algorithms, such as Convolutional Neural Networks (CNN) and Recurrent Neural Networks (RNN), specifically designed for analyzing sequential and temporal data acquired by wearable sensors \cite{yekta_said_can_3e1184b6}. Hybrid techniques and Multi-task Learning (MTL) methods have also been proposed to enhance federated model accuracy and robustness by sharing representations across related tasks\cite{mohamed_benouis_35501772}.
+Beyond the mentioned techniques, there is growing interest in using more complex algorithms, such as Convolutional Neural Networks (CNN) and Recurrent Neural Networks (RNN), specifically designed for analyzing sequential and temporal data acquired by wearable sensors \cite{yekta_said_can_3e1184b6} [Direta]. Hybrid techniques and Multi-task Learning (MTL) methods have also been proposed to enhance federated model accuracy and robustness by sharing representations across related tasks\cite{mohamed_benouis_35501772} [Parcial].
 
 Ensemble learning techniques, like Gradient Boosting Machines and AdaBoost, are also highlighted for significantly improving predictive performance by combining multiple individual models, thus enhancing generalization capability in heterogeneous federated data scenarios \cite{abdulrahman_alahmadi_32bc288c}.
 
@@ -248,7 +295,7 @@ Federated learning, while promising, faces significant challenges in real-world 
 
 Communication constraints, particularly in scenarios with limited bandwidth or intermittent connectivity, pose challenges for model aggregation and distribution \cite{tian_li_4bd16a66}. Addressing statistical heterogeneity, also known as non-IID (independent and identically distributed) data, is paramount in federated learning because the distribution of local data across different clients can vary significantly due to diverse occupational environments and individual differences, which impacts model convergence and performance. 
 
-Furthermore, the computational capabilities of edge devices used for local training can vary widely, creating additional challenges for deploying complex models and algorithms \cite{neha_gahlan_d8b04f5d}.  Moreover, security and privacy considerations are paramount, necessitating robust mechanisms to defend against adversarial attacks such as data poisoning and inference attacks, while simultaneously ensuring adherence to stringent data protection regulations such as GDPR and HIPAA, which mandate the safeguarding of sensitive health information \cite{adam_sadilek_c59c73f4}.
+Furthermore, the computational capabilities of edge devices used for local training can vary widely, creating additional challenges for deploying complex models and algorithms \cite{neha_gahlan_d8b04f5d} [Parcial].  Moreover, security and privacy considerations are paramount, necessitating robust mechanisms to defend against adversarial attacks such as data poisoning and inference attacks, while simultaneously ensuring adherence to stringent data protection regulations such as GDPR and HIPAA, which mandate the safeguarding of sensitive health information \cite{adam_sadilek_c59c73f4} [Contextual].
 
 The trustworthiness of federated learning systems is also a major concern, requiring careful attention to issues such as data quality, provenance, and bias detection to ensure reliable and equitable outcomes \cite{jie_xu_193cbfb6}.
 
@@ -259,20 +306,20 @@ Therefore, addressing these challenges requires interdisciplinary collaboration 
 
 \subsection{\textit{RQ4}: How can federated learning be integrated with wearable technology for continuous and personalized occupational stress monitoring?}
 
-Federated learning can be seamlessly integrated with wearable technology to enable continuous and personalized occupational stress monitoring, offering numerous advantages over traditional centralized approaches. By processing data locally on wearable devices, federated learning minimizes the need to transmit sensitive physiological data to a central server, thereby reducing the risk of data breaches and privacy violations \cite{jessica_chia_liu_cd0e0973}. Wearable devices, equipped with sensors such as heart rate monitors and electrodermal activity sensors, continuously collect physiological data, which is then pre-processed and analyzed locally using lightweight machine learning models. 
+Federated learning can be seamlessly integrated with wearable technology to enable continuous and personalized occupational stress monitoring, offering numerous advantages over traditional centralized approaches. By processing data locally on wearable devices, federated learning minimizes the need to transmit sensitive physiological data to a central server, thereby reducing the risk of data breaches and privacy violations \cite{jessica_chia_liu_cd0e0973} [Contextual]. Wearable devices, equipped with sensors such as heart rate monitors and electrodermal activity sensors, continuously collect physiological data, which is then pre-processed and analyzed locally using lightweight machine learning models. 
 
-FL operates by training models locally on individual wearable devices or edge devices such as smartphones. Each device can collect physiological signals such as BVP/PPG, EDA, respiration, skin temperature, ECG, or EMG, depending on the wearable configuration; these signals are commonly explored as indicators of stress-related physiological responses \cite{abdulrahman_alahmadi_32bc288c}. 
+FL operates by training models locally on individual wearable devices or edge devices such as smartphones. Each device can collect physiological signals such as BVP/PPG, EDA, respiration, skin temperature, ECG, or EMG, depending on the wearable configuration; these signals are commonly explored as indicators of stress-related physiological responses \cite{abdulrahman_alahmadi_32bc288c} [Direta]. 
 
 These models are trained using algorithms such as federated averaging, which aggregates model updates from multiple devices to create a global model without directly accessing the raw data.  
 
-Additionally, the effectiveness of these technologies depends on their ability to accurately capture and interpret physiological signals indicative of stress \cite{ahmad_almadhor_8cc2e670}.
+Additionally, the effectiveness of these technologies depends on their ability to accurately capture and interpret physiological signals indicative of stress \cite{ahmad_almadhor_8cc2e670} [Direta].
 
 Federated learning further preserves data privacy and promotes real-time distribution of models and learning by enabling devices to collaboratively train and evaluate a shared model while keeping personal data on site. Moreover, federated learning enables personalized stress models that adapt to individual physiological characteristics and work patterns, leading to more accurate and timely stress detection. The integration of federated learning with wearable technology requires careful consideration of factors such as device heterogeneity, communication bandwidth, and energy efficiency to ensure optimal performance and user experience.
 
 \subsection{\textit{RQ5}: What are the main challenges and the corresponding solutions found in applying federated learning for occupational stress monitoring?}
 
 
-Applying federated learning to occupational stress monitoring presents several challenges related to data quality, privacy, and computational resources, which necessitate innovative solutions to ensure effective and reliable monitoring \cite{neha_gahlan_d8b04f5d, jayant_vyas_bcd9860b}. Data quality can be affected by sensor noise, missing values, and individual variations in physiological responses, which can impact the accuracy of stress detection models. 
+Applying federated learning to occupational stress monitoring presents several challenges related to data quality, privacy, and computational resources, which necessitate innovative solutions to ensure effective and reliable monitoring \cite{neha_gahlan_d8b04f5d} [Parcial], \cite{jayant_vyas_bcd9860b} [Parcial]. Data quality can be affected by sensor noise, missing values, and individual variations in physiological responses, which can impact the accuracy of stress detection models. 
 
 To address these challenges, robust data preprocessing techniques such as filtering, imputation, and normalization are essential to improve the quality and consistency of the data used for training federated learning models. Differential privacy mechanisms, such as adding noise to model updates, can be employed to protect sensitive data from inference attacks, but this must be done carefully to avoid compromising model accuracy. 
 
