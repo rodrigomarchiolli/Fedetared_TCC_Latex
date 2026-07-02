@@ -187,14 +187,14 @@ Artificial Neural Networks are highly versatile algorithms inspired by the human
 
 \subsubsection{Random Forest (RF)}
 
-Random Forest is an ensemble method algorithm that combines results from multiple individual decision trees. The main strength of this method lies in its robustness against noisy data and its capacity to avoid overfitting, which is critically advantageous in federated learning environments where data quality can vary significantly among participants \cite{tran_duc_luong_b5df10e8}. Additionally, RF is particularly effective for physiological data, allowing accurate classification by consolidating multiple decisions from distributed devices, thereby reducing reliance on a single model or data source \cite{adam_sadilek_c59c73f4}.
+Random Forest is an ensemble method algorithm that combines results from multiple individual decision trees. The main strength of this method lies in its robustness against noisy data and its capacity to avoid overfitting, which is critically advantageous in federated learning environments where data quality can vary significantly among participants. In this context, protecting the aggregation from anomalies or malicious updates is crucial to maintain robustness, being investigated through mechanisms like latent space inspection and autoencoders to secure threat detection models \cite{tran_duc_luong_b5df10e8}. Additionally, RF is particularly effective for physiological data, allowing accurate classification by consolidating multiple decisions from distributed devices, thereby reducing reliance on a single model or data source \cite{adam_sadilek_c59c73f4}.
 
 \textbf{Typical metrics:} High accuracy (80-93\%), robust against noise.\\
 \textbf{Challenges:} Potentially higher complexity when employing numerous trees on resource-limited devices.
 
 \subsubsection{Support Vector Machines (SVM)}
 
-SVM is widely recognized for effectively classifying complex data by establishing clear separation hyperplanes between classes. This method consistently performs well in FL contexts for detecting physiological states related to stress, particularly when client-specific data availability is limited. Nonetheless, SVM requires careful parameter tuning to handle non-linear and noisy data, frequently encountered in stress analysis from wearable sensors \cite{hao_huang_8976046f}.
+SVM is widely recognized for effectively classifying complex data by establishing clear separation hyperplanes between classes. This method consistently performs well in FL contexts for detecting physiological states related to stress, particularly when client-specific data availability is limited. Nonetheless, SVM requires careful parameter tuning to handle non-linear and noisy data, frequently encountered in stress analysis from wearable sensors. To evaluate such challenges in practical environments, researchers propose physical testbeds with frameworks like Flower and embedded hardware to analyze model resilience under adverse conditions \cite{hao_huang_8976046f}.
 
 \textbf{Typical metrics:} Medium-high accuracy (75-90\%), high precision.\\
 \textbf{Challenges:} Complex hyperparameter tuning and sensitivity to outliers.
@@ -215,7 +215,7 @@ Logistic Regression is a classic method for binary classification problems, mode
 
 \subsubsection{Other Relevant Algorithms}
 
-Beyond the mentioned techniques, there is growing interest in using more complex algorithms, such as Convolutional Neural Networks (CNN) and Recurrent Neural Networks (RNN), specifically designed for analyzing sequential and temporal data acquired by wearable sensors \cite{hao_huang_8976046f}. Hybrid techniques and Multi-task Learning (MTL) methods have also been proposed to enhance federated model accuracy and robustness by sharing representations across related tasks\cite{mohamed_benouis_35501772}.
+Beyond the mentioned techniques, there is growing interest in using more complex algorithms, such as Convolutional Neural Networks (CNN) and Recurrent Neural Networks (RNN), specifically designed for analyzing sequential and temporal data acquired by wearable sensors \cite{yekta_said_can_3e1184b6}. Hybrid techniques and Multi-task Learning (MTL) methods have also been proposed to enhance federated model accuracy and robustness by sharing representations across related tasks\cite{mohamed_benouis_35501772}.
 
 Ensemble learning techniques, like Gradient Boosting Machines and AdaBoost, are also highlighted for significantly improving predictive performance by combining multiple individual models, thus enhancing generalization capability in heterogeneous federated data scenarios \cite{abdulrahman_alahmadi_32bc288c}.
 
@@ -274,7 +274,7 @@ Applying federated learning to occupational stress monitoring presents several c
 
 To address these challenges, robust data preprocessing techniques such as filtering, imputation, and normalization are essential to improve the quality and consistency of the data used for training federated learning models. Differential privacy mechanisms, such as adding noise to model updates, can be employed to protect sensitive data from inference attacks, but this must be done carefully to avoid compromising model accuracy. 
 
-One of the primary advantages of federated learning is its ability to maintain data privacy by processing data locally on user devices \cite{shuang_dai_ae9ca8bc, jakub_kone_n__e9c179d4}. 
+One of the primary advantages of federated learning is its ability to maintain data privacy by processing data locally on user devices \cite{jakub_kone_n__e9c179d4}. This decentralized paradigm has also been successfully adapted to other smart home monitoring scenarios, such as non-intrusive load monitoring (NILM) for smart grid applications, showcasing its versatility in preserving privacy at the edge \cite{shuang_dai_ae9ca8bc}. 
 
 The inherent architecture of federated learning prioritizes user privacy, as model training occurs on decentralized devices, and only model updates are shared with a central server \cite{tomer_gafni_ff1f0d6e}. 
 
