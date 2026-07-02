@@ -6,6 +6,7 @@ fedlearn
 AGENTS.md
 opencode.json
 .solicitacao_banca
+.memory
 
 
 # Artefatos do pipeline — não versionar resultados intermediários
