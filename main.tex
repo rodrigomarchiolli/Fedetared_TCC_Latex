@@ -621,63 +621,79 @@ No-scaler integration & Uses original feature scale and is easier to reproduce a
 
 In this work, \textit{no scaler} means that no feature standardization is applied after type conversion and median imputation. This choice reduces local validation performance, but it removes a fragile external dependency from the end-to-end system.
 
+The complete data flow from raw signal to classification output proceeds as follows: (1) raw physiological signals (BVP, EDA, Resp, TEMP) are segmented into 30-second non-overlapping windows; (2) for each window, 26 statistical and morphological features are extracted (listed in Table~\ref{tab:wesad_features}); (3) missing values are imputed with the feature median from the training split; (4) in the privacy-oriented configuration, three demographic attributes are dropped, reducing the feature vector to 26; (5) the 26- or 29-dimensional vector is passed through the TabularMLP, which produces three raw logits; (6) the cross-entropy loss function applies softmax internally to convert logits to a probability distribution over the three classes; and (7) the class with the highest probability is taken as the predicted affective state.
+
 \subsection{Model Architecture and Training Configuration}
 
 Given the tabular representation described above, the project uses a Multilayer Perceptron (MLP) rather than a temporal model such as an LSTM, GRU, 1D-CNN, or transformer. Those architectures are appropriate when the model receives raw sequences. Here, the temporal signal has already been summarized into a fixed-length feature vector, so a fully connected network is a simpler and more coherent fit.
 
 \subsubsection{Baseline and Proposed TabularMLP}
 
-The original baseline was a simple MLP with two hidden layers and ReLU activations. This baseline is useful because it measures how much of the classification signal is already present in the extracted features. The proposed model, named \textit{TabularMLP}, keeps the same family of fully connected networks but adds regularization and training-stability mechanisms. Table~\ref{tab:model_architecture_comparison} summarizes the main architectural differences.
+The original baseline was a simple MLP with two hidden layers and ReLU activations. This baseline is useful because it measures how much of the classification signal is already present in the extracted features. The proposed model, named \textit{TabularMLP}, keeps the same family of fully connected networks but adds regularization and training-stability mechanisms. The input layer has 26 neurons in the privacy-oriented configuration (one per physiological feature, excluding demographic attributes) or 29 neurons in the full configuration, as listed in Table~\ref{tab:wesad_features}. Table~\ref{tab:model_and_training} summarizes the main architectural differences and training hyperparameters
 
-\begingroup
-\footnotesize
-\setlength{\tabcolsep}{3pt}
-\renewcommand{\arraystretch}{0.96}
-\setlength{\LTpre}{2pt}
-\setlength{\LTpost}{2pt}
-\begin{longtable}{p{2.6cm} p{4.4cm} p{5.2cm}}
-\caption{Comparison between the baseline MLP and the proposed TabularMLP.}
-\label{tab:model_architecture_comparison}\\[-0.2em]
-\toprule
-\textbf{Aspect} & \textbf{Original baseline MLP} & \textbf{Proposed TabularMLP} \\ \midrule
-Hidden layers & Two fully connected layers. & Three fully connected layers with dimensions 128, 128, and 64. \\ \midrule
-Activation & ReLU. & GELU. \\ \midrule
-Normalization & Not used. & BatchNorm1d after each hidden linear layer. \\ \midrule
-Regularization & Limited. & Dropout with probability 0.25 and AdamW weight decay. \\ \midrule
-Output & Three class logits. & Three class logits. \\ \bottomrule
-\end{longtable}
-\endgroup
+The final layer returns three raw logits, one for each class; no final softmax is included because PyTorch's cross-entropy loss expects logits. Each of the three output neurons corresponds to one WESAD class: amusement (class 0), baseline (class 1), and stress (class 2). The predicted class is the index of the highest logit after softmax normalization is applied internally by the cross-entropy loss function.
 
-The final layer returns three raw logits, one for each class; no final softmax is included because PyTorch's cross-entropy loss expects logits.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  neuron/.style={circle, draw, minimum size=0.7cm, inner sep=1pt, font=\tiny},
+  layer/.style={rectangle, draw, rounded corners, minimum width=2cm, minimum height=0.6cm, font=\small},
+  arrow/.style={-Stealth, thick}
+]
+  % Input layer
+  \node[layer, fill=blue!10] (input) {Input (26/29)};
+  % Hidden layers
+  \node[layer, fill=green!10, below=0.8cm of input] (h1) {FC 128 $\rightarrow$ GELU $\rightarrow$ BN};
+  \node[layer, fill=green!10, below=0.8cm of h1] (h2) {FC 128 $\rightarrow$ GELU $\rightarrow$ BN};
+  \node[layer, fill=green!10, below=0.8cm of h2] (h3) {FC 64 $\rightarrow$ GELU $\rightarrow$ BN};
+  % Dropout
+  \node[layer, fill=yellow!10, below=0.8cm of h3] (drop) {Dropout $p=0.25$};
+  % Output
+  \node[layer, fill=red!10, below=0.8cm of drop] (output) {Output (3 logits)};
+  % Arrows
+  \draw[arrow] (input) -- (h1);
+  \draw[arrow] (h1) -- (h2);
+  \draw[arrow] (h2) -- (h3);
+  \draw[arrow] (h3) -- (drop);
+  \draw[arrow] (drop) -- (output);
+\end{tikzpicture}
+\caption{Architecture of the proposed TabularMLP. The network consists of an input layer (26 or 29 neurons), three hidden layers (128, 128, 64) each followed by GELU activation and Batch Normalization, a Dropout layer for regularization, and an output layer with three logits corresponding to the WESAD classes.}
+\label{fig:mlp_architecture}
+\end{figure}
 
 \subsubsection{Training Strategy}
 
 The training procedure was designed for a small tabular physiological dataset, where two risks are especially relevant: overfitting and class imbalance. Overfitting occurs when the model adapts too closely to the training windows and loses generalization capacity on validation windows. Class imbalance occurs when one affective state has more samples than the others, which can make accuracy misleading because a model may perform well on the majority class while failing on less frequent classes.
 
-Optimization was performed with AdamW, using an initial learning rate of $2 \times 10^{-3}$ and weight decay of $10^{-3}$. AdamW is an adaptive optimization method that updates each model parameter according to the observed gradients while applying weight decay as a separate regularization term. In practical terms, this discourages excessively large weights and helps reduce overfitting in small datasets. Training was performed in mini-batches of 64 samples, allowing the model to learn from shuffled subsets of the training data rather than recalculating each update from the full dataset at once.
+Optimization was performed with AdamW\cite{loshchilov2019decoupled}, using an initial learning rate of $2 \times 10^{-3}$ and weight decay of $10^{-3}$. AdamW is an adaptive optimization method that updates each model parameter according to the observed gradients while applying weight decay as a separate regularization term. In practical terms, this discourages excessively large weights and helps reduce overfitting in small datasets. Training was performed in mini-batches of 64 samples, allowing the model to learn from shuffled subsets of the training data rather than recalculating each update from the full dataset at once.
 
 The loss function was class-weighted cross-entropy. Cross-entropy is suitable for this task because the model outputs one score for each target class, corresponding to \textit{amusement}, \textit{baseline}, and \textit{stress}. The class weights are computed from the training-label frequencies, assigning a larger penalty to errors in less frequent classes. This prevents the optimization process from being dominated only by the most common affective state. An additional sampling-based rebalancing strategy was also evaluated, in which less frequent classes are sampled more often during training. It was not adopted as the default strategy because combining this sampling policy with class-weighted loss can overcompensate minority classes in small datasets.
 
-Model selection was based on validation macro F1-score, not on accuracy. Macro F1 computes the F1-score independently for each class and then averages the three values, giving equal weight to all affective states. This criterion is more appropriate for the WESAD experiments because the objective is not merely to maximize the number of correct predictions, but to maintain balanced performance across \textit{amusement}, \textit{baseline}, and \textit{stress}. The model retained for comparison is therefore the one obtained at the epoch with the highest validation macro F1-score, subject to a minimum improvement threshold of $10^{-4}$.
+Model selection was based on validation macro F1-score\cite{sokolova2009systematic}, not on accuracy. Macro F1 computes the F1-score independently for each class and then averages the three values, giving equal weight to all affective states. This criterion is more appropriate for the WESAD experiments because the objective is not merely to maximize the number of correct predictions, but to maintain balanced performance across \textit{amusement}, \textit{baseline}, and \textit{stress}. The model retained for comparison is therefore the one obtained at the epoch with the highest validation macro F1-score, subject to a minimum improvement threshold of $10^{-4}$.
 
-The training procedure also includes mechanisms to control convergence. The learning rate is reduced by a factor of 0.5 when validation macro F1-score stops improving for 15 consecutive epochs, with a minimum learning rate of $10^{-6}$. Early stopping interrupts training when validation macro F1-score does not improve for 50 epochs, avoiding unnecessary optimization after the model has saturated. Finally, gradient clipping limits the gradient norm to 1.0, reducing the risk of unstable parameter updates during backpropagation.
+The training procedure also includes mechanisms to control convergence\cite{goodfellow2016deep}. The learning rate is reduced by a factor of 0.5 when validation macro F1-score stops improving for 15 consecutive epochs, with a minimum learning rate of $10^{-6}$. Early stopping interrupts training when validation macro F1-score does not improve for 50 epochs, avoiding unnecessary optimization after the model has saturated. Finally, gradient clipping limits the gradient norm to 1.0, reducing the risk of unstable parameter updates during backpropagation.
 
 \begin{table}[H]
 \centering
-\caption{Main training hyperparameters used in the TabularMLP experiments.}
-\label{tab:training_hyperparameters}
+\caption{Model architecture and training hyperparameters of the baseline MLP and proposed TabularMLP.}
+\label{tab:model_and_training}
+\footnotesize
+\renewcommand{\arraystretch}{1.05}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{lll}
+\begin{tabular}{p{2.0cm} p{3.0cm} p{3.8cm} p{2.2cm} p{3.0cm}}
 \toprule
-\textbf{Component} & \textbf{Value} & \textbf{Purpose} \\ \midrule
-Optimizer & AdamW & Adaptive optimization with decoupled weight regularization. \\ \midrule
-Learning rate & $2 \times 10^{-3}$ & Initial magnitude of parameter updates. \\ \midrule
-Weight decay & $10^{-3}$ & Penalizes overly large weights to reduce overfitting. \\ \midrule
-Batch size & 64 & Number of samples used per optimization step. \\ \midrule
-Maximum epochs & 300 & Upper bound on the number of training passes. \\ \midrule
-Learning-rate policy & Reduction after validation stagnation & Refines optimization when validation macro F1 stops improving. \\ \midrule
-Early stopping patience & 50 epochs & Stops training after prolonged lack of validation improvement. \\ \midrule
-Gradient clipping & 1.0 & Limits abrupt gradient updates. \\ \bottomrule
+\textbf{Aspect} & \textbf{Baseline MLP} & \textbf{Proposed TabularMLP} & \textbf{Value} & \textbf{Purpose} \\ \midrule
+Hidden layers & Two FC layers & Three FC (128, 128, 64) & — & — \\ \midrule
+Activation & ReLU & GELU\cite{hendrycks2016gelu} & — & — \\ \midrule
+Normalization & Not used & BatchNorm1d\cite{ioffe2015batch} & — & — \\ \midrule
+Regularization & Limited & Dropout\cite{srivastava2014dropout} + AdamW weight decay & wd=$10^{-3}$, drop=0.25 & Prevents overfitting in small dataset \\ \midrule
+Output & 3 class logits & 3 class logits & — & — \\ \cmidrule{1-5}
+Optimizer & — & AdamW\cite{loshchilov2019decoupled} & $2\times10^{-3}$ & Adaptive optimization with decoupled weight regularization \\ \midrule
+Batch size & — & 64 & 64 & Samples per optimization step \\ \midrule
+Max epochs & — & 300 & 300 & Upper bound on training passes \\ \midrule
+LR scheduling & — & Reduce on plateau & factor 0.5, patience 15 & Refines when macro F1 stagnates \\ \midrule
+Early stopping & — & Patience 50 & 50 epochs & Stops after no improvement \\ \midrule
+Gradient clipping & — & Norm 1.0 & 1.0 & Prevents unstable gradient updates \\ \bottomrule
 \end{tabular}%
 }
 \end{table}
@@ -713,25 +729,9 @@ Figure~\ref{fig:wesad_val_loss} complements this analysis by tracking validation
 
 \subsection{Experimental Classification Results}
 
-Eleven training configurations were evaluated to separate model quality, privacy-oriented feature selection, preprocessing reproducibility, and embedded feasibility. The configurations can be read as four experimental questions, summarized in Table~\ref{tab:experimental_questions}.
+Eleven training configurations were evaluated to separate model quality, privacy-oriented feature selection, preprocessing reproducibility, and embedded feasibility. These configurations address four experimental questions. The original baseline establishes whether a simple MLP is already sufficient for the extracted features, providing a reproducible reference point. The New full configuration measures the best local validation performance with all features and standardization, serving as the upper local-performance reference. The no-demographics and no-scaler variants quantify the cost of privacy-oriented and deployment-oriented constraints, removing quasi-identifiers and avoiding scaler synchronization across services. The ESP-friendly configurations estimate the feasibility of simplified sensor-side processing using a reduced feature set.
 
-\begin{table}[H]
-\centering
-\caption{Experimental questions represented by the evaluated WESAD configurations.}
-\label{tab:experimental_questions}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{p{3.5cm} p{5.2cm} p{5.5cm}}
-\toprule
-\textbf{Configuration family} & \textbf{Question addressed} & \textbf{Reason for evaluation} \\ \midrule
-Original baseline & Is a simple MLP already sufficient for the extracted features? & Establishes a reproducible reference point. \\ \midrule
-New full & What is the best local validation performance with all features and standardization? & Measures the upper local-performance reference. \\ \midrule
-No demographics / no scaler & What is the cost of privacy-oriented and deployment-oriented constraints? & Removes quasi-identifiers and avoids scaler synchronization across services. \\ \midrule
-ESP-friendly & What is the cost of using features easier to compute in an embedded path? & Estimates feasibility for simplified sensor-side processing. \\ \bottomrule
-\end{tabular}%
-}
-\end{table}
-
-Table~\ref{tab:wesad_results} summarizes the best validation performance achieved by each configuration, ranked by validation macro F1-score. Figure~\ref{fig:wesad_core_metrics} compares accuracy, precision, recall, and macro F1 at the best epoch of each experiment.
+Table~\ref{tab:wesad_results} summarizes the best validation performance achieved by each configuration, ranked by validation macro F1-score. The New full model reached its optimum at epoch 77 out of a maximum of 300, terminating at epoch 127 due to early stopping. The selected no-scaler model peaked later at epoch 117 and stopped at epoch 167. These values indicate that convergence typically required between 77 and 117 epochs across configurations, with the no-scaler variant needing more iterations due to the absence of standardization. Figure~\ref{fig:wesad_core_metrics} compares accuracy, precision, recall, and macro F1 at the best epoch of each experiment.
 
 \begin{table}[H]
 \centering
@@ -802,22 +802,7 @@ The integration with federated learning was implemented by separating the local 
 \label{fig:federated_integration_architecture}
 \end{figure}
 
-\begin{table}[H]
-\centering
-\caption{Main software contracts in the federated learning integration.}
-\label{tab:federated_contracts}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{p{3.2cm} p{4.5cm} p{6.0cm}}
-\toprule
-\textbf{Component} & \textbf{Input} & \textbf{Responsibility} \\ \midrule
-Local API & HMAC-authenticated physiological windows. & Validates requests and persists accepted records in PostgreSQL. \\ \midrule
-PostgreSQL & Accepted sensor windows. & Stores institutional physiological records locally. \\ \midrule
-Local Flower client & Local database records and global parameters. & Trains the TabularMLP locally and returns updated model parameters and metrics. \\ \midrule
-Global Flower server & Client model updates. & Coordinates federated rounds and aggregates parameters using FedAvg. \\ \midrule
-Global Model API & Exported global model artifact and metadata. & Publishes the latest ONNX model and metadata for mobile retrieval. \\ \bottomrule
-\end{tabular}%
-}
-\end{table}
+The main software contracts in the federated learning integration are distributed across five components. The Local API receives HMAC-authenticated physiological windows, validates requests, and persists accepted records in PostgreSQL. The PostgreSQL database stores accepted sensor windows locally. The Local Flower client reads local database records and global parameters, trains the TabularMLP locally, and returns updated model parameters and metrics. The Global Flower server coordinates federated rounds and aggregates parameters using FedAvg. Finally, the Global Model API publishes the latest ONNX model and metadata for mobile retrieval.
 
 \subsubsection{Local Flower Client Integration at the Local Node}
 
