@@ -212,7 +212,7 @@ The development of this work involved the use of artificial intelligence tools a
 \begin{itemize}
     \item \textbf{Text writing and revision:} AI-based writing assistants (ChatGPT, Claude) were used for grammar checking, stylistic suggestions, and paragraph organization. No AI tool was used to generate the original research ideas, experimental results, or core scientific contributions.
     \item \textbf{Code implementation:} AI-assisted code generation tools (GitHub Copilot, ChatGPT) were employed to support the implementation of the ESP32 firmware, React Native mobile application, Python training scripts, and Flower federated learning integration. Beyond code generation, the LLMs also aided in researching and interpreting the Tor (onion routing) and HTTP communication protocols, understanding the HMAC-SHA256 signing mechanism for request authenticity and integrity, and creating automated tests for the web system. Additionally, the LLMs assisted with the Bluetooth Low Energy (BLE) communication protocols between the ESP32 and the mobile device, and with native library builds for the mobile application using the Expo framework. All generated code and technical content was reviewed and tested by the authors before integration.
-    \item \textbf{Figure and diagram generation:} The system architecture diagram (Figure~\ref{fig:architecture}) was initially drafted by the authors, and generative AI was used to produce a refined version with improved visual design. The mobile application screen designs were created in Figma, using Google's Material Design (Stitch) as inspiration for the visual interface. The PRISMA flow diagram (Figure~\ref{fig:prisma}) was generated using the RAYYAN tool \cite{nastasha_johnson_93d644ed}. The experimental results charts were produced using matplotlib. The TabularMLP architecture diagram was produced using TikZ.
+    \item \textbf{Figure and diagram generation:} The system architecture diagram (Figure~\ref{fig:architecture}) was initially drafted by the authors, and generative AI was used to produce a refined version with improved visual design. The mobile application screen designs were created in Figma, using Google Stitch as an AI-assisted design tool, with Material Design as the visual design system reference. The PRISMA flow diagram (Figure~\ref{fig:prisma}) was generated using the RAYYAN tool \cite{nastasha_johnson_93d644ed}. The experimental results charts were produced using matplotlib. The TabularMLP architecture diagram was produced using TikZ.
 \end{itemize}
 
 \section{Main Results and Discussion}
@@ -236,46 +236,48 @@ Among the most employed algorithms are \textit{Artificial Neural Networks (ANN)}
 
 A visual comparison summarizing the main algorithms discussed can be observed in Table~\ref{tab:algorithms_comparison}.
 
+To provide context for the performance expectations of these algorithms, a recent meta-analysis of wearable-based stress detection studies reported a pooled mean accuracy of 85.6\% (95\% CI 70--93\%) across 71 accuracy estimates from 17 studies, with individual algorithm performances varying according to dataset, validation protocol, and classification granularity \cite{alaa_abd-alrazaq_e52622}.
+
 \subsubsection{Artificial Neural Networks (ANN)}
 
 Artificial Neural Networks are highly versatile algorithms inspired by the human brain's structure, capable of modeling complex relationships between input data (e.g., physiological signals acquired by wearable sensors) and outputs (e.g., detected stress levels). ANNs are particularly valued for their ability to extract non-linear patterns from multidimensional and heterogeneous data \cite{abdulrahman_alahmadi_32bc288c} [Direta]. In federated learning contexts, they are widely adopted due to their flexibility in handling diverse physiological data types, such as electrocardiogram (ECG), electrodermal activity (EDA), and electromyography (EMG), along with effective adaptation to edge devices with computational resource constraints \cite{abdulrahman_alahmadi_32bc288c}.
 
-\textbf{Typical metrics:} High accuracy (85-95\%), high precision and recall \cite{abdulrahman_alahmadi_32bc288c}.\\
+\textbf{Typical metrics:} See meta-analysis \cite{alaa_abd-alrazaq_e52622}.\\
 \textbf{Challenges:} Requires large data volume and high local computational resources.
 
 \subsubsection{Random Forest (RF)}
 
 Random Forest is an ensemble method algorithm that combines results from multiple individual decision trees. The main strength of this method lies in its robustness against noisy data and its capacity to avoid overfitting, which is critically advantageous in federated learning environments where data quality can vary significantly among participants. In this context, protecting the aggregation from anomalies or malicious updates is crucial to maintain robustness, being investigated through mechanisms like latent space inspection and autoencoders to secure threat detection models \cite{tran_duc_luong_b5df10e8}. Additionally, RF is particularly effective for physiological data, allowing accurate classification by consolidating multiple decisions from distributed devices, thereby reducing reliance on a single model or data source \cite{adam_sadilek_c59c73f4}.
 
-\textbf{Typical metrics:} High accuracy (80-93\%), robust against noise.\\
+\textbf{Typical metrics:} See meta-analysis \cite{alaa_abd-alrazaq_e52622}.\\
 \textbf{Challenges:} Potentially higher complexity when employing numerous trees on resource-limited devices.
 
 \subsubsection{Support Vector Machines (SVM)}
 
 SVM is widely recognized for effectively classifying complex data by establishing clear separation hyperplanes between classes. This method consistently performs well in FL contexts for detecting physiological states related to stress, particularly when client-specific data availability is limited. Nonetheless, SVM requires careful parameter tuning to handle non-linear and noisy data, frequently encountered in stress analysis from wearable sensors. To evaluate such challenges in practical environments, researchers propose physical testbeds with frameworks like Flower and embedded hardware to analyze model resilience under adverse conditions \cite{hao_huang_8976046f}.
 
-\textbf{Typical metrics:} Medium-high accuracy (75-90\%), high precision.\\
+\textbf{Typical metrics:} See meta-analysis \cite{alaa_abd-alrazaq_e52622}.\\
 \textbf{Challenges:} Complex hyperparameter tuning and sensitivity to outliers.
 
 \subsubsection{k-Nearest Neighbors (k-NN)}
 
 The k-NN algorithm is a simple yet effective method that classifies new data points based on the labels of their \textit{k} nearest neighbors. In federated learning, its simplicity and low computational cost are particularly valuable, facilitating direct implementation on wearable devices with limited resources. However, challenges such as noisy data, local distribution heterogeneity, and class imbalance must be managed carefully to ensure reliable results. Advanced techniques, such as SMOTE or SMOTEENN, can mitigate imbalance issues that could compromise accuracy \cite{abdulrahman_alahmadi_32bc288c}.
 
-\textbf{Typical metrics:} Medium accuracy (70-85\%), good interpretability.\\
+\textbf{Typical metrics:} See meta-analysis \cite{alaa_abd-alrazaq_e52622}.\\
 \textbf{Challenges:} High computational cost during prediction with large datasets.
 
 \subsubsection{Logistic Regression (LR)}
 
 Logistic Regression is a classic method for binary classification problems, modeling the probability that a data point belongs to a class based on explanatory variables. In FL, its primary advantage is simplicity, fast training, and low computational requirement, aspects that facilitate deployment on distributed devices. Nevertheless, it is sensitive to data balance and representativeness, demanding careful parameter tuning and additional strategies to prevent overfitting. Its applicability in federated environments is mainly explored when straightforward interpretation of variables is required \cite{abdulrahman_alahmadi_32bc288c}.
 
-\textbf{Typical metrics:} Medium accuracy (70-85\%), high computational efficiency.\\
+\textbf{Typical metrics:} See meta-analysis \cite{alaa_abd-alrazaq_e52622}.\\
 \textbf{Challenges:} Sensitive to data imbalance.
 
 \subsubsection{Other Relevant Algorithms}
 
 Beyond the mentioned techniques, there is growing interest in using more complex algorithms, such as Convolutional Neural Networks (CNN) and Recurrent Neural Networks (RNN), specifically designed for analyzing sequential and temporal data acquired by wearable sensors \cite{yekta_said_can_3e1184b6} [Direta]. Hybrid techniques and Multi-task Learning (MTL) methods have also been proposed to enhance federated model accuracy and robustness by sharing representations across related tasks\cite{mohamed_benouis_35501772} [Parcial].
 
-Ensemble learning techniques, like Gradient Boosting Machines and AdaBoost, are also highlighted for significantly improving predictive performance by combining multiple individual models, thus enhancing generalization capability in heterogeneous federated data scenarios \cite{abdulrahman_alahmadi_32bc288c}.
+Ensemble learning techniques, like Gradient Boosting Machines and AdaBoost, are also highlighted for significantly improving predictive performance by combining multiple individual models, thus enhancing generalization capability in heterogeneous federated data scenarios \cite{alaa_abd-alrazaq_e52622}.
 
 \begin{table}[H]
 \centering
@@ -284,12 +286,12 @@ Ensemble learning techniques, like Gradient Boosting Machines and AdaBoost, are 
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{lccccccl}
 \toprule
-\textbf{Algorithm} & \textbf{Type} & \textbf{Accuracy} & \textbf{Noise Robustness} & \textbf{Computational Cost} & \textbf{Suitability for FL} & \textbf{Reference} \\ \midrule
-ANN                & Non-linear    & High              & Medium                    & High                        & High                        & \cite{abdulrahman_alahmadi_32bc288c} \\ \midrule
-Random Forest      & Non-linear    & High              & High                      & Medium-High                 & High                        & \cite{adam_sadilek_c59c73f4} \\ \midrule
-SVM                & Linear/Non-linear & Medium-High   & Medium                    & Medium-High                 & Medium                      & \cite{hao_huang_8976046f} \\ \midrule
-k-NN               & Non-linear    & Medium            & Low                       & Medium-Low                  & Medium                      & \cite{abdulrahman_alahmadi_32bc288c} \\ \midrule
-Logistic Regression & Linear       & Medium            & Low-Medium                & Low                         & High                        & \cite{abdulrahman_alahmadi_32bc288c} \\ 
+\textbf{Algorithm} & \textbf{Type} & \textbf{Reported Performance} & \textbf{Noise Robustness} & \textbf{Computational Cost} & \textbf{Suitability for FL} & \textbf{Reference} \\ \midrule
+ANN                & Non-linear    & Varies             & Medium                    & High                        & High                        & \cite{alaa_abd-alrazaq_e52622} \\ \midrule
+Random Forest      & Non-linear    & Varies             & High                      & Medium-High                 & High                        & \cite{adam_sadilek_c59c73f4} \\ \midrule
+SVM                & Linear/Non-linear & Varies            & Medium                    & Medium-High                 & Medium                      & \cite{hao_huang_8976046f} \\ \midrule
+k-NN               & Non-linear    & Varies             & Low                       & Medium-Low                  & Medium                      & \cite{alaa_abd-alrazaq_e52622} \\ \midrule
+Logistic Regression & Linear       & Varies             & Low-Medium                & Low                         & High                        & \cite{alaa_abd-alrazaq_e52622} \\ 
 \bottomrule
 \end{tabular}%
 }
