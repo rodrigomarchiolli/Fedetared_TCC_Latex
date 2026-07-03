@@ -242,35 +242,30 @@ To provide context for the performance expectations of these algorithms, a recen
 
 Artificial Neural Networks are highly versatile algorithms inspired by the human brain's structure, capable of modeling complex relationships between input data (e.g., physiological signals acquired by wearable sensors) and outputs (e.g., detected stress levels). ANNs are particularly valued for their ability to extract non-linear patterns from multidimensional and heterogeneous data \cite{abdulrahman_alahmadi_32bc288c} [Direta]. In federated learning contexts, they are widely adopted due to their flexibility in handling diverse physiological data types, such as electrocardiogram (ECG), electrodermal activity (EDA), and electromyography (EMG), along with effective adaptation to edge devices with computational resource constraints \cite{abdulrahman_alahmadi_32bc288c}.
 
-\textbf{Typical metrics:} See meta-analysis \cite{alaa_abd-alrazaq_e52622}.\\
 \textbf{Challenges:} Requires large data volume and high local computational resources.
 
 \subsubsection{Random Forest (RF)}
 
 Random Forest is an ensemble method algorithm that combines results from multiple individual decision trees. The main strength of this method lies in its robustness against noisy data and its capacity to avoid overfitting, which is critically advantageous in federated learning environments where data quality can vary significantly among participants. In this context, protecting the aggregation from anomalies or malicious updates is crucial to maintain robustness, being investigated through mechanisms like latent space inspection and autoencoders to secure threat detection models \cite{tran_duc_luong_b5df10e8}. Additionally, RF is particularly effective for physiological data, allowing accurate classification by consolidating multiple decisions from distributed devices, thereby reducing reliance on a single model or data source \cite{adam_sadilek_c59c73f4}.
 
-\textbf{Typical metrics:} See meta-analysis \cite{alaa_abd-alrazaq_e52622}.\\
 \textbf{Challenges:} Potentially higher complexity when employing numerous trees on resource-limited devices.
 
 \subsubsection{Support Vector Machines (SVM)}
 
 SVM is widely recognized for effectively classifying complex data by establishing clear separation hyperplanes between classes. This method consistently performs well in FL contexts for detecting physiological states related to stress, particularly when client-specific data availability is limited. Nonetheless, SVM requires careful parameter tuning to handle non-linear and noisy data, frequently encountered in stress analysis from wearable sensors. To evaluate such challenges in practical environments, researchers propose physical testbeds with frameworks like Flower and embedded hardware to analyze model resilience under adverse conditions \cite{hao_huang_8976046f}.
 
-\textbf{Typical metrics:} See meta-analysis \cite{alaa_abd-alrazaq_e52622}.\\
 \textbf{Challenges:} Complex hyperparameter tuning and sensitivity to outliers.
 
 \subsubsection{k-Nearest Neighbors (k-NN)}
 
 The k-NN algorithm is a simple yet effective method that classifies new data points based on the labels of their \textit{k} nearest neighbors. In federated learning, its simplicity and low computational cost are particularly valuable, facilitating direct implementation on wearable devices with limited resources. However, challenges such as noisy data, local distribution heterogeneity, and class imbalance must be managed carefully to ensure reliable results. Advanced techniques, such as SMOTE or SMOTEENN, can mitigate imbalance issues that could compromise accuracy \cite{abdulrahman_alahmadi_32bc288c}.
 
-\textbf{Typical metrics:} See meta-analysis \cite{alaa_abd-alrazaq_e52622}.\\
 \textbf{Challenges:} High computational cost during prediction with large datasets.
 
 \subsubsection{Logistic Regression (LR)}
 
 Logistic Regression is a classic method for binary classification problems, modeling the probability that a data point belongs to a class based on explanatory variables. In FL, its primary advantage is simplicity, fast training, and low computational requirement, aspects that facilitate deployment on distributed devices. Nevertheless, it is sensitive to data balance and representativeness, demanding careful parameter tuning and additional strategies to prevent overfitting. Its applicability in federated environments is mainly explored when straightforward interpretation of variables is required \cite{abdulrahman_alahmadi_32bc288c}.
 
-\textbf{Typical metrics:} See meta-analysis \cite{alaa_abd-alrazaq_e52622}.\\
 \textbf{Challenges:} Sensitive to data imbalance.
 
 \subsubsection{Other Relevant Algorithms}
