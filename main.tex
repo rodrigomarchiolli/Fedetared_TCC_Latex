@@ -62,12 +62,12 @@ For the practical implementation, a layered Internet of Medical Things (IoMT) ar
 \section{Introduction}
 
 
-Occupational stress, a significant concern in contemporary work environments, stems from the imbalance between job-related pressures and an individual's ability to cope with them, precipitating a range of detrimental consequences for personal health and organizational effectiveness. Given that occupational stress is not a condition that can be cured through treatment but rather a risk factor requiring consideration of the problem's history, continuous monitoring and proactive management become paramount \cite{james_campbell_quick_f0fffc85}. The repercussions of occupational stress are multifaceted, impacting individual well-being through emotional distress and physical health problems, while also affecting organizations via diminished productivity and increased costs \cite{james_campbell_quick_f0fffc85, paul_e__spector_2bae7a3d}. The current work environment's demands often clash with employees' physiological, emotional, and social needs, making it essential to create supportive work conditions that encourage growth and productivity while aiding individuals in their challenges \cite{agnese_mariotti_dd5ad5ca}. 
+Occupational stress, a significant concern in contemporary work environments, stems from the imbalance between job-related pressures and an individual's ability to cope with them, precipitating a range of detrimental consequences for personal health and organizational effectiveness. Given that occupational stress is not a condition that can be cured through treatment but rather a risk factor requiring consideration of the problem's history, continuous monitoring and proactive management become paramount \cite{james_campbell_quick_f0fffc85}. The repercussions of occupational stress are multifaceted, impacting individual well-being through emotional distress and physical health problems, while also affecting organizations via diminished productivity and increased costs \cite{james_campbell_quick_f0fffc85, paul_e__spector_2bae7a3d, shiyi_jiang_d0702d3b}. The current work environment's demands often clash with employees' physiological, emotional, and social needs, making it essential to create supportive work conditions that encourage growth and productivity while aiding individuals in their challenges \cite{agnese_mariotti_dd5ad5ca}. 
 
 
 Wearable technology and artificial intelligence offer innovative pathways for detecting and managing occupational stress by continuously monitoring physiological signals and behaviors linked to stress responses \cite{james_campbell_quick_f0fffc85}. The integration of wearable sensors, coupled with advanced data analytics, creates opportunities for real-time insights into an individual's stress levels, thereby enabling the implementation of timely and personalized intervention strategies \cite{reham_alhejaili_14968434, mazin_alshamrani_65eed49a}. Such interventions have the potential to mitigate the adverse effects of stress, fostering healthier and more productive work environments \cite{jerry_chen_fd58cab0}. However, the traditional centralized data collection approach raises significant concerns regarding privacy and data security. The centralized storage and processing of sensitive employee data, such as physiological information and behavioral patterns, can expose individuals to potential breaches, unauthorized access, and misuse of their personal information. This poses substantial risks to both employee privacy and organizational data security. To address these concerns, alternative approaches that prioritize privacy and security while still enabling effective occupational stress analysis are needed.
 
-Federated learning, a decentralized machine learning technique, addresses these privacy issues by allowing models to be trained locally on individual devices without sharing sensitive raw data \cite{yekta_said_can_3e1184b6}. This approach holds significant promise for occupational stress analysis, as it enables the preservation of employee privacy and data security. In contrast to traditional centralized machine learning methods, which involve the collection and storage of raw physiological and behavioral data, federated learning empowers individuals to train models on their own devices, sharing only model updates rather than the underlying personal information.
+Federated learning, a decentralized machine learning technique, addresses these privacy issues by allowing models to be trained locally on individual devices without sharing sensitive raw data \cite{yekta_said_can_3e1184b6}. This approach holds significant promise for occupational stress analysis, as it enables the preservation of employee privacy and data security. In contrast to traditional centralized machine learning methods, which involve the collection and storage of raw physiological and behavioral data, federated learning empowers individuals to train models on their own devices, sharing only model updates rather than the underlying personal information \cite{muhammad_ali_fauzi_c546a580}.
 
 By leveraging federated learning, this study aims to explore its potential for analyzing occupational stress, emphasizing the dual objectives of accurate stress detection and the protection of data privacy. The practical prototype extends this vision with a mobile privacy gateway that routes authenticated physiological data through the Tor network to local training nodes at healthcare institutions, ensuring that raw signals remain on-premises while only model updates participate in global aggregation.
 
@@ -81,7 +81,7 @@ This paper is organized into seven sections. Section 2 details the methodology e
 
 This research employed a mixed-methods approach, incorporating a literature review and practical implementation to evaluate the effectiveness and security of federated learning for detecting and monitoring occupational stress. 
 
-The literature review followed PRISMA guidelines, ensuring a structured process for identifying, selecting, and synthesizing relevant studies. The literature review aimed to explore the current state of research on federated learning, traditional machine learning, occupational stress, and wearable technologies, providing a comprehensive understanding of the field. 
+The literature review followed PRISMA guidelines, ensuring a structured process 	te{ziyu_wang_a7666f66} for identifying, selecting, and synthesizing relevant studies. The literature review aimed to explore the current state of research on federated learning, traditional machine learning, occupational stress, and wearable technologies, providing a comprehensive understanding of the field. 
 
 The review process consisted of well-defined steps: (1) formulating research questions; (2) identifying relevant literature; (3) applying selection criteria to filter articles; (4) extracting and analyzing data; and (5) synthesizing and presenting the findings.
 
@@ -122,29 +122,29 @@ Peer-reviewed status & Review articles \\ \bottomrule
 
 \subsection{Applying Selection Criteria to Filter Articles}
 
-The search was conducted in Web of Science, Scopus, PubMed, and IEEE Xplore databases using the following search string to ensure relevance: ("occupational stress" OR stress) AND "federated learning". The specific search strings and adjustments for each database were as follows:
+The search was conducted in Web of Science, Scopus, PubMed, and IEEE Xplore databases using the following search string to ensure relevance: ("occupational stress" OR "workplace stress" OR stress) AND "federated learning". The specific search strings and adjustments for each database were as follows:
 
 \begin{itemize}
     \item \textbf{Web of Science}
     \begin{itemize}
-        \item Search String: \texttt{ALL=(("occupational stress" OR stress) AND "federated learning")}
+        \item Search String: \texttt{ALL=(("occupational stress" OR "workplace stress" OR stress) AND "federated learning")}
         \item Adjustments: Display final publication year
         \item Initial number of articles: 34
     \end{itemize}
     \item \textbf{Scopus}
     \begin{itemize}
-        \item Search String: \texttt{TITLE-ABS-KEY ( ( "occupational stress" OR stress ) AND "federated learning" )}
+        \item Search String: \texttt{TITLE-ABS-KEY ( ( "occupational stress" OR "workplace stress" OR stress ) AND "federated learning" )}
         \item Adjustments: Include only the document type \textit{Article}
         \item Initial number of articles: 10
     \end{itemize}
     \item \textbf{PubMed}
     \begin{itemize}
-        \item Search String: \texttt{("occupational stress"[Title/Abstract] OR stress[Title/Abstract]) AND "federated learning"[Title/Abstract]}
+        \item Search String: \texttt{("occupational stress"[Title/Abstract] OR "workplace stress"[Title/Abstract] OR stress[Title/Abstract]) AND "federated learning"[Title/Abstract]}
         \item Initial number of articles: 5
     \end{itemize}
     \item \textbf{IEEE Xplore}
     \begin{itemize}
-        \item Search String: \texttt{("All Metadata":federated learning) AND ("All Metadata":occupational stress OR "All Metadata":stress)}
+        \item Search String: \texttt{("All Metadata":federated learning) AND ("All Metadata":occupational stress OR "All Metadata":workplace stress OR "All Metadata":stress)}
         \item Initial number of articles: 41
     \end{itemize}
 \end{itemize}
@@ -240,7 +240,7 @@ A visual comparison summarizing the main algorithms discussed can be observed in
 
 Artificial Neural Networks are highly versatile algorithms inspired by the human brain's structure, capable of modeling complex relationships between input data (e.g., physiological signals acquired by wearable sensors) and outputs (e.g., detected stress levels). ANNs are particularly valued for their ability to extract non-linear patterns from multidimensional and heterogeneous data \cite{abdulrahman_alahmadi_32bc288c} [Direta]. In federated learning contexts, they are widely adopted due to their flexibility in handling diverse physiological data types, such as electrocardiogram (ECG), electrodermal activity (EDA), and electromyography (EMG), along with effective adaptation to edge devices with computational resource constraints \cite{abdulrahman_alahmadi_32bc288c}.
 
-\textbf{Typical metrics:} High accuracy (85-95\%), high precision and recall.\\
+\textbf{Typical metrics:} High accuracy (85-95\%), high precision and recall \cite{abdulrahman_alahmadi_32bc288c}.\\
 \textbf{Challenges:} Requires large data volume and high local computational resources.
 
 \subsubsection{Random Forest (RF)}
@@ -282,14 +282,14 @@ Ensemble learning techniques, like Gradient Boosting Machines and AdaBoost, are 
 \caption{Visual comparison of commonly employed machine learning algorithms in federated learning for occupational stress analysis.}
 \label{tab:algorithms_comparison}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{lccccc}
+\begin{tabular}{lccccccl}
 \toprule
-\textbf{Algorithm} & \textbf{Type} & \textbf{Accuracy} & \textbf{Noise Robustness} & \textbf{Computational Cost} & \textbf{Suitability for FL} \\ \midrule
-ANN                & Non-linear    & High              & Medium                    & High                        & High                        \\ \midrule
-Random Forest      & Non-linear    & High              & High                      & Medium-High                 & High                        \\ \midrule
-SVM                & Linear/Non-linear & Medium-High   & Medium                    & Medium-High                 & Medium                      \\ \midrule
-k-NN               & Non-linear    & Medium            & Low                       & Medium-Low                  & Medium                      \\ \midrule
-Logistic Regression & Linear       & Medium            & Low-Medium                & Low                         & High                        \\ 
+\textbf{Algorithm} & \textbf{Type} & \textbf{Accuracy} & \textbf{Noise Robustness} & \textbf{Computational Cost} & \textbf{Suitability for FL} & \textbf{Reference} \\ \midrule
+ANN                & Non-linear    & High              & Medium                    & High                        & High                        & \cite{abdulrahman_alahmadi_32bc288c} \\ \midrule
+Random Forest      & Non-linear    & High              & High                      & Medium-High                 & High                        & \cite{adam_sadilek_c59c73f4} \\ \midrule
+SVM                & Linear/Non-linear & Medium-High   & Medium                    & Medium-High                 & Medium                      & \cite{hao_huang_8976046f} \\ \midrule
+k-NN               & Non-linear    & Medium            & Low                       & Medium-Low                  & Medium                      & \cite{abdulrahman_alahmadi_32bc288c} \\ \midrule
+Logistic Regression & Linear       & Medium            & Low-Medium                & Low                         & High                        & \cite{abdulrahman_alahmadi_32bc288c} \\ 
 \bottomrule
 \end{tabular}%
 }
