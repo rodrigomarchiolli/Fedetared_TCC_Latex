@@ -58,6 +58,11 @@ This study evaluated federated learning as a privacy-preserving approach for det
 For the practical implementation, a layered Internet of Medical Things (IoMT) architecture was developed in which ESP32-based wearable devices transmit physiological signals to an owner-authorized mobile application through authenticated Bluetooth Low Energy bonding. The mobile application stores provisioning credentials securely, signs outgoing JSON payloads with HMAC-SHA256, a Hash-based Message Authentication Code using the SHA-256 hash function, and forwards authenticated requests through the Tor anonymity network to a local training node hosted at a healthcare institution. Local model training was validated on the WESAD dataset using a regularized tabular Multilayer Perceptron (MLP), achieving a validation macro F1-score of 0.9565 for three-class stress classification. The ESP32-based sensing hardware and mobile privacy gateway were functionally validated for data transmission and authentication; the physiological data used for classifier training and validation originated exclusively from the WESAD benchmark dataset, not from the prototype sensors. The proposed model was compared with an original MLP baseline and alternative training strategies, using accuracy, precision, recall, macro F1-score, validation loss, and overfitting gap as evaluation criteria. The stress classification component detects general physiological stress states (amusement, baseline, stress) from the WESAD laboratory protocol, not specific occupational stressors; the occupational stress framing is the motivating application context, not the validated experimental scope.
 \end{abstract}
     
+\begin{resumo}
+Este estudo avaliou o aprendizado federado como uma abordagem de preservação de privacidade para detecção e monitoramento de estresse ocupacional. O trabalho combina uma revisão bibliográfica com um protótipo prático que integra sensoriamento vestível, um gateway móvel de privacidade, comunicação anônima, submissão autenticada de dados e treinamento local de modelos. A revisão discute a relevância do estresse ocupacional, o papel das tecnologias vestíveis e da inteligência artificial no monitoramento do estresse e os riscos de privacidade associados à coleta centralizada de dados fisiológicos.
+
+Para a implementação prática, foi desenvolvida uma arquitetura em camadas de Internet das Coisas Médicas (IoMT) na qual dispositivos vestíveis baseados em ESP32 transmitem sinais fisiológicos para um aplicativo móvel autorizado pelo proprietário por meio de emparelhamento autenticado Bluetooth Low Energy. O aplicativo móvel armazena credenciais de provisionamento de forma segura, assina payloads JSON de saída com HMAC-SHA256, um Código de Autenticação de Mensagem baseado em Hash usando a função hash SHA-256, e encaminha requisições autenticadas através da rede de anonimato Tor para um nó de treinamento local hospedado em uma instituição de saúde. O treinamento local do modelo foi validado no conjunto de dados WESAD usando um Perceptron Multicamadas (MLP) tabular regularizado, alcançando um macro F1-score de validação de 0,9565 para classificação de estresse em três classes. O hardware de sensoriamento baseado em ESP32 e o gateway móvel de privacidade foram funcionalmente validados para transmissão de dados e autenticação; os dados fisiológicos usados para treinamento e validação do classificador foram originados exclusivamente do conjunto de dados de referência WESAD, e não dos sensores do protótipo. O modelo proposto foi comparado com uma MLP baseline original e estratégias alternativas de treinamento, utilizando acurácia, precisão, recall, macro F1-score, perda de validação e gap de overfitting como critérios de avaliação. O componente de classificação de estresse detecta estados fisiológicos gerais de estresse (amusement, baseline, stress) do protocolo laboratorial WESAD, e não estressores ocupacionais específicos; o contexto de estresse ocupacional é a motivação aplicada, não o escopo experimental validado.
+\end{resumo}
 
 \section{Introduction}
 
@@ -69,7 +74,7 @@ Wearable technology and artificial intelligence offer innovative pathways for de
 
 Federated learning, a decentralized machine learning technique, addresses these privacy issues by allowing models to be trained locally on individual devices without sharing sensitive raw data \cite{yekta_said_can_3e1184b6, ziyu_wang_a7666f66}. This approach holds significant promise for occupational stress analysis, as it enables the preservation of employee privacy and data security. In contrast to traditional centralized machine learning methods, which involve the collection and storage of raw physiological and behavioral data, federated learning empowers individuals to train models on their own devices, sharing only model updates rather than the underlying personal information \cite{muhammad_ali_fauzi_c546a580}.
 
-By leveraging federated learning, this study aims to explore its potential for analyzing occupational stress, emphasizing the dual objectives of accurate stress detection and the protection of data privacy. The practical prototype extends this vision with a mobile privacy gateway that routes authenticated physiological data through the Tor network to local training nodes at healthcare institutions, ensuring that raw signals remain on-premises while only model updates participate in global aggregation.
+By leveraging federated learning, this study aims to explore its potential for analyzing occupational stress, emphasizing the dual objectives of accurate stress detection and the protection of data privacy. The practical prototype extends this vision with a mobile privacy gateway that routes authenticated physiological data through the Tor network to local training nodes at healthcare institutions, ensuring that raw signals remain on-premises while only model updates participate in global aggregation. After aggregation via Federated Averaging (FedAvg), the global server redistributes the updated aggregated weights back to the participating clients, enabling collaborative model improvement without exposing raw data.
 
 Through a literature review and practical implementation, this research intends to assess the effectiveness and advantages of federated learning compared to traditional centralized methods. By combining local model training with a privacy-preserving communication path based on Tor and HMAC-SHA256 (Hash-based Message Authentication Code using the SHA-256 hash function), this work seeks not only to enhance privacy and data security, but also to maintain the precision and accuracy of stress detection models in realistic occupational health scenarios. In this context, Tor hides the network origin of the request, while HMAC-SHA256 verifies message integrity and authorization at the application layer. Additionally, the research aims to demonstrate the practical applicability and benefits of federated learning in addressing occupational stress, a critical issue with significant social, economic, and organizational implications. It is important to distinguish two validation dimensions: the end-to-end hardware and software architecture (ESP32, BLE, Tor, HMAC, Flower) was implemented and functionally tested; the stress classification model, however, was trained and validated using the public WESAD dataset, not data collected by the prototype sensors in a live deployment.
 
@@ -362,9 +367,34 @@ The current prototype validates the data ingestion, authentication, anonymized t
 
 This section presents the practical outcomes of the project, organized according to the evolved system architecture. The implementation combines wearable physiological sensing, a mobile privacy gateway, network anonymization through Tor, application-layer authentication via HMAC, local data storage at the institutional node, federated training with Flower, and model redistribution to the mobile application. The WESAD dataset is used as a validation benchmark for the stress classification pipeline.
 
-To make the results self-contained, the glossary in Appendix~A summarizes the main technical terms used throughout this section and their role in the implemented prototype.
+To make the results self-contained, the glossary in Appendix~A (Table~\ref{tab:technical_terms_results}) summarizes the main technical terms used throughout this section and their role in the implemented prototype.
 
 
+
+\subsection{Mobile Application as Privacy Gateway}
+
+The mobile application was developed as an Expo/React Native prototype with native modules for Tor connectivity, camera-based QR code scanning, secure credential storage, and communication with the ESP32-based sensing unit. Expo/React Native was used because it supports mobile interface development in JavaScript/TypeScript while still allowing native modules for capabilities such as Bluetooth and Tor connectivity. This design addresses a central limitation identified during prototyping: executing a Tor daemon directly on ESP32 hardware is computationally prohibitive for continuous operation. By contrast, modern smartphones provide sufficient resources to run a native Tor client while maintaining an intuitive interface for credential provisioning, local request preparation, and secure data submission.
+
+In the proposed workflow, a single ESP32 simulates the collection of pre-recorded physiological signals from the WESAD dataset, reading them from FLASH memory and transmitting them via BLE to the mobile gateway. Wrist or pulse sensors provide BVP, EDA, and skin temperature measurements. BVP, or blood volume pulse, captures changes in blood flow and is related to cardiovascular response. EDA, or electrodermal activity, captures changes in skin conductance and is commonly associated with sympathetic nervous system activation. The chest sensor provides respiratory data through a strain gauge, which detects expansion and contraction during breathing. The ESP32 transmits these physiological readings to the mobile application through authenticated Bluetooth Low Energy bonding. The smartphone then acts as a privacy gateway between the local sensing layer and the hospital-side training infrastructure.
+
+The mobile gateway pipeline comprises three main stages:
+
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Credential provisioning:} the local training node API generates a QR code containing a JSON object with the \texttt{.onion} service address and a shared password. The user scans this QR code with the mobile application, and the credentials are stored securely on the device.
+\item \textbf{Local request preparation:} the application receives simulated physiological data from the ESP32, serializes the readings into a JSON payload, computes an HMAC-SHA256 signature using the shared password, and attaches the resulting digest to the request through the \texttt{x-signature} header.
+\item \textbf{Secure submission and validation:} the application sends a \texttt{POST} request to \texttt{/send-pairs} through the Tor network. The hospital API verifies the HMAC signature and persists valid data locally.
+\end{enumerate}
+
+Training is not started by the HTTP request itself; it is executed later by the local Flower client when the federated server coordinates a training round. End-to-end tests confirmed the expected validation behavior: requests with invalid signatures are rejected with HTTP status \texttt{401}, whereas correctly signed requests are accepted and persisted with HTTP status \texttt{201}. Figure~\ref{fig:security_flow} summarizes this pipeline, emphasizing the distinction between application-layer authentication provided by HMAC-SHA256 and network-layer anonymization provided by Tor.
+
+\begin{figure}[H]
+\centering
+\safeincludegraphics[width=\textwidth]{imagens/architeture/Mobile App Gateway.png}
+\caption{Mobile application pipeline as a privacy gateway. The local training node provisions credentials through a QR code, the mobile app stores the \texttt{.onion} address and shared password securely, receives simulated physiological data from the ESP32 through authenticated Bluetooth Low Energy bonding, signs the JSON payload with HMAC-SHA256, and submits the request through Tor to the hospital API for signature validation and local persistence.}
+\label{fig:security_flow}
+\end{figure}
+
+\FloatBarrier
 
 \subsection{Evolved System Architecture}
 
@@ -398,7 +428,7 @@ The end-to-end flow proceeds as follows:
 \item During a federated training round, the local Flower client reads these stored records, trains locally, and returns only updated model parameters to the global server.
 \end{enumerate}
 
-The ESP32 does not capture live physiological readings from sensors. Instead, pre-recorded WESAD signal windows are stored in the microcontroller's FLASH memory. Every 30 seconds, a new window is read from FLASH into a RAM buffer, simulating real sensor sampling. When the smartphone requests data over BLE, the entire buffer is flushed to the mobile gateway. This pipeline validates the transmission and processing chain, not the physiological data acquisition itself.
+The ESP32 does not capture live physiological readings from sensors. Instead, pre-recorded WESAD signal windows are stored in the microcontroller's FLASH memory. Every 30 seconds, a new window is read from FLASH into a RAM buffer, simulating real sensor sampling. When the smartphone requests data over BLE, the entire buffer is flushed to the mobile gateway. This pipeline, shown in Figure~\ref{fig:physical_setup}, validates the transmission and processing chain, not the physiological data acquisition itself.
 
 \begin{figure}[H]
 \centering
@@ -414,31 +444,6 @@ Figure~\ref{fig:architecture} provides a visual overview of these layers and the
 \safeincludegraphics[width=\textwidth]{imagens/architeture/Evolved System Architecture.png}
 \caption{Evolved IoMT architecture for privacy-preserving occupational stress monitoring. Physiological data flow from a single ESP32 connected to wearable sensors to the owner-authorized mobile gateway through authenticated Bluetooth Low Energy bonding, then traverse Tor with HMAC-authenticated requests, and are processed locally at the healthcare institution before federated model aggregation.}
 \label{fig:architecture}
-\end{figure}
-
-\FloatBarrier
-
-\subsection{Mobile Application as Privacy Gateway}
-
-The mobile application was developed as an Expo/React Native prototype with native modules for Tor connectivity, camera-based QR code scanning, secure credential storage, and communication with the ESP32-based sensing unit. Expo/React Native was used because it supports mobile interface development in JavaScript/TypeScript while still allowing native modules for capabilities such as Bluetooth and Tor connectivity. This design addresses a central limitation identified during prototyping: executing a Tor daemon directly on ESP32 hardware is computationally prohibitive for continuous operation. By contrast, modern smartphones provide sufficient resources to run a native Tor client while maintaining an intuitive interface for credential provisioning, local request preparation, and secure data submission.
-
-In the proposed workflow, a single ESP32 simulates the collection of pre-recorded physiological signals from the WESAD dataset, reading them from FLASH memory and transmitting them via BLE to the mobile gateway. Wrist or pulse sensors provide BVP, EDA, and skin temperature measurements. BVP, or blood volume pulse, captures changes in blood flow and is related to cardiovascular response. EDA, or electrodermal activity, captures changes in skin conductance and is commonly associated with sympathetic nervous system activation. The chest sensor provides respiratory data through a strain gauge, which detects expansion and contraction during breathing. The ESP32 transmits these physiological readings to the mobile application through authenticated Bluetooth Low Energy bonding. The smartphone then acts as a privacy gateway between the local sensing layer and the hospital-side training infrastructure.
-
-The mobile gateway pipeline comprises three main stages:
-
-\begin{enumerate}[leftmargin=*]
-\item \textbf{Credential provisioning:} the local training node API generates a QR code containing a JSON object with the \texttt{.onion} service address and a shared password. The user scans this QR code with the mobile application, and the credentials are stored securely on the device.
-\item \textbf{Local request preparation:} the application receives simulated physiological data from the ESP32, serializes the readings into a JSON payload, computes an HMAC-SHA256 signature using the shared password, and attaches the resulting digest to the request through the \texttt{x-signature} header.
-\item \textbf{Secure submission and validation:} the application sends a \texttt{POST} request to \texttt{/send-pairs} through the Tor network. The hospital API verifies the HMAC signature and persists valid data locally.
-\end{enumerate}
-
-Training is not started by the HTTP request itself; it is executed later by the local Flower client when the federated server coordinates a training round. End-to-end tests confirmed the expected validation behavior: requests with invalid signatures are rejected with HTTP status \texttt{401}, whereas correctly signed requests are accepted and persisted with HTTP status \texttt{201}. Figure~\ref{fig:security_flow} summarizes this pipeline, emphasizing the distinction between application-layer authentication provided by HMAC-SHA256 and network-layer anonymization provided by Tor.
-
-\begin{figure}[H]
-\centering
-\safeincludegraphics[width=\textwidth]{imagens/architeture/Mobile App Gateway.png}
-\caption{Mobile application pipeline as a privacy gateway. The local training node provisions credentials through a QR code, the mobile app stores the \texttt{.onion} address and shared password securely, receives simulated physiological data from the ESP32 through authenticated Bluetooth Low Energy bonding, signs the JSON payload with HMAC-SHA256, and submits the request through Tor to the hospital API for signature validation and local persistence.}
-\label{fig:security_flow}
 \end{figure}
 
 \FloatBarrier
@@ -628,7 +633,7 @@ Given the tabular representation described above, the project uses a Multilayer 
 
 \subsubsection{Baseline and Proposed TabularMLP}
 
-The original baseline was a simple MLP with two hidden layers and ReLU activations. This baseline is useful because it measures how much of the classification signal is already present in the extracted features. The proposed model, named \textit{TabularMLP}, keeps the same family of fully connected networks but adds regularization and training-stability mechanisms. The input layer has 26 neurons in the privacy-oriented configuration (one per physiological feature, excluding demographic attributes) or 29 neurons in the full configuration, as listed in Table~\ref{tab:wesad_features}. Table~\ref{tab:model_and_training} summarizes the main architectural differences and training hyperparameters
+The original baseline was a simple MLP with two hidden layers and ReLU activations. This baseline is useful because it measures how much of the classification signal is already present in the extracted features. The proposed model, named \textit{TabularMLP}, keeps the same family of fully connected networks but adds regularization and training-stability mechanisms. The input layer has 26 neurons in the privacy-oriented configuration (one per physiological feature, excluding demographic attributes) or 29 neurons in the full configuration, as listed in Table~\ref{tab:wesad_features}. Table~\ref{tab:model_and_training} summarizes the main architectural differences and training hyperparameters, and Figure~\ref{fig:mlp_architecture} illustrates the network topology.
 
 The final layer returns three raw logits, one for each class; no final softmax is included because PyTorch's cross-entropy loss expects logits. Each of the three output neurons corresponds to one WESAD class: amusement (class 0), baseline (class 1), and stress (class 2). The predicted class is the index of the highest logit after softmax normalization is applied internally by the cross-entropy loss function.
 
@@ -762,7 +767,7 @@ ESP-friendly level 1 & 13 & 119 & 0.7627 & 0.7921 & 0.7559 & 0.7794 \\ \bottomru
 \label{fig:wesad_core_metrics}
 \end{figure}
 
-The \textit{New full} configuration achieved the highest local validation macro F1-score, 0.9565 at epoch 77, outperforming the original baseline score of 0.9241 by approximately 3.2 percentage points. Its validation loss was also the lowest among the evaluated models (0.1454), and its overfitting gap was small (0.0145). This indicates that the regularized TabularMLP improved local generalization compared with the simpler baseline, whose overfitting gap was 0.0728.
+The \textit{New full} configuration achieved the highest local validation macro F1-score, 0.9565 at epoch 77, outperforming the original baseline score of 0.9241 by approximately 3.2 percentage points. Its validation loss was also the lowest among the evaluated models (0.1454), and its overfitting gap was small (0.0145, see Figure~\ref{fig:wesad_overfit}). This indicates that the regularized TabularMLP improved local generalization compared with the simpler baseline, whose overfitting gap was 0.0728.
 
 Removing demographic features produced a modest decrease when \texttt{StandardScaler} was still used: the macro F1-score moved from 0.9565 to 0.9378. This supports the privacy-oriented decision to exclude \texttt{age}, \texttt{height}, and \texttt{weight}; most of the discriminative signal remained in the physiological features.
 
@@ -872,7 +877,7 @@ The development of this work involved the use of artificial intelligence tools a
 \begin{itemize}
     \item \textbf{Text writing and revision:} AI-based writing assistants (ChatGPT, Claude) were used for grammar checking, stylistic suggestions, and paragraph organization. No AI tool was used to generate the original research ideas, experimental results, or core scientific contributions.
     \item \textbf{Code implementation:} AI-assisted code generation tools (GitHub Copilot, ChatGPT) were employed to support the implementation of the ESP32 firmware, React Native mobile application, Python training scripts, and Flower federated learning integration. Beyond code generation, the LLMs also aided in researching and interpreting the Tor (onion routing) and HTTP communication protocols, understanding the HMAC-SHA256 signing mechanism for request authenticity and integrity, and creating automated tests for the web system. Additionally, the LLMs assisted with the Bluetooth Low Energy (BLE) communication protocols between the ESP32 and the mobile device, and with native library builds for the mobile application using the Expo framework. All generated code and technical content was reviewed and tested by the authors before integration.
-    \item \textbf{Figure and diagram generation:} The system architecture diagram (Figure~\ref{fig:architecture}) was initially drafted by the authors, and generative AI was used to produce a refined version with improved visual design. The mobile application screen designs were created in Figma, using Google Stitch as an AI-assisted design tool, with Material Design as the visual design system reference. The PRISMA flow diagram (Figure~\ref{fig:prisma}) was generated using the RAYYAN tool \cite{nastasha_johnson_93d644ed}. The experimental results charts were produced using matplotlib. The TabularMLP architecture diagram was produced using TikZ.
+    \item \textbf{Figure and diagram generation:} The system architecture diagram (Figure~\ref{fig:architecture}) was initially drafted by the authors, and generative AI was used to produce a refined version with improved visual design. The initial versions of the mobile application screen designs were exported from Figma, using Google's Material Design (Stitch) as inspiration for the visual interface. The PRISMA flow diagram (Figure~\ref{fig:prisma}) was generated using the RAYYAN tool \cite{nastasha_johnson_93d644ed}. The experimental results charts were produced using matplotlib. The TabularMLP architecture diagram was produced using TikZ.
 \end{itemize}
 
 \bibliographystyle{sbc}
