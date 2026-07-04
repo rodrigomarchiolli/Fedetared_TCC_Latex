@@ -206,14 +206,7 @@ The review process began with 90 articles from the Web of Science, Scopus, PubMe
 
 \endgroup
 
-\subsection*{Use of Artificial Intelligence Tools}
-The development of this work involved the use of artificial intelligence tools as assistants in specific stages, as detailed below. All AI-assisted content was reviewed and validated by the authors, who assume full responsibility for the intellectual content of this manuscript.
 
-\begin{itemize}
-    \item \textbf{Text writing and revision:} AI-based writing assistants (ChatGPT, Claude) were used for grammar checking, stylistic suggestions, and paragraph organization. No AI tool was used to generate the original research ideas, experimental results, or core scientific contributions.
-    \item \textbf{Code implementation:} AI-assisted code generation tools (GitHub Copilot, ChatGPT) were employed to support the implementation of the ESP32 firmware, React Native mobile application, Python training scripts, and Flower federated learning integration. Beyond code generation, the LLMs also aided in researching and interpreting the Tor (onion routing) and HTTP communication protocols, understanding the HMAC-SHA256 signing mechanism for request authenticity and integrity, and creating automated tests for the web system. Additionally, the LLMs assisted with the Bluetooth Low Energy (BLE) communication protocols between the ESP32 and the mobile device, and with native library builds for the mobile application using the Expo framework. All generated code and technical content was reviewed and tested by the authors before integration.
-    \item \textbf{Figure and diagram generation:} The system architecture diagram (Figure~\ref{fig:architecture}) was initially drafted by the authors, and generative AI was used to produce a refined version with improved visual design. The mobile application screen designs were created in Figma, using Google Stitch as an AI-assisted design tool, with Material Design as the visual design system reference. The PRISMA flow diagram (Figure~\ref{fig:prisma}) was generated using the RAYYAN tool \cite{nastasha_johnson_93d644ed}. The experimental results charts were produced using matplotlib. The TabularMLP architecture diagram was produced using TikZ.
-\end{itemize}
 
 \section{Main Results and Discussion}
 
@@ -878,6 +871,14 @@ This study investigated federated learning as a privacy-preserving approach moti
 
 Experimental validation on the WESAD dataset demonstrated that the scaled TabularMLP classifier achieves a validation macro F1-score of 0.9565 for three-class affective state classification, outperforming a simpler baseline while maintaining low overfitting. For the federated prototype, the selected no-demographics, no-scaler variant prioritizes reproducible preprocessing across the embedded sensing, simulated data, local training, server validation, and mobile inference paths. Future work will complete live ESP32 stream integration, subject-level cross-validation, Tor latency evaluation, and multi-institutional federated training rounds.
 
+\section*{Use of Artificial Intelligence Tools}
+The development of this work involved the use of artificial intelligence tools as assistants in specific stages, as detailed below. All AI-assisted content was reviewed and validated by the authors, who assume full responsibility for the intellectual content of this manuscript.
+
+\begin{itemize}
+    \item \textbf{Text writing and revision:} AI-based writing assistants (ChatGPT, Claude) were used for grammar checking, stylistic suggestions, and paragraph organization. No AI tool was used to generate the original research ideas, experimental results, or core scientific contributions.
+    \item \textbf{Code implementation:} AI-assisted code generation tools (GitHub Copilot, ChatGPT) were employed to support the implementation of the ESP32 firmware, React Native mobile application, Python training scripts, and Flower federated learning integration. Beyond code generation, the LLMs also aided in researching and interpreting the Tor (onion routing) and HTTP communication protocols, understanding the HMAC-SHA256 signing mechanism for request authenticity and integrity, and creating automated tests for the web system. Additionally, the LLMs assisted with the Bluetooth Low Energy (BLE) communication protocols between the ESP32 and the mobile device, and with native library builds for the mobile application using the Expo framework. All generated code and technical content was reviewed and tested by the authors before integration.
+    \item \textbf{Figure and diagram generation:} The system architecture diagram (Figure~\ref{fig:architecture}) was initially drafted by the authors, and generative AI was used to produce a refined version with improved visual design. The mobile application screen designs were created in Figma, using Google Stitch as an AI-assisted design tool, with Material Design as the visual design system reference. The PRISMA flow diagram (Figure~\ref{fig:prisma}) was generated using the RAYYAN tool \cite{nastasha_johnson_93d644ed}. The experimental results charts were produced using matplotlib. The TabularMLP architecture diagram was produced using TikZ.
+\end{itemize}
 
 \bibliographystyle{sbc}
 \bibliography{sbc-template}
