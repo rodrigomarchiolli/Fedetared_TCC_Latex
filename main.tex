@@ -378,7 +378,7 @@ The practical prototype consolidates six operational layers, as summarized in Ta
 \begin{tabular}{p{2.8cm} p{3.2cm} p{4.5cm} p{4.5cm}}
 \toprule
 \textbf{Layer} & \textbf{Component} & \textbf{Primary Function} & \textbf{Privacy Measure} \\ \midrule
-IoMT Devices & ESP32 and wearable sensors & Collection of physiological sensor signals & Device pseudonyms; authenticated BLE bonding; single-owner access control \\ \midrule
+IoMT Devices & ESP32 and wearable sensors & Simulated physiological data transmission & Device pseudonyms; authenticated BLE bonding; single-owner access control \\ \midrule
 Mobile Gateway & React Native application & Reception of sensor data and secure forwarding & Local secure storage; Tor client on the smartphone \\ \midrule
 Network Anonymization & Tor hidden service (\texttt{.onion}) & Concealment of the network path between the phone and the institution & Onion routing; origin IP masking \\ \midrule
 Application Authentication & HMAC-SHA256 middleware & Request integrity and client authorization & Shared secret; signed JSON payload \\ \midrule
@@ -391,28 +391,23 @@ Federated Coordination & Flower server using gRPC & Global model aggregation thr
 The end-to-end flow proceeds as follows:
 
 \begin{enumerate}[leftmargin=*]
-\item Wearable sensors connected to a single ESP32 collect physiological windows and transmit them to the authorized mobile device through an authenticated Bluetooth Low Energy bond.
+\item Wearable sensors connected to a single ESP32 relay pre-stored physiological windows and transmit them to the authorized mobile device through an authenticated Bluetooth Low Energy bond.
 \item The mobile application stores configuration credentials locally and prepares a signed HTTP request.
 \item The request traverses the Tor network and reaches the hidden service exposed by the local training node.
 \item The local API validates the HMAC signature and persists the received data in the institution's database.
 \item During a federated training round, the local Flower client reads these stored records, trains locally, and returns only updated model parameters to the global server.
 \end{enumerate}
 
+The ESP32 does not capture live physiological readings from sensors. Instead, pre-recorded WESAD signal windows are stored in the microcontroller's FLASH memory. Every 30 seconds, a new window is read from FLASH into a RAM buffer, simulating real sensor sampling. When the smartphone requests data over BLE, the entire buffer is flushed to the mobile gateway. This pipeline validates the transmission and processing chain, not the physiological data acquisition itself.
+
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[node distance=1.5cm and 3cm, every node/.style={font=\small}]
-  \node[draw, rectangle, rounded corners, minimum width=3cm, minimum height=1.2cm, fill=blue!10, align=center] (wrist) {Wrist/Pulse Sensor\\ (BVP, EDA, TEMP)};
-  \node[draw, rectangle, rounded corners, minimum width=3cm, minimum height=1.2cm, fill=green!10, below=of wrist, align=center] (chest) {Chest Sensor\\ (Respiration)};
-  \node[draw, rectangle, rounded corners, minimum width=3cm, minimum height=1.2cm, fill=orange!10, right=of wrist, align=center] (esp32) {ESP32\\ Microcontroller};
-  
-  \draw[-Stealth, thick] (wrist.east) -- node[above, font=\footnotesize] {BLE} (esp32.west);
-  \draw[-Stealth, thick] (chest.east) -- node[below, font=\footnotesize] {BLE} (esp32.west);
-\end{tikzpicture}
-\caption{Physical prototype setup (ESP32 + wearable sensors), used for functional data transmission validation. The physiological data for classifier validation (Sections 5.8--5.10) originate from the WESAD dataset, not from this setup.}
+\safeincludegraphics[width=0.8\textwidth]{imagens/architeture/setup_fisico.png}
+\caption{Real prototype setup showing the ESP32 microcontroller, wearable sensors, and mobile application interface. The ESP32 simulates physiological data transmission: pre-stored signal windows in FLASH memory are accumulated in a RAM buffer and flushed via BLE when requested by the smartphone. This validates the end-to-end transmission pipeline, not live physiological data collection. The physiological data for classifier validation (Sections~5.8--5.10) originate from the WESAD dataset. For the complete system integration across multiple institutions, see Figure~\ref{fig:federated_integration_architecture}.}
 \label{fig:physical_setup}
 \end{figure}
 
-Figure~\ref{fig:architecture} provides a visual overview of these layers and their interactions.
+Figure~\ref{fig:architecture} provides a visual overview of these layers and their interactions. Figure~\ref{fig:federated_integration_architecture} illustrates the complete multi-institutional integration.
 
 \begin{figure}[H]
 \centering
@@ -427,13 +422,13 @@ Figure~\ref{fig:architecture} provides a visual overview of these layers and the
 
 The mobile application was developed as an Expo/React Native prototype with native modules for Tor connectivity, camera-based QR code scanning, secure credential storage, and communication with the ESP32-based sensing unit. Expo/React Native was used because it supports mobile interface development in JavaScript/TypeScript while still allowing native modules for capabilities such as Bluetooth and Tor connectivity. This design addresses a central limitation identified during prototyping: executing a Tor daemon directly on ESP32 hardware is computationally prohibitive for continuous operation. By contrast, modern smartphones provide sufficient resources to run a native Tor client while maintaining an intuitive interface for credential provisioning, local request preparation, and secure data submission.
 
-In the proposed workflow, a single ESP32 collects physiological signals from multiple wearable sensors. Wrist or pulse sensors provide BVP, EDA, and skin temperature measurements. BVP, or blood volume pulse, captures changes in blood flow and is related to cardiovascular response. EDA, or electrodermal activity, captures changes in skin conductance and is commonly associated with sympathetic nervous system activation. The chest sensor provides respiratory data through a strain gauge, which detects expansion and contraction during breathing. The ESP32 transmits these physiological readings to the mobile application through authenticated Bluetooth Low Energy bonding. The smartphone then acts as a privacy gateway between the local sensing layer and the hospital-side training infrastructure.
+In the proposed workflow, a single ESP32 simulates the collection of pre-recorded physiological signals from the WESAD dataset, reading them from FLASH memory and transmitting them via BLE to the mobile gateway. Wrist or pulse sensors provide BVP, EDA, and skin temperature measurements. BVP, or blood volume pulse, captures changes in blood flow and is related to cardiovascular response. EDA, or electrodermal activity, captures changes in skin conductance and is commonly associated with sympathetic nervous system activation. The chest sensor provides respiratory data through a strain gauge, which detects expansion and contraction during breathing. The ESP32 transmits these physiological readings to the mobile application through authenticated Bluetooth Low Energy bonding. The smartphone then acts as a privacy gateway between the local sensing layer and the hospital-side training infrastructure.
 
 The mobile gateway pipeline comprises three main stages:
 
 \begin{enumerate}[leftmargin=*]
 \item \textbf{Credential provisioning:} the local training node API generates a QR code containing a JSON object with the \texttt{.onion} service address and a shared password. The user scans this QR code with the mobile application, and the credentials are stored securely on the device.
-\item \textbf{Local request preparation:} the application receives physiological data from the ESP32, serializes the readings into a JSON payload, computes an HMAC-SHA256 signature using the shared password, and attaches the resulting digest to the request through the \texttt{x-signature} header.
+\item \textbf{Local request preparation:} the application receives simulated physiological data from the ESP32, serializes the readings into a JSON payload, computes an HMAC-SHA256 signature using the shared password, and attaches the resulting digest to the request through the \texttt{x-signature} header.
 \item \textbf{Secure submission and validation:} the application sends a \texttt{POST} request to \texttt{/send-pairs} through the Tor network. The hospital API verifies the HMAC signature and persists valid data locally.
 \end{enumerate}
 
@@ -442,7 +437,7 @@ Training is not started by the HTTP request itself; it is executed later by the 
 \begin{figure}[H]
 \centering
 \safeincludegraphics[width=\textwidth]{imagens/architeture/Mobile App Gateway.png}
-\caption{Mobile application pipeline as a privacy gateway. The local training node provisions credentials through a QR code, the mobile app stores the \texttt{.onion} address and shared password securely, receives physiological data from the ESP32 through authenticated Bluetooth Low Energy bonding, signs the JSON payload with HMAC-SHA256, and submits the request through Tor to the hospital API for signature validation and local persistence.}
+\caption{Mobile application pipeline as a privacy gateway. The local training node provisions credentials through a QR code, the mobile app stores the \texttt{.onion} address and shared password securely, receives simulated physiological data from the ESP32 through authenticated Bluetooth Low Energy bonding, signs the JSON payload with HMAC-SHA256, and submits the request through Tor to the hospital API for signature validation and local persistence.}
 \label{fig:security_flow}
 \end{figure}
 
@@ -802,7 +797,7 @@ The integration with federated learning was implemented by separating the local 
 \begin{figure}[H]
 \centering
 \safeincludegraphics[width=\textwidth]{imagens/architeture/federated_integration_architecture.png}
-\caption{Implemented federated learning integration architecture, showing the separation between mobile data submission, hospital-side data ingestion, local Flower training, global aggregation, and model redistribution.}
+\caption{Implemented federated learning integration architecture, showing the separation between mobile data submission, hospital-side data ingestion, local Flower training, global aggregation, and model redistribution.\protect\footnote{Code Implementation: \protect\url{https://github.com/rodrigomarchiolli/Federated_TOR}}}
 \label{fig:federated_integration_architecture}
 \end{figure}
 
@@ -911,7 +906,7 @@ The development of this work involved the use of artificial intelligence tools a
 
 IoMT & \textit{Internet of Medical Things}; connected medical or health-related sensing devices. & Sensing layer composed of wearable physiological sensors connected to the ESP32. \\ \midrule
 
-ESP32 & Low-cost microcontroller with wireless communication capabilities. & Local sensing unit controller that collects signals from wearable sensors and sends them to the mobile application through authenticated Bluetooth Low Energy bonding. \\ \midrule
+ESP32 & Low-cost microcontroller with wireless communication capabilities. & Local sensing unit controller that receives pre-stored signals from wearable sensors and sends them to the mobile application through authenticated Bluetooth Low Energy bonding. \\ \midrule
 
 Bluetooth Low Energy (BLE) bonding & Persistent authenticated pairing between a peripheral device and a central device. & Restricts local sensor access to the smartphone that completed authenticated enrollment with the sensing unit. \\ \midrule
 
