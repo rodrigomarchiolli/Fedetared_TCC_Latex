@@ -7,6 +7,7 @@ AGENTS.md
 opencode.json
 .solicitacao_banca
 .memory
+.modificacoes
 
 
 # Artefatos do pipeline — não versionar resultados intermediários
