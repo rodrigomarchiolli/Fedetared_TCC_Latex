@@ -524,7 +524,7 @@ Figure~\ref{fig:app_navigation} illustrates the main navigation screens of the m
 
 \subsection{Network Anonymization through Tor}
 
-The Tor network provides \textit{topological anonymity} by routing traffic through a sequence of relay nodes using onion encryption. In practical terms, this means that the destination service does not directly observe the real IP address of the mobile device. In this architecture, Tor complements, but does not replace, transport-layer protections such as TLS. Its primary role is to obscure the network origin of the mobile gateway before data reach the local training node, thereby reducing the risk of correlating a participant's IP address with a specific healthcare institution or individual session.
+The Tor network \cite{dingledine2004tor} provides \textit{topological anonymity} by routing traffic through a sequence of relay nodes using onion encryption. In practical terms, this means that the destination service does not directly observe the real IP address of the mobile device. In this architecture, Tor complements, but does not replace, transport-layer protections such as TLS. Its primary role is to obscure the network origin of the mobile gateway before data reach the local training node, thereby reducing the risk of correlating a participant's IP address with a specific healthcare institution or individual session.
 
 Tor protects three aspects of the communication path: (i) the real IP address of the mobile gateway as observed by the destination service; (ii) the observable network route between origin and destination; and (iii) direct association between a network endpoint and a logical participant in the system. However, Tor alone does not protect the semantic content of messages if payloads are transmitted in plaintext, nor does it authenticate legitimate clients. Poorly designed topic names or unencrypted JSON fields could still reveal sensitive information even when routed through Tor. For this reason, the architecture treats Tor as one layer within a broader privacy strategy that also includes pseudonymous device identifiers, payload signing, and federated learning.
 
@@ -532,7 +532,7 @@ In operational terms, the mobile client connects to a hidden service address (\t
 
 \subsection{Application-Layer Authentication with HMAC-SHA256}
 
-While Tor addresses anonymity at the network layer, it does not verify whether an incoming request originates from an authorized federated client. To close this gap, the system employs HMAC-SHA256 (\textit{Hash-based Message Authentication Code}) at the application layer. HMAC combines a shared secret key with the message content through a cryptographic hash function, producing a deterministic signature that allows the server to verify both authenticity and integrity of each request.
+While Tor addresses anonymity at the network layer, it does not verify whether an incoming request originates from an authorized federated client. To close this gap, the system employs HMAC-SHA256 \cite{rfc2104} (\textit{Hash-based Message Authentication Code}) at the application layer. HMAC combines a shared secret key with the message content through a cryptographic hash function, producing a deterministic signature that allows the server to verify both authenticity and integrity of each request.
 
 The authentication contract operates as follows. The local training node generates a QR code containing two fields: \texttt{address}, corresponding to the \texttt{.onion} hidden service URL, and \texttt{password}, a shared secret known only to the institution and the authorized mobile client. When submitting data, the mobile application computes:
 
@@ -541,6 +541,8 @@ The authentication contract operates as follows. The local training node generat
 \end{equation}
 
 The resulting digest, encoded as hexadecimal, is sent in the HTTP header \texttt{x-signature}. The server recomputes the signature from the raw request body and rejects any mismatch. Critically, the signature is computed over the exact byte sequence transmitted in the POST body; any alteration to field ordering, whitespace, or numeric formatting would invalidate the authentication.
+
+The middleware also validates the schema of the POST body, checking that all required fields are present and correctly typed. This prevents man-in-the-middle attacks from injecting malformed payloads even when the HMAC signature itself is valid.
 
 Table~\ref{tab:tor_hmac_roles} summarizes the separation of responsibilities between Tor and HMAC-SHA256. Tor hides the network route, while HMAC-SHA256 authenticates the request and protects payload integrity at the application layer.
 
@@ -846,6 +848,8 @@ Five limitations warrant explicit acknowledgment:
 \item \textbf{No multi-institutional benchmark yet:} although the local Flower client and global Flower server components define the federated execution path, the present evaluation does not yet report a multi-institutional experiment with independent hospital nodes and heterogeneous local distributions.
 
 \item \textbf{Absence of personalization:} the model was trained in an aggregated cross-subject manner without individual calibration or fine-tuning. Since physiological stress thresholds (e.g., EDA, heart rate variability, temperature) vary across individuals, a one-size-fits-all model may not correctly capture the stress/non-stress boundary for each person. Future work should investigate personalization strategies such as per-subject local fine-tuning within the federated client, which is architecturally compatible with the proposed federated framework \cite{ereno2025avaliando}.
+
+\item \textbf{Mobile gateway as single point of failure:} the current architecture routes all physiological data through the mobile application. If the gateway device goes offline or loses network connectivity, data transmission to the local training node is interrupted. Future work should investigate fault-tolerant designs, such as store-and-forward mechanisms on the ESP32 side or multi-gateway redundancy, to mitigate this limitation.
 
 \end{enumerate}
 
