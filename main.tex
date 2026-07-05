@@ -109,7 +109,7 @@ Four academic databases were systematically searched: PubMed, IEEE Xplore, Scopu
 
 Articles were selected based on well-defined inclusion criteria as described in Table~\ref{tab:criterios}, such as peer-reviewed status, publication date (recent ten years), focus on federated learning, stress monitoring, and wearable technology. Articles that did not meet these criteria or lacked sufficient methodological detail were excluded. The selection process involved title and abstract screening, followed by full-text evaluation.
 
-\begin{table}[h!]
+\begin{table}[htbp]
 \centering
 \caption{Inclusion and Exclusion Criteria}
 \label{tab:criterios}
@@ -156,7 +156,7 @@ The search was conducted in Web of Science, Scopus, PubMed, and IEEE Xplore data
 
 The review process began with 90 articles from the Web of Science, Scopus, PubMed, and IEEE Xplore databases. The RAYYAN tool was used to assist in the selection \cite{nastasha_johnson_93d644ed}. After removing 29 duplicates, 61 articles were screened. Of these, 34 were excluded based on the title and abstract. The remaining 27 were retrieved in full and assessed using the inclusion and exclusion criteria. Sixteen articles were excluded for not meeting the criteria or being out of scope. Ultimately, 11 articles were included in the literature review. The PRISMA flow diagram in Figure~\ref{fig:prisma} details this selection process. Table~\ref{tab:included_articles} summarizes these 11 articles, their focus, algorithms, datasets, and relationship to the implemented prototype.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \safeincludegraphics[width=0.8\linewidth]{imagens/prisma.png}
     \caption{PRISMA flow diagram}
@@ -272,7 +272,7 @@ Beyond the mentioned techniques, there is growing interest in using more complex
 
 Ensemble learning techniques, like Gradient Boosting Machines and AdaBoost, are also highlighted for significantly improving predictive performance by combining multiple individual models, thus enhancing generalization capability in heterogeneous federated data scenarios \cite{alaa_abd-alrazaq_e52622}.
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \caption{Visual comparison of commonly employed machine learning algorithms in federated learning for occupational stress analysis.}
 \label{tab:algorithms_comparison}
@@ -387,7 +387,7 @@ The mobile gateway pipeline comprises three main stages:
 
 Training is not started by the HTTP request itself; it is executed later by the local Flower client when the federated server coordinates a training round. End-to-end tests confirmed the expected validation behavior: requests with invalid signatures are rejected with HTTP status \texttt{401}, whereas correctly signed requests are accepted and persisted with HTTP status \texttt{201}. Figure~\ref{fig:security_flow} summarizes this pipeline, emphasizing the distinction between application-layer authentication provided by HMAC-SHA256 and network-layer anonymization provided by Tor.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \safeincludegraphics[width=\textwidth]{imagens/architeture/Mobile App Gateway.png}
 \caption{Mobile application pipeline as a privacy gateway. The local training node provisions credentials through a QR code, the mobile app stores the \texttt{.onion} address and shared password securely, receives simulated physiological data from the ESP32 through authenticated Bluetooth Low Energy bonding, signs the JSON payload with HMAC-SHA256, and submits the request through Tor to the hospital API for signature validation and local persistence.}
@@ -400,7 +400,7 @@ Training is not started by the HTTP request itself; it is executed later by the 
 
 The practical prototype consolidates six operational layers, as summarized in Table~\ref{tab:architecture_layers} and Figure~\ref{fig:architecture}. Compared with the initial design, the most significant change is the insertion of a mobile application between the ESP32-based wearables and the local training node hosted by the healthcare institution. Rather than requiring each embedded device to establish an anonymized connection, physiological data are first received by the smartphone, which then performs secure forwarding through the Tor network toward the institution's local server.
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \caption{Operational layers of the evolved IoMT architecture for occupational stress monitoring.}
 \label{tab:architecture_layers}
@@ -430,7 +430,7 @@ The end-to-end flow proceeds as follows:
 
 The ESP32 does not capture live physiological readings from sensors. Instead, pre-recorded WESAD signal windows are stored in the microcontroller's FLASH memory. Every 30 seconds, a new window is read from FLASH into a RAM buffer, simulating real sensor sampling. When the smartphone requests data over BLE, the entire buffer is flushed to the mobile gateway. This pipeline, shown in Figure~\ref{fig:physical_setup}, validates the transmission and processing chain, not the physiological data acquisition itself.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \safeincludegraphics[width=0.8\textwidth]{imagens/architeture/setup_fisico.png}
 \caption{Real prototype setup showing the ESP32 microcontroller, wearable sensors, and mobile application interface. The ESP32 simulates physiological data transmission: pre-stored signal windows in FLASH memory are accumulated in a RAM buffer and flushed via BLE when requested by the smartphone. This validates the end-to-end transmission pipeline, not live physiological data collection. The physiological data for classifier validation (Sections~5.8--5.10) originate from the WESAD dataset. For the complete system integration across multiple institutions, see Figure~\ref{fig:federated_integration_architecture}.}
@@ -466,7 +466,7 @@ Beyond acting as a privacy gateway, the mobile application was designed to provi
 
 The prototype interface is organized into four main screens, summarized in Table~\ref{tab:app_screens}: Dashboard, History, Reports, and Device. Together, these screens support three practical goals: real-time interpretability, local data quality control, and operational reliability.
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \caption{Main screens and user-facing functions of the mobile prototype.}
 \label{tab:app_screens}
@@ -486,7 +486,7 @@ The Dashboard screen provides a high-level view of the monitoring process, while
 
 Figure~\ref{fig:app_navigation} illustrates the main navigation screens of the mobile prototype.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \begin{minipage}{0.23\textwidth}
 \centering
@@ -546,7 +546,7 @@ The middleware also validates the schema of the POST body, checking that all req
 
 Table~\ref{tab:tor_hmac_roles} summarizes the separation of responsibilities between Tor and HMAC-SHA256. Tor hides the network route, while HMAC-SHA256 authenticates the request and protects payload integrity at the application layer.
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \caption{Separation of responsibilities between Tor and HMAC-SHA256.}
 \label{tab:tor_hmac_roles}
@@ -582,7 +582,7 @@ The target variable has three classes inherited from the WESAD protocol: \textit
 
 The complete feature set contains 29 columns. Of these, 26 are physiological descriptors and three are demographic attributes. The physiological columns summarize the behavior of each sensor inside a 30-second window, using statistics such as mean, standard deviation, minimum, and maximum, plus a small number of domain-specific derivatives.
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \caption{Feature groups used in the WESAD tabular training pipeline.}
 \label{tab:wesad_features}
@@ -611,7 +611,7 @@ The first local experiments also used \texttt{StandardScaler}. This transformati
 
 Table~\ref{tab:preprocessing_contracts} summarizes the resulting engineering trade-off. During integration, the scaled contract was not reliable: when the model trained with scaling received unscaled or differently scaled inputs, Flower validation dropped to approximately 0.4 macro F1. For this reason, the selected integration pipeline uses the no-scaler contract.
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \caption{Comparison between the scaled local-reference pipeline and the selected no-scaler integration pipeline.}
 \label{tab:preprocessing_contracts}
@@ -639,7 +639,7 @@ The original baseline was a simple MLP with two hidden layers and ReLU activatio
 
 The final layer returns three raw logits, one for each class; no final softmax is included because PyTorch's cross-entropy loss expects logits. Each of the three output neurons corresponds to one WESAD class: amusement (class 0), baseline (class 1), and stress (class 2). The predicted class is the index of the highest logit after softmax normalization is applied internally by the cross-entropy loss function.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \begin{tikzpicture}[
   neuron/.style={circle, draw, minimum size=0.7cm, inner sep=1pt, font=\tiny},
@@ -679,7 +679,7 @@ Model selection was based on validation macro F1-score\cite{sokolova2009systemat
 
 The training procedure also includes mechanisms to control convergence\cite{goodfellow2016deep}. The learning rate is reduced by a factor of 0.5 when validation macro F1-score stops improving for 15 consecutive epochs, with a minimum learning rate of $10^{-6}$. Early stopping interrupts training when validation macro F1-score does not improve for 50 epochs, avoiding unnecessary optimization after the model has saturated. Finally, gradient clipping limits the gradient norm to 1.0, reducing the risk of unstable parameter updates during backpropagation.
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \caption{Model architecture and training hyperparameters of the baseline MLP and proposed TabularMLP.}
 \label{tab:model_and_training}
@@ -739,7 +739,7 @@ Eleven training configurations were evaluated to separate model quality, privacy
 
 Table~\ref{tab:wesad_results} summarizes the best validation performance achieved by each configuration, ranked by validation macro F1-score. The New full model reached its optimum at epoch 77 out of a maximum of 300, terminating at epoch 127 due to early stopping. The selected no-scaler model peaked later at epoch 117 and stopped at epoch 167. These values indicate that convergence typically required between 77 and 117 epochs across configurations, with the no-scaler variant needing more iterations due to the absence of standardization. Figure~\ref{fig:wesad_core_metrics} compares accuracy, precision, recall, and macro F1 at the best epoch of each experiment.
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \caption{Best validation metrics per training configuration on the WESAD 30-second window dataset.}
 \label{tab:wesad_results}
