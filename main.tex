@@ -439,9 +439,9 @@ The ESP32 does not capture live physiological readings from sensors. Instead, pr
 
 Figure~\ref{fig:architecture} provides a visual overview of these layers and their interactions. Figure~\ref{fig:federated_integration_architecture} illustrates the complete multi-institutional integration.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
-\safeincludegraphics[width=\textwidth]{imagens/architeture/Evolved System Architecture.png}
+\safeincludegraphics[width=0.85\textwidth]{imagens/architeture/Evolved System Architecture.png}
 \caption{Evolved IoMT architecture for privacy-preserving occupational stress monitoring. Physiological data flow from a single ESP32 connected to wearable sensors to the owner-authorized mobile gateway through authenticated Bluetooth Low Energy bonding, then traverse Tor with HMAC-authenticated requests, and are processed locally at the healthcare institution before federated model aggregation.}
 \label{fig:architecture}
 \end{figure}
@@ -801,9 +801,9 @@ Taken together, the experimental figures provide two complementary conclusions. 
 
 The integration with federated learning was implemented by separating the local data ingestion service from the federated training process. This separation was an important architectural decision because the hospital-side HTTP API should not become responsible for coordinating training rounds, storing model weights, or uploading model files to a central endpoint. Instead, the local API only receives authenticated physiological windows and persists them in the local PostgreSQL database. The federated training responsibility is assigned to a Python service running in the same institutional environment, implemented as a Flower client. On the global side, a Flower server coordinates the rounds, aggregates the received model updates, and publishes the newest global model through a separate Global Model API. The overall organization of this implementation is illustrated in Figure~\ref{fig:federated_integration_architecture}, which provides a visual summary of how the mobile gateway, hospital-side ingestion services, local Flower clients, global Flower server, and model distribution API are connected.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
-\safeincludegraphics[width=\textwidth]{imagens/architeture/federated_integration_architecture.png}
+\safeincludegraphics[width=0.85\textwidth]{imagens/architeture/federated_integration_architecture.png}
 \caption{Implemented federated learning integration architecture, showing the separation between mobile data submission, hospital-side data ingestion, local Flower training, global aggregation, and model redistribution.\protect\footnote{Code Implementation: \protect\url{https://github.com/rodrigomarchiolli/Federated_TOR}}}
 \label{fig:federated_integration_architecture}
 \end{figure}
