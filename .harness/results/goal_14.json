@@ -1,0 +1,43 @@
+{
+  "goal": "Goal 14 - Citacao Bouacida & Mohapatra (2021) sobre vulnerabilidades em FL",
+  "goal_number": 14,
+  "timestamp": "2026-07-04T00:00:00Z",
+  "commit_hash": "pending",
+  "baseline": {
+    "RB-001": "PASS",
+    "RB-002": "PASS",
+    "RB-003": "PASS",
+    "RB-004": "PASS",
+    "RB-005": "PASS",
+    "RB-006": "PASS",
+    "RB-007": "PASS",
+    "RB-008": "PASS",
+    "RB-009": "PASS",
+    "RB-010": "PASS"
+  },
+  "results": {
+    "VL-001": "PASS",
+    "VL-002": "PASS",
+    "VL-003": "PASS",
+    "VL-004": "PASS"
+  },
+  "regression_check": {
+    "RB-001": "PASS",
+    "RB-002": "PASS",
+    "RB-003": "PASS",
+    "RB-004": "PASS",
+    "RB-005": "PASS",
+    "RB-006": "PASS",
+    "RB-007": "PASS",
+    "RB-008": "PASS",
+    "RB-009": "PASS",
+    "RB-010": "PASS"
+  },
+  "all_baseline_still_pass": true,
+  "all_goal_criteria_pass": true,
+  "pipeline_approved": true,
+  "pre_existing_fails": [
+    "RF-005 (PARCIAL)"
+  ],
+  "gates_result": "APROVADO (1 pre-existing PARCIAL: RF-005, 0 new regressions)"
+}
