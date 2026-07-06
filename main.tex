@@ -26,6 +26,7 @@
 \usepackage{amsmath}
 \usepackage{tikz}
 \usepackage{longtable}
+\usepackage{array}
 \usepackage{enumitem}
 \usepackage{placeins}
 \usepackage{pdfpages}
@@ -832,15 +833,21 @@ The training procedure also includes mechanisms to control convergence\cite{good
 \footnotesize
 \renewcommand{\arraystretch}{1.05}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{p{2.0cm} p{3.0cm} p{3.8cm} p{2.2cm} p{3.0cm}}
+\begin{tabular}{
+  >{\raggedright\arraybackslash\setlength{\parindent}{0pt}}p{2.5cm}
+  >{\raggedright\arraybackslash\setlength{\parindent}{0pt}}p{2.3cm}
+  >{\raggedright\arraybackslash\setlength{\parindent}{0pt}}p{3.8cm}
+  >{\raggedright\arraybackslash\setlength{\parindent}{0pt}}p{2.0cm}
+  >{\raggedright\arraybackslash\setlength{\parindent}{0pt}}p{3.4cm}
+}
 \toprule
 \textbf{Aspect} & \textbf{Baseline MLP} & \textbf{Proposed TabularMLP} & \textbf{Value} & \textbf{Purpose} \\ \midrule
 Hidden layers & Two FC layers & Three FC (128, 128, 64) & — & — \\ \midrule
-Activation & ReLU & GELU\cite{hendrycks2016gelu} & — & — \\ \midrule
-Normalization & Not used & BatchNorm1d\cite{ioffe2015batch} & — & — \\ \midrule
-Regularization & Limited & Dropout\cite{srivastava2014dropout} + AdamW weight decay & wd=$10^{-3}$, drop=0.25 & Prevents overfitting in small dataset \\ \midrule
+Activation & ReLU & GELU \cite{hendrycks2016gelu} & — & — \\ \midrule
+Normalization & Not used & BatchNorm1d \cite{ioffe2015batch} & — & — \\ \midrule
+Regularization & Limited & Dropout \cite{srivastava2014dropout} + AdamW weight decay & wd=$10^{-3}$, drop=0.25 & Prevents overfitting in small dataset \\ \midrule
 Output & 3 class logits & 3 class logits & — & — \\ \cmidrule{1-5}
-Optimizer & — & AdamW\cite{loshchilov2019decoupled} & $2\times10^{-3}$ & Adaptive optimization with decoupled weight regularization \\ \midrule
+Optimizer & — & AdamW \cite{loshchilov2019decoupled} & $2\times10^{-3}$ & Adaptive optimization with decoupled weight regularization \\ \midrule
 Batch size & — & 64 & 64 & Samples per optimization step \\ \midrule
 Max epochs & — & 300 & 300 & Upper bound on training passes \\ \midrule
 LR scheduling & — & Reduce on plateau & factor 0.5, patience 15 & Refines when macro F1 stagnates \\ \midrule
