@@ -6,7 +6,6 @@ fedlearn
 AGENTS.md
 opencode.json
 .memory
-.harness
 .verification
 
 # Artefatos do pipeline — não versionar resultados intermediários
