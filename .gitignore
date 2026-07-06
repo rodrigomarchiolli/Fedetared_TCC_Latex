@@ -30,3 +30,6 @@ skills-lock.json
 *.fdb_latexmk
 *.synctex.gz
 *.xdv
+
+# Anotações e transcrições
+.modificacoes/transcrição_call_alinhamento.txt
