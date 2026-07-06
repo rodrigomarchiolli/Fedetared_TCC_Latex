@@ -28,6 +28,8 @@
 \usepackage{longtable}
 \usepackage{enumitem}
 \usepackage{placeins}
+\usepackage{pdfpages}
+\usepackage{textcase}
 \usetikzlibrary{arrows.meta, positioning, fit, backgrounds, calc}
 
 % Keeps the file compilable even when a figure has not yet been uploaded to Overleaf.
@@ -39,9 +41,153 @@
 
 \sloppy
 
-\title{Using Federated Learning to Analyze Occupational Stress: Preserving Privacy and Identifying Patterns}
+\newcommand{\monografiaAutor}{Rodrigo Neves de Senna Marchiolli}
+\newcommand{\monografiaTitulo}{Using Federated Learning to Analyze Occupational Stress: Preserving Privacy and Identifying Patterns}
+\newcommand{\monografiaInstituicao}{Universidade Federal de Santa Catarina}
+\newcommand{\monografiaCentro}{Centro de Ciências, Tecnologias e Saúde do Campus Araranguá}
+\newcommand{\monografiaPrograma}{Curso de Graduação em Engenharia de Computação}
+\newcommand{\monografiaTipoTrabalho}{Trabalho de Conclusão de Curso}
+\newcommand{\monografiaFormacao}{Bacharel em Engenharia de Computação}
+\newcommand{\monografiaLocal}{Araranguá}
+\newcommand{\monografiaAno}{2026}
+\newcommand{\monografiaCoordenador}{Prof. Antonio Carlos Sobieranski, Dr.}
+\newcommand{\monografiaOrientador}{Prof. Martin Vigil, Dr.}
+\newcommand{\monografiaAvaliadora}{Profa. Analúcia Schiaffino Morales, Dra.}
+\newcommand{\monografiaAvaliador}{Prof. Jim Lau, Dr.}
+\newcommand{\monografiaDataAprovacao}{\monografiaAno}
+\newcommand{\monografiaOrientadorLinha}{Orientador: \monografiaOrientador}
+\newcommand{\monografiaCoorientadorLinha}{}
+\newcommand{\monografiaFichaCatalografica}{imagens/ficha_catalografica/Ficha_Catalografica.pdf}
 
-\author{Rodrigo Neves de Senna Marchiolli\inst{1}}
+\newcommand{\ufscLogo}{%
+  \IfFileExists{setup/vertical_sigla_fundo_claro.pdf}{%
+    \includegraphics[width=1.84cm,keepaspectratio]{setup/vertical_sigla_fundo_claro}\par
+  }{%
+    \IfFileExists{ref/setup/vertical_sigla_fundo_claro.pdf}{%
+      \includegraphics[width=1.84cm,keepaspectratio]{ref/setup/vertical_sigla_fundo_claro}\par
+    }{%
+      \textbf{UFSC}\par
+    }%
+  }%
+}
+
+\newcommand{\assinaturaUFSC}[2]{%
+  \parbox[t]{0.76\textwidth}{%
+    \centering
+    \rule{0.68\textwidth}{0.4pt}\\[-1pt]
+    #1\\
+    #2%
+  }%
+}
+
+\newcommand{\dataAprovacaoUFSC}{%
+  \vspace*{\baselineskip}
+  \monografiaLocal, \monografiaDataAprovacao.\par
+}
+
+\newcommand{\imprimirfolhaaprovacaoUFSC}{%
+  \begin{titlepage}
+    \thispagestyle{empty}
+    \centering
+    \begingroup
+    \setlength{\parskip}{0pt}
+    \linespread{1.25}\selectfont
+    \monografiaAutor\\
+    \vspace*{10pt}
+    \textbf{\monografiaTitulo}\par
+    \vspace*{\baselineskip}
+    Este~\monografiaTipoTrabalho~foi julgado adequado para obtenção do Título de~\monografiaFormacao~e aprovado em sua forma final pelo~\monografiaPrograma.\par
+    \dataAprovacaoUFSC
+    \vspace{22pt}
+    \assinaturaUFSC{\monografiaCoordenador}{Coordenador do Curso}\par
+    \vspace*{1.4\baselineskip}
+    \textbf{Banca Examinadora:}\par
+    \vspace{22pt}
+    \assinaturaUFSC{\monografiaOrientador}{Orientador}\par
+    \vspace{32pt}
+    \assinaturaUFSC{\monografiaAvaliadora}{Avaliadora}\par
+    \vspace{32pt}
+    \assinaturaUFSC{\monografiaAvaliador}{Avaliador}\par
+    \endgroup
+  \end{titlepage}
+}
+
+\newcommand{\imprimircapaUFSC}{%
+  \begin{titlepage}
+    \thispagestyle{empty}
+    \centering
+    \begingroup
+    \setlength{\parskip}{0pt}
+    \linespread{1.25}\selectfont
+    \ufscLogo
+    \MakeTextUppercase{\monografiaInstituicao}\par
+    \MakeTextUppercase{\monografiaCentro}\par
+    \MakeTextUppercase{\monografiaPrograma}\par
+    \vspace*{5\baselineskip}
+    \monografiaAutor\par
+    \vspace*{8\baselineskip}
+    \textbf{\monografiaTitulo}\par
+    \vfill
+    \monografiaLocal\par
+    \monografiaAno\par
+    \endgroup
+  \end{titlepage}
+}
+
+\newcommand{\imprimirfolhaderostoUFSC}{%
+  \begin{titlepage}
+    \thispagestyle{empty}
+    \centering
+    \begingroup
+    \setlength{\parskip}{0pt}
+    \linespread{1.25}\selectfont
+    \vbox to 10cm{%
+      \monografiaAutor\par
+      \vfill
+      \textbf{\monografiaTitulo}\par
+    }
+    \vfill
+    \begin{flushright}
+      \begin{minipage}{0.48\textwidth}
+        \footnotesize
+        \monografiaTipoTrabalho~do~\monografiaPrograma~submetido~ao~\monografiaCentro~da~\monografiaInstituicao~para~a~obtenção~do~título~de~\monografiaFormacao.\par
+        \medskip
+        \monografiaOrientadorLinha\par
+      \end{minipage}
+    \end{flushright}
+    \vfill
+    \monografiaLocal\par
+    \monografiaAno
+    \endgroup
+  \end{titlepage}
+}
+
+\newcommand{\imprimirfichacatalograficaUFSC}{%
+  \clearpage
+  \IfFileExists{\monografiaFichaCatalografica}{%
+    \includepdf[pages={1},pagecommand={\thispagestyle{empty}}]{\monografiaFichaCatalografica}
+  }{%
+    \begin{titlepage}
+      \thispagestyle{empty}
+      \centering
+      \vspace*{\fill}
+      Ficha catalográfica não encontrada.
+      \vspace*{\fill}
+    \end{titlepage}
+  }%
+}
+
+\newcommand{\imprimirpretextoUFSC}{%
+  \imprimircapaUFSC
+  \imprimirfolhaderostoUFSC
+  \imprimirfichacatalograficaUFSC
+  \imprimirfolhaaprovacaoUFSC
+  \clearpage
+}
+
+\title{\monografiaTitulo}
+
+\author{\monografiaAutor\inst{1}}
 
 
 \address{Universidade Federal de Santa Catarina (UFSC)\\2026
@@ -50,7 +196,7 @@
 
 \begin{document} 
 
-\maketitle
+\imprimirpretextoUFSC
 
 \begin{abstract}
 This study evaluated federated learning as a privacy-preserving approach for detecting and monitoring occupational stress. The work combines a literature review with a practical prototype that integrates wearable sensing, a mobile privacy gateway, anonymized communication, authenticated data submission, and local model training. The review discusses the relevance of occupational stress, the role of wearable technologies and artificial intelligence in stress monitoring, and the privacy risks associated with centralized physiological data collection.
