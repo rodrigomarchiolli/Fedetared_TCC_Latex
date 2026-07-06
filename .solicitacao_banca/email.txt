@@ -1,0 +1,27 @@
+ENC: Texto com as anotações
+Caixa de entrada
+
+Rodrigo Marchiolli <rodrigo_nsmarchiolli@hotmail.com>
+Anexos
+12:04 (há 7 horas)
+para mim
+
+.
+De: Analucia Schiaffino Morales <analucia.schiaffino@gmail.com>
+Enviado: quarta-feira, 1 de julho de 2026 11:12
+Para: Martín Vigil <martin.vigil@ufsc.br>; Rodrigo Marchiolli <rodrigo_nsmarchiolli@hotmail.com>
+Assunto: Texto com as anotações
+ 
+Bom dia,
+Seguem as anotações mas vou listar aqui as principais recomendações do trabalho escrito:
+- Rever a parte teórica e separar alguns dos trabalhos que estão relacionados ao que foi realizado.
+- Listar os artigos e incluir em uma tabela as informações que se relacionam ao trabalho (projeto).
+- Incluir as ferramentas de IA e agentes utilizados no projeto tanto no texto quanto na implementação, inclusive na geração de imagens. 
+- Incluir imagem do SETUP, deixar claro que os dados dos biomarcadores não são oriundos de sensores e sim do dataset WESAD.
+- Revisar a parte prática de forma geral, incluir as referências e rever a quantidade de tabelas apresentadas. Todas as informações conceituais precisam de referências, principalmente na questão da rede neural utilizada. Explicar a camada de entrada e saída, como os dados foram fornecidos para rede, épocas de treinamento necessários para a rede aprender. Incluir ainda informações dos rótulos utilizados para a entrada e para a saída, incluir uma figura demonstrando a arquitetura da MLP.
+- Rever o uso de stress ocupacional uma vez que está identificando apenas se o indivíduo está estressado ou não, sem incluir as questões dos estressores ocupacionais que podem ser ambientais, emocionais, etc. Neste artigo: https://doi.org/10.3390/technologies14030188 falamos sobre isso. Incluir a questão que o treinamento não se preocupou em individualizar os dados (ver trabalho da Luiza - https://repositorio.ufsc.br/handle/123456789/266447. Isso é importante, porque o estresse depende de dados individuais de cada pessoa. No momento que generaliza, os dados não deverão ser adequados para apontar os limiares do que é estresse e não estresse. 
+
+Atenciosamente,
+Analúcia
+__________________________________
+Analúcia Schiaffino Morales
