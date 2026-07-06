@@ -340,6 +340,7 @@ Peer-reviewed status & Review articles \\ \bottomrule
 \setlength{\tabcolsep}{4pt}
 \renewcommand{\arraystretch}{1.08}
 
+{\color{COR_ADICIONADO}
 \begin{longtable}{p{4.5cm} p{3.2cm} p{2.2cm} p{2.8cm} p{1.4cm}}
 \caption{Summary of articles included in the literature review.}
 \label{tab:included_articles} \\
@@ -380,6 +381,7 @@ Peer-reviewed status & Review articles \\ \bottomrule
 \cite{chuan_ma_e07241ba} & Data privacy and security in FL & FL, privacy techniques & Simulated data & Contextual \\
 
 \end{longtable}
+}
 
 \endgroup
 
@@ -451,12 +453,12 @@ Logistic Regression is a classic method for binary classification problems, mode
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{lccccccl}
 \toprule
-\textbf{Algorithm} & \textbf{Type} & \textbf{Reported Performance} & \textbf{Noise Robustness} & \textbf{Computational Cost} & \textbf{Suitability for FL} & \textbf{Reference} \\ \midrule
-ANN                & Non-linear    & Varies             & Medium                    & High                        & High                        & \cite{alaa_abd-alrazaq_e52622} \\ \midrule
-Random Forest      & Non-linear    & Varies             & High                      & Medium-High                 & High                        & \cite{adam_sadilek_c59c73f4} \\ \midrule
-SVM                & Linear/Non-linear & Varies            & Medium                    & Medium-High                 & Medium                      & \cite{hao_huang_8976046f} \\ \midrule
-k-NN               & Non-linear    & Varies             & Low                       & Medium-Low                  & Medium                      & \cite{alaa_abd-alrazaq_e52622} \\ \midrule
-Logistic Regression & Linear       & Varies             & Low-Medium                & Low                         & High                        & \cite{alaa_abd-alrazaq_e52622} \\ 
+\alterado{\textbf{Algorithm}} & \alterado{\textbf{Type}} & \alterado{\textbf{Reported Performance}} & \alterado{\textbf{Noise Robustness}} & \alterado{\textbf{Computational Cost}} & \alterado{\textbf{Suitability for FL}} & \alterado{\textbf{Reference}} \\ \midrule
+\alterado{ANN}                & \alterado{Non-linear}    & \alterado{Varies}             & \alterado{Medium}                    & \alterado{High}                        & \alterado{High}                        & \alterado{\cite{alaa_abd-alrazaq_e52622}} \\ \midrule
+\alterado{Random Forest}      & \alterado{Non-linear}    & \alterado{Varies}             & \alterado{High}                      & \alterado{Medium-High}                 & \alterado{High}                        & \alterado{\cite{adam_sadilek_c59c73f4}} \\ \midrule
+\alterado{SVM}                & \alterado{Linear/Non-linear} & \alterado{Varies}            & \alterado{Medium}                    & \alterado{Medium-High}                 & \alterado{Medium}                      & \alterado{\cite{hao_huang_8976046f}} \\ \midrule
+\alterado{k-NN}               & \alterado{Non-linear}    & \alterado{Varies}             & \alterado{Low}                       & \alterado{Medium-Low}                  & \alterado{Medium}                      & \alterado{\cite{alaa_abd-alrazaq_e52622}} \\ \midrule
+\alterado{Logistic Regression} & \alterado{Linear}       & \alterado{Varies}             & \alterado{Low-Medium}                & \alterado{Low}                         & \alterado{High}                        & \alterado{\cite{alaa_abd-alrazaq_e52622}} \\ 
 \bottomrule
 \end{tabular}%
 }
@@ -583,7 +585,7 @@ The practical prototype consolidates six operational layers, as summarized in Ta
 \begin{tabular}{p{2.8cm} p{3.2cm} p{4.5cm} p{4.5cm}}
 \toprule
 \textbf{Layer} & \textbf{Component} & \textbf{Primary Function} & \textbf{Privacy Measure} \\ \midrule
-IoMT Devices & ESP32 and wearable sensors & Simulated physiological data transmission & Device pseudonyms; authenticated BLE bonding; single-owner access control \\ \midrule
+\alterado{IoMT Devices} & \alterado{ESP32 and wearable sensors} & \alterado{Simulated physiological data transmission} & \alterado{Device pseudonyms; authenticated BLE bonding; single-owner access control} \\ \midrule
 Mobile Gateway & React Native application & Reception of sensor data and secure forwarding & Local secure storage; Tor client on the smartphone \\ \midrule
 Network Anonymization & Tor hidden service (\texttt{.onion}) & Concealment of the network path between the phone and the institution & Onion routing; origin IP masking \\ \midrule
 Application Authentication & HMAC-SHA256 middleware & Request integrity and client authorization & Shared secret; signed JSON payload \\ \midrule
@@ -863,8 +865,8 @@ The training procedure was designed for a small tabular physiological dataset, w
 \centering
 \caption{Model architecture and training hyperparameters of the baseline MLP and proposed TabularMLP.}
 \label{tab:model_and_training}
-\footnotesize
-\renewcommand{\arraystretch}{1.05}
+\alterado{\footnotesize}
+\alterado{\renewcommand{\arraystretch}{1.05}}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{
   >{\raggedright\arraybackslash\setlength{\parindent}{0pt}}p{2.5cm}
@@ -874,18 +876,18 @@ The training procedure was designed for a small tabular physiological dataset, w
   >{\raggedright\arraybackslash\setlength{\parindent}{0pt}}p{3.4cm}
 }
 \toprule
-\textbf{Aspect} & \textbf{Baseline MLP} & \textbf{Proposed TabularMLP} & \textbf{Value} & \textbf{Purpose} \\ \midrule
-Hidden layers & Two FC layers & Three FC (128, 128, 64) & — & — \\ \midrule
-Activation & ReLU & GELU \cite{hendrycks2016gelu} & — & — \\ \midrule
-Normalization & Not used & BatchNorm1d \cite{ioffe2015batch} & — & — \\ \midrule
-Regularization & Limited & Dropout \cite{srivastava2014dropout} + AdamW weight decay & wd=$10^{-3}$, drop=0.25 & Prevents overfitting in small dataset \\ \midrule
-Output & 3 class logits & 3 class logits & — & — \\ \cmidrule{1-5}
-Optimizer & — & AdamW \cite{loshchilov2019decoupled} & $2\times10^{-3}$ & Adaptive optimization with decoupled weight regularization \\ \midrule
-Batch size & — & 64 & 64 & Samples per optimization step \\ \midrule
-Max epochs & — & 300 & 300 & Upper bound on training passes \\ \midrule
-LR scheduling & — & Reduce on plateau & factor 0.5, patience 15 & Refines when macro F1 stagnates \\ \midrule
-Early stopping & — & Patience 50 & 50 epochs & Stops after no improvement \\ \midrule
-Gradient clipping & — & Norm 1.0 & 1.0 & Prevents unstable gradient updates \\ \bottomrule
+\alterado{\textbf{Aspect}} & \alterado{\textbf{Baseline MLP}} & \alterado{\textbf{Proposed TabularMLP}} & \alterado{\textbf{Value}} & \alterado{\textbf{Purpose}} \\ \midrule
+\alterado{Hidden layers} & \alterado{Two FC layers} & \alterado{Three FC (128, 128, 64)} & \alterado{—} & \alterado{—} \\ \midrule
+\alterado{Activation} & \alterado{ReLU} & \alterado{GELU \cite{hendrycks2016gelu}} & \alterado{—} & \alterado{—} \\ \midrule
+\alterado{Normalization} & \alterado{Not used} & \alterado{BatchNorm1d \cite{ioffe2015batch}} & \alterado{—} & \alterado{—} \\ \midrule
+\alterado{Regularization} & \alterado{Limited} & \alterado{Dropout \cite{srivastava2014dropout} + AdamW weight decay} & \alterado{wd=$10^{-3}$, drop=0.25} & \alterado{Prevents overfitting in small dataset} \\ \midrule
+\alterado{Output} & \alterado{3 class logits} & \alterado{3 class logits} & \alterado{—} & \alterado{—} \\ \cmidrule{1-5}
+\alterado{Optimizer} & \alterado{—} & \alterado{AdamW \cite{loshchilov2019decoupled}} & \alterado{$2\times10^{-3}$} & \alterado{Adaptive optimization with decoupled weight regularization} \\ \midrule
+\alterado{Batch size} & \alterado{—} & \alterado{64} & \alterado{64} & \alterado{Samples per optimization step} \\ \midrule
+\alterado{Max epochs} & \alterado{—} & \alterado{300} & \alterado{300} & \alterado{Upper bound on training passes} \\ \midrule
+\alterado{LR scheduling} & \alterado{—} & \alterado{Reduce on plateau} & \alterado{factor 0.5, patience 15} & \alterado{Refines when macro F1 stagnates} \\ \midrule
+\alterado{Early stopping} & \alterado{—} & \alterado{Patience 50} & \alterado{50 epochs} & \alterado{Stops after no improvement} \\ \midrule
+\alterado{Gradient clipping} & \alterado{—} & \alterado{Norm 1.0} & \alterado{1.0} & \alterado{Prevents unstable gradient updates} \\ \bottomrule
 \end{tabular}%
 }
 \end{table}
@@ -1082,15 +1084,16 @@ Experimental validation on the WESAD dataset demonstrated that the scaled Tabula
 \bibliographystyle{sbc}
 \bibliography{sbc-template}
 
-\adicionado{\appendix}
+\appendix
 \section*{Appendix A: Glossary of Technical Terms}
 \label{app:glossary}
 
 \begingroup
-\small
+\alterado{\small
 \setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.08}
+\renewcommand{\arraystretch}{1.08}}
 
+{\color{COR_ALTERADO}
 \begin{longtable}{p{2.5cm} p{4.7cm} p{6.4cm}}
 \caption{Glossary of technical terms used in the prototype description.}
 \label{tab:technical_terms_results} \\
@@ -1131,6 +1134,7 @@ FedAvg & \textit{Federated Averaging}; aggregation rule for combining model upda
 ONNX & Open Neural Network Exchange; interoperable format for machine learning models. & Exports the updated global model for mobile-oriented inference and redistribution. \\
 
 \end{longtable}
+}
 
 \endgroup
 
