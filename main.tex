@@ -50,9 +50,9 @@
 \newcommand{\monografiaTipoTrabalho}{Trabalho de Conclusão de Curso}
 \newcommand{\monografiaFormacao}{Bacharel em Engenharia de Computação}
 \newcommand{\monografiaLocal}{Araranguá}
-\newcommand{\monografiaAno}{2026}
+\newcommand{\monografiaAno}{01 de Julho 2026}
 \newcommand{\monografiaCoordenador}{Prof. Antonio Carlos Sobieranski, Dr.}
-\newcommand{\monografiaOrientador}{Prof. Martin Vigil, Dr.}
+\newcommand{\monografiaOrientador}{Prof. Martín Vigil, Dr.}
 \newcommand{\monografiaAvaliadora}{Profa. Analúcia Schiaffino Morales, Dra.}
 \newcommand{\monografiaAvaliador}{Prof. Jim Lau, Dr.}
 \newcommand{\monografiaDataAprovacao}{\monografiaAno}
@@ -99,15 +99,15 @@
     \vspace*{\baselineskip}
     Este~\monografiaTipoTrabalho~foi julgado adequado para obtenção do Título de~\monografiaFormacao~e aprovado em sua forma final pelo~\monografiaPrograma.\par
     \dataAprovacaoUFSC
-    \vspace{22pt}
+    \vspace{62pt}
     \assinaturaUFSC{\monografiaCoordenador}{Coordenador do Curso}\par
     \vspace*{1.4\baselineskip}
     \textbf{Banca Examinadora:}\par
-    \vspace{22pt}
+    \vspace{60pt}
     \assinaturaUFSC{\monografiaOrientador}{Orientador}\par
-    \vspace{32pt}
+    \vspace{80pt}
     \assinaturaUFSC{\monografiaAvaliadora}{Avaliadora}\par
-    \vspace{32pt}
+    \vspace{80pt}
     \assinaturaUFSC{\monografiaAvaliador}{Avaliador}\par
     \endgroup
   \end{titlepage}
@@ -200,16 +200,12 @@
 \imprimirpretextoUFSC
 
 \begin{abstract}
-This study evaluated federated learning as a privacy-preserving approach for detecting and monitoring occupational stress. The work combines a literature review with a practical prototype that integrates wearable sensing, a mobile privacy gateway, anonymized communication, authenticated data submission, and local model training. The review discusses the relevance of occupational stress, the role of wearable technologies and artificial intelligence in stress monitoring, and the privacy risks associated with centralized physiological data collection.
+Occupational stress is a relevant problem in contemporary work environments, affecting employee well-being and organizational performance. Wearable sensing and artificial intelligence can support continuous stress monitoring by analyzing physiological signals, but the centralized collection of these sensitive data raises privacy and security concerns. In this context, this study proposed and evaluated federated learning as a privacy-preserving approach for detecting and monitoring occupational stress. The work combines a rapid literature review with a practical prototype that integrates wearable sensing, a mobile privacy gateway, anonymized communication, authenticated data submission, and local model training. The review discusses the relevance of occupational stress, the role of wearable technologies and artificial intelligence in stress monitoring, and the privacy risks associated with centralized physiological data collection.
 
-For the practical implementation, a layered Internet of Medical Things (IoMT) architecture was developed in which ESP32-based wearable devices transmit physiological signals to an owner-authorized mobile application through authenticated Bluetooth Low Energy bonding. The mobile application stores provisioning credentials securely, signs outgoing JSON payloads with HMAC-SHA256, a Hash-based Message Authentication Code using the SHA-256 hash function, and forwards authenticated requests through the Tor anonymity network to a local training node hosted at a healthcare institution. Local model training was validated on the WESAD dataset using a regularized tabular Multilayer Perceptron (MLP), achieving a validation macro F1-score of 0.9565 for three-class stress classification. The ESP32-based sensing hardware and mobile privacy gateway were functionally validated for data transmission and authentication; the physiological data used for classifier training and validation originated exclusively from the WESAD benchmark dataset, not from the prototype sensors. The proposed model was compared with an original MLP baseline and alternative training strategies, using accuracy, precision, recall \cite{sokolova2009systematic}, macro F1-score, validation loss, and overfitting gap as evaluation criteria. The stress classification component detects general physiological stress states (amusement, baseline, stress) from the WESAD laboratory protocol, not specific occupational stressors; the occupational stress framing is the motivating application context, not the validated experimental scope.
+For the practical implementation, a layered Internet of Medical Things (IoMT) architecture was developed in which ESP32-based wearable devices transmit physiological signals to an owner-authorized mobile application through authenticated Bluetooth Low Energy bonding. The mobile application stores provisioning credentials securely, signs outgoing JSON payloads with HMAC-SHA256, and forwards authenticated requests through the Tor anonymity network to a local training node hosted at a healthcare institution. The stress classification component detects general physiological stress states (amusement, baseline, stress) from the WESAD laboratory protocol, not specific occupational stressors; therefore, the occupational stress framing is the motivating application context, not the validated experimental scope. Within this scope, local model training was validated on the WESAD dataset using a regularized tabular Multilayer Perceptron (MLP), with the physiological data used for classifier training and validation originating exclusively from the WESAD benchmark dataset, not from the prototype sensors; this model achieved a validation macro F1-score of 0.9565 for three-class stress classification. The ESP32-based sensing hardware and mobile privacy gateway were functionally validated for data transmission and authentication. The proposed model was compared with an original MLP baseline and alternative training strategies, using accuracy, precision, recall, macro F1-score, validation loss, and overfitting gap as evaluation criteria.
 \end{abstract}
-    
-\begin{resumo}
-Este estudo avaliou o aprendizado federado como uma abordagem de preservação de privacidade para detecção e monitoramento de estresse ocupacional. O trabalho combina uma revisão bibliográfica com um protótipo prático que integra sensoriamento vestível, um gateway móvel de privacidade, comunicação anônima, submissão autenticada de dados e treinamento local de modelos. A revisão discute a relevância do estresse ocupacional, o papel das tecnologias vestíveis e da inteligência artificial no monitoramento do estresse e os riscos de privacidade associados à coleta centralizada de dados fisiológicos.
 
-Para a implementação prática, foi desenvolvida uma arquitetura em camadas de Internet das Coisas Médicas (IoMT) na qual dispositivos vestíveis baseados em ESP32 transmitem sinais fisiológicos para um aplicativo móvel autorizado pelo proprietário por meio de emparelhamento autenticado Bluetooth Low Energy. O aplicativo móvel armazena credenciais de provisionamento de forma segura, assina payloads JSON de saída com HMAC-SHA256, um Código de Autenticação de Mensagem baseado em Hash usando a função hash SHA-256, e encaminha requisições autenticadas através da rede de anonimato Tor para um nó de treinamento local hospedado em uma instituição de saúde. O treinamento local do modelo foi validado no conjunto de dados WESAD usando um Perceptron Multicamadas (MLP) tabular regularizado, alcançando um macro F1-score de validação de 0,9565 para classificação de estresse em três classes. O hardware de sensoriamento baseado em ESP32 e o gateway móvel de privacidade foram funcionalmente validados para transmissão de dados e autenticação; os dados fisiológicos usados para treinamento e validação do classificador foram originados exclusivamente do conjunto de dados de referência WESAD, e não dos sensores do protótipo. O modelo proposto foi comparado com uma MLP baseline original e estratégias alternativas de treinamento, utilizando acurácia, precisão, recall, macro F1-score, perda de validação e gap de overfitting como critérios de avaliação. O componente de classificação de estresse detecta estados fisiológicos gerais de estresse (amusement, baseline, stress) do protocolo laboratorial WESAD, e não estressores ocupacionais específicos; o contexto de estresse ocupacional é a motivação aplicada, não o escopo experimental validado.
-\end{resumo}
+\newpage
 
 \section{Introduction}
 
@@ -221,26 +217,25 @@ Wearable technology and artificial intelligence offer innovative pathways for de
 
 Federated learning, a decentralized machine learning technique, addresses these privacy issues by allowing models to be trained locally on individual devices without sharing sensitive raw data \cite{yekta_said_can_3e1184b6, ziyu_wang_a7666f66}. This approach holds significant promise for occupational stress analysis, as it enables the preservation of employee privacy and data security. In contrast to traditional centralized machine learning methods, which involve the collection and storage of raw physiological and behavioral data, federated learning empowers individuals to train models on their own devices, sharing only model updates rather than the underlying personal information \cite{muhammad_ali_fauzi_c546a580}.
 
-By leveraging federated learning, this study aims to explore its potential for analyzing occupational stress, emphasizing the dual objectives of accurate stress detection and the protection of data privacy. The practical prototype extends this vision with a mobile privacy gateway that routes authenticated physiological data through the Tor network to local training nodes at healthcare institutions, ensuring that raw signals remain on-premises while only model updates participate in global aggregation. After aggregation via Federated Averaging (FedAvg), the global server redistributes the updated aggregated weights back to the participating clients, enabling collaborative model improvement without exposing raw data.
-
-Through a literature review and practical implementation, this research intends to assess the effectiveness and advantages of federated learning compared to traditional centralized methods. By combining local model training with a privacy-preserving communication path based on Tor and HMAC-SHA256 (Hash-based Message Authentication Code using the SHA-256 hash function), this work seeks not only to enhance privacy and data security, but also to maintain the precision and accuracy of stress detection models in realistic occupational health scenarios. In this context, Tor hides the network origin of the request, while HMAC-SHA256 verifies message integrity and authorization at the application layer. Additionally, the research aims to demonstrate the practical applicability and benefits of federated learning in addressing occupational stress, a critical issue with significant social, economic, and organizational implications. It is important to distinguish two validation dimensions: the end-to-end hardware and software architecture (ESP32, BLE, Tor, HMAC, Flower) was implemented and functionally tested; the stress classification model, however, was trained and validated using the public WESAD dataset, not data collected by the prototype sensors in a live deployment.
+Building on this premise, this study investigates federated learning for privacy-preserving occupational stress analysis through a rapid literature review and a practical implementation. The work addresses limitations of traditional centralized methods by combining local model training with a mobile privacy gateway: physiological data are sent from ESP32-based wearable devices to an authorized smartphone through authenticated BLE bonding, signed with HMAC-SHA256 (Hash-based Message Authentication Code using the SHA-256 hash function), and routed through Tor to local training nodes hosted at healthcare institutions. In this context, Tor hides the network origin of the request, while HMAC-SHA256 verifies message integrity and authorization at the application layer. In the federated workflow, raw signals remain on-premises; only model updates are shared for global aggregation through Federated Averaging (FedAvg), after which the global server redistributes the updated weights to participating clients. This implementation demonstrates the integration of ESP32, BLE, Tor, HMAC, and Flower for privacy-preserving data transmission and local training. The validation has two distinct dimensions: the end-to-end hardware and software architecture was functionally tested, whereas the stress classification model was trained and validated using the public WESAD dataset rather than data collected by the prototype sensors in a live deployment.
 
 The scope of the term "occupational stress" as used in this work also requires clarification. Occupational stress is a multifactorial phenomenon involving environmental, emotional, organizational, and psychosocial stressors that vary across work contexts \cite{morales2026affective}. The present study, however, validates a classifier for general physiological stress states (amusement, baseline, stress) induced under controlled laboratory conditions following the WESAD protocol. The occupational health motivation justifies the investigation, but the experimental validation does not fully replicate the real-world spectrum of occupational stressors. This distinction should be considered when interpreting the results.
 
 This paper is organized into seven sections. Section 2 details the methodology employed in the literature review, investigating four databases: PubMed, IEEE Xplore, Scopus, and Web of Science; based on inclusion and exclusion criteria, a total of 11 scientific articles were selected. Section 3 presents the main results of the literature review, addressing the research questions and related discussions. Section 4 covers the main challenges encountered and solutions implemented during the development of the privacy-preserving prototype. Section 5 presents the practical results, Section 6 discusses the implications of these findings, and Section 7 concludes the study.
 
+
 \section{Methodology}
 
-This research employed a mixed-methods approach, incorporating a literature review and practical implementation to evaluate the effectiveness and security of federated learning for detecting and monitoring occupational stress. 
+This research employed a mixed-methods approach, incorporating a rapid literature review and practical implementation to evaluate the effectiveness and security of federated learning for detecting and monitoring occupational stress. 
 
-The literature review followed PRISMA guidelines, ensuring a structured process for identifying, selecting, and synthesizing relevant studies. The literature review aimed to explore the current state of research on federated learning, traditional machine learning, occupational stress, and wearable technologies, providing a comprehensive understanding of the field. 
+The rapid literature review followed PRISMA guidelines, ensuring a structured process for identifying, selecting, and synthesizing relevant studies. The rapid literature review aimed to explore the current state of research on federated learning, traditional machine learning, occupational stress, and wearable technologies, providing a comprehensive understanding of the field. 
 
 The review process consisted of well-defined steps: (1) formulating research questions; (2) identifying relevant literature; (3) applying selection criteria to filter articles; (4) extracting and analyzing data; and (5) synthesizing and presenting the findings.
 
 
 \subsection{Formulating Research Questions}
 
-To guide the literature review, the following research questions were established:
+To guide the rapid literature review, the following research questions were established:
 \begin{itemize}
     \item \textbf{RQ1}: How can data security and privacy be ensured in the context of federated learning?
     \item \textbf{RQ2}: What types of machine learning algorithms are commonly employed in federated learning for occupational stress analysis?
@@ -301,7 +296,7 @@ The search was conducted in Web of Science, Scopus, PubMed, and IEEE Xplore data
     \end{itemize}
 \end{itemize}
 
-The review process began with 90 articles from the Web of Science, Scopus, PubMed, and IEEE Xplore databases. The RAYYAN tool was used to assist in the selection \cite{nastasha_johnson_93d644ed}. After removing 29 duplicates, 61 articles were screened. Of these, 34 were excluded based on the title and abstract. The remaining 27 were retrieved in full and assessed using the inclusion and exclusion criteria. Sixteen articles were excluded for not meeting the criteria or being out of scope. Ultimately, 11 articles were included in the literature review. The PRISMA flow diagram in Figure~\ref{fig:prisma} details this selection process. Table~\ref{tab:included_articles} summarizes these 11 articles, their focus, algorithms, datasets, and relationship to the implemented prototype.
+The review process began with 90 articles from the Web of Science, Scopus, PubMed, and IEEE Xplore databases. The RAYYAN tool was used to assist in the selection \cite{nastasha_johnson_93d644ed}. After removing 29 duplicates, 61 articles were screened. Of these, 34 were excluded based on the title and abstract. The remaining 27 were retrieved in full and assessed using the inclusion and exclusion criteria. Sixteen articles were excluded for not meeting the criteria or being out of scope. Ultimately, 11 articles were included in the rapid literature review. The PRISMA flow diagram in Figure~\ref{fig:prisma} details this selection process. Table~\ref{tab:included_articles} summarizes these 11 articles, their focus, algorithms and datasets to the implemented prototype.
 
 \begin{figure}[htbp]
     \centering
@@ -315,44 +310,44 @@ The review process began with 90 articles from the Web of Science, Scopus, PubMe
 \setlength{\tabcolsep}{4pt}
 \renewcommand{\arraystretch}{1.08}
 
-\begin{longtable}{p{4.5cm} p{3.2cm} p{2.2cm} p{2.8cm} p{1.4cm}}
-\caption{Summary of articles included in the literature review.}
+\begin{longtable}{p{4.5cm} p{3.2cm} p{2.2cm} p{2.8cm}}
+\caption{Summary of articles included in the rapid literature review.}
 \label{tab:included_articles} \\
 
 \toprule
-\textbf{Reference} & \textbf{Focus} & \textbf{ML/FL Algorithm} & \textbf{Physiological Data/Dataset} & \textbf{Relationship} \\ \midrule
+\textbf{Reference} & \textbf{Focus} & \textbf{ML/FL Algorithm} & \textbf{Physiological Data/Dataset} \\ \midrule
 \endfirsthead
 
-\caption[]{Summary of articles included in the literature review. (Continued)} \\
+\caption[]{Summary of articles included in the rapid literature review. (Continued)} \\
 
 \toprule
-\textbf{Reference} & \textbf{Focus} & \textbf{ML/FL Algorithm} & \textbf{Physiological Data/Dataset} & \textbf{Relationship} \\ \midrule
+\textbf{Reference} & \textbf{Focus} & \textbf{ML/FL Algorithm} & \textbf{Physiological Data/Dataset} \\ \midrule
 \endhead
 
 \bottomrule
 \endfoot
 
-\cite{abdulrahman_alahmadi_32bc288c} & Privacy-preserved IoMT stress detection & FL, ANN, RF, k-NN & WESAD (ECG, EDA, EMG, Resp, TEMP) & Direta \\ \midrule
+\cite{abdulrahman_alahmadi_32bc288c} & Privacy-preserved IoMT stress detection & FL, ANN, RF, k-NN & WESAD (ECG, EDA, EMG, Resp, TEMP) \\ \midrule
 
-\cite{ahmad_almadhor_8cc2e670} & FL-based stress detection with edge computing & FL, DNN & WESAD (EDA) & Direta \\ \midrule
+\cite{ahmad_almadhor_8cc2e670} & FL-based stress detection with edge computing & FL, DNN & WESAD (EDA) \\ \midrule
 
-\cite{yekta_said_can_3e1184b6} & Privacy-preserving FL for wearable IoT & FL, Deep Learning & Heart activity (smart bands) & Direta \\ \midrule
+\cite{yekta_said_can_3e1184b6} & Privacy-preserving FL for wearable IoT & FL, Deep Learning & Heart activity (smart bands) \\ \midrule
 
-\cite{neha_gahlan_d8b04f5d} & FL inspired privacy sensitive emotion recognition & FL, CNN & Multi-modal physiological sensors & Parcial \\ \midrule
+\cite{neha_gahlan_d8b04f5d} & FL inspired privacy sensitive emotion recognition & FL, CNN & Multi-modal physiological sensors \\ \midrule
 
-\cite{jayant_vyas_bcd9860b} & Driver recommendation using FL & FL, Multi-task Learning & UAH-DriveSet, HCI Lab, PhysioNet & Parcial \\ \midrule
+\cite{jayant_vyas_bcd9860b} & Driver recommendation using FL & FL, Multi-task Learning & UAH-DriveSet, HCI Lab, PhysioNet \\ \midrule
 
-\cite{m__bharathi_b0a198b0} & FL for healthcare IoT: origins and applications & FL, ML & Healthcare IoT & Parcial \\ \midrule
+\cite{m__bharathi_b0a198b0} & FL for healthcare IoT: origins and applications & FL, ML & Healthcare IoT \\ \midrule
 
-\cite{mohamed_benouis_35501772} & FL for mental health monitoring & FL, Multi-task Learning & Multimodal physiological signals & Parcial \\ \midrule
+\cite{mohamed_benouis_35501772} & FL for mental health monitoring & FL, Multi-task Learning & Multimodal physiological signals \\ \midrule
 
-\cite{jessica_chia_liu_cd0e0973} & FL for health data privacy & FL (simulation) & Wearable physiological and motion data & Contextual \\ \midrule
+\cite{jessica_chia_liu_cd0e0973} & FL for health data privacy & FL (simulation) & Wearable physiological and motion data \\ \midrule
 
-\cite{nastasha_johnson_93d644ed} & RAYYAN systematic review tool & N/A & N/A & Contextual \\ \midrule
+\cite{nastasha_johnson_93d644ed} & RAYYAN systematic review tool & N/A & N/A \\ \midrule
 
-\cite{adam_sadilek_c59c73f4} & Privacy-first health research with FL & FL, Differential Privacy & Multi-site health studies & Contextual \\ \midrule
+\cite{adam_sadilek_c59c73f4} & Privacy-first health research with FL & FL, Differential Privacy & Multi-site health studies \\ \midrule
 
-\cite{chuan_ma_e07241ba} & Data privacy and security in FL & FL, privacy techniques & Simulated data & Contextual \\
+\cite{chuan_ma_e07241ba} & Data privacy and security in FL & FL, privacy techniques & Simulated data \\
 
 \end{longtable}
 
@@ -365,9 +360,9 @@ The review process began with 90 articles from the Web of Science, Scopus, PubMe
 \subsection{\textit{RQ1}: How can data security and privacy be ensured in the context of federated learning?}
 
 
-Federated learning (FL) provides inherent advantages for preserving data privacy by ensuring that sensitive information remains decentralized, a crucial requirement when dealing with confidential healthcare datasets \cite{adam_sadilek_c59c73f4} [Contextual]. This approach minimizes the risks associated with data breaches and unauthorized access, aligning with stringent data protection regulations such as the General Data Protection Regulation (GDPR) and HIPAA \cite{m__bharathi_b0a198b0} [Parcial]. Several strategies enhance data security and privacy within federated learning frameworks, including differential privacy, homomorphic encryption, and secure multi-party computation \cite{jie_xu_193cbfb6}. Blockchain-orchestrated FL architectures have also been proposed for healthcare consortia, combining distributed ledger immutability with decentralized model training to strengthen data governance across participating institutions \cite{jonathan_passerat_palmbach_a7961671}.
+Federated learning (FL) provides inherent advantages for preserving data privacy by ensuring that sensitive information remains decentralized, a crucial requirement when dealing with confidential healthcare datasets \cite{adam_sadilek_c59c73f4}. This approach minimizes the risks associated with data breaches and unauthorized access, aligning with stringent data protection regulations such as the General Data Protection Regulation (GDPR) and HIPAA \cite{m__bharathi_b0a198b0}. Several strategies enhance data security and privacy within federated learning frameworks, including differential privacy, homomorphic encryption, and secure multi-party computation \cite{jie_xu_193cbfb6}. Blockchain-orchestrated FL architectures have also been proposed for healthcare consortia, combining distributed ledger immutability with decentralized model training to strengthen data governance across participating institutions \cite{jonathan_passerat_palmbach_a7961671}.
 
-In addition, regulations such as GDPR reinforce the importance of privacy-preserving technologies, highlighting the crucial role of FL in complying with specific data protection legislation. In this context, complementary techniques have been explored to strengthen security and privacy in FL, including physical transmission layer security mechanisms, such as leveraging the unique properties of wireless channels to protect communications between local devices and central servers. By focusing on safeguarding both the client and server sides, federated learning addresses critical aspects such as convergence, data poisoning, scaling, and model aggregation \cite{chuan_ma_e07241ba} [Contextual]. In addition, FL has been applied to network intrusion detection in smart environments, further demonstrating its versatility in securing distributed healthcare and IoT systems \cite{cholakoska2023federated}.
+In addition, regulations such as GDPR reinforce the importance of privacy-preserving technologies, highlighting the crucial role of FL in complying with specific data protection legislation. In this context, complementary techniques have been explored to strengthen security and privacy in FL, including physical transmission layer security mechanisms, such as leveraging the unique properties of wireless channels to protect communications between local devices and central servers. By focusing on safeguarding both the client and server sides, federated learning addresses critical aspects such as convergence, data poisoning, scaling, and model aggregation \cite{chuan_ma_e07241ba}. In addition, FL has been applied to network intrusion detection in smart environments, further demonstrating its versatility in securing distributed healthcare and IoT systems \cite{cholakoska2023federated}.
 
 Other advanced techniques have also been incorporated into FL to increase the protection of shared data. For example, the use of Generative Adversarial Networks (GANs) for data augmentation and Graph Attention Networks (GATs) have been explored in the literature to improve learning from distributed data while limiting the amount of information exchanged, further reducing the possibility of inferring sensitive information through reverse engineering. \cite{shiyi_jiang_49d728e9}.
 
@@ -375,7 +370,7 @@ Therefore, FL ensures data security and privacy mainly by keeping raw informatio
     
 \subsection{\textit{RQ2}: What types of machine learning algorithms are commonly employed in federated learning for occupational stress analysis?}
 
-There is no universal approach when developing artificial intelligence models applied to federated learning (FL) for occupational stress analysis. Specialized literature suggests various algorithms commonly used due to their proven capability to handle specific federated learning challenges, such as data decentralization, information privacy, and device heterogeneity \cite{adam_sadilek_c59c73f4} [Contextual].
+There is no universal approach when developing artificial intelligence models applied to federated learning (FL) for occupational stress analysis. Specialized literature suggests various algorithms commonly used due to their proven capability to handle specific federated learning challenges, such as data decentralization, information privacy, and device heterogeneity \cite{adam_sadilek_c59c73f4}.
 
 Among the most employed algorithms are \textit{Artificial Neural Networks (ANN)}, \textit{Random Forest (RF)}, \textit{Support Vector Machines (SVM)}, \textit{k-Nearest Neighbors (k-NN)}, and \textit{Logistic Regression (LR)}. Each of these techniques has distinct characteristics and advantages suitable for practical applications in federated environments for occupational stress analysis.
 
@@ -385,37 +380,28 @@ To provide context for the performance expectations of these algorithms, a recen
 
 \subsubsection{Artificial Neural Networks (ANN)}
 
-Artificial Neural Networks are highly versatile algorithms inspired by the human brain's structure, capable of modeling complex relationships between input data (e.g., physiological signals acquired by wearable sensors) and outputs (e.g., detected stress levels). ANNs are particularly valued for their ability to extract non-linear patterns from multidimensional and heterogeneous data \cite{abdulrahman_alahmadi_32bc288c} [Direta]. In federated learning contexts, they are widely adopted due to their flexibility in handling diverse physiological data types, such as electrocardiogram (ECG), electrodermal activity (EDA), and electromyography (EMG), along with effective adaptation to edge devices with computational resource constraints \cite{abdulrahman_alahmadi_32bc288c}.
-
-\textbf{Challenges:} Requires large data volume and high local computational resources.
+Artificial Neural Networks are highly versatile algorithms inspired by the human brain's structure, capable of modeling complex relationships between input data (e.g., physiological signals acquired by wearable sensors) and outputs (e.g., detected stress levels). ANNs are particularly valued for their ability to extract non-linear patterns from multidimensional and heterogeneous data \cite{abdulrahman_alahmadi_32bc288c} [Direta]. In federated learning contexts, they are widely adopted due to their flexibility in handling diverse physiological data types, such as electrocardiogram (ECG), electrodermal activity (EDA), and electromyography (EMG), along with effective adaptation to edge devices with computational resource constraints \cite{abdulrahman_alahmadi_32bc288c}. However, ANNs generally require larger data volumes and higher local computational resources than simpler models.
 
 \subsubsection{Random Forest (RF)}
 
-Random Forest is an ensemble method algorithm that combines results from multiple individual decision trees. The main strength of this method lies in its robustness against noisy data and its capacity to avoid overfitting, which is critically advantageous in federated learning environments where data quality can vary significantly among participants. In this context, protecting the aggregation from anomalies or malicious updates is crucial to maintain robustness, being investigated through mechanisms like latent space inspection and autoencoders to secure threat detection models \cite{tran_duc_luong_b5df10e8}. Additionally, RF is particularly effective for physiological data, allowing accurate classification by consolidating multiple decisions from distributed devices, thereby reducing reliance on a single model or data source \cite{adam_sadilek_c59c73f4}.
-
-\textbf{Challenges:} Potentially higher complexity when employing numerous trees on resource-limited devices.
+Random Forest is an ensemble method algorithm that combines results from multiple individual decision trees. The main strength of this method lies in its robustness against noisy data and its capacity to avoid overfitting, which is critically advantageous in federated learning environments where data quality can vary significantly among participants. In this context, protecting the aggregation from anomalies or malicious updates is crucial to maintain robustness, being investigated through mechanisms like latent space inspection and autoencoders to secure threat detection models \cite{tran_duc_luong_b5df10e8}. Additionally, RF is particularly effective for physiological data, allowing accurate classification by consolidating multiple decisions from distributed devices, thereby reducing reliance on a single model or data source \cite{adam_sadilek_c59c73f4}. Its complexity can increase, however, when numerous trees are employed on resource-limited devices.
 
 \subsubsection{Support Vector Machines (SVM)}
 
-SVM is widely recognized for effectively classifying complex data by establishing clear separation hyperplanes between classes. This method consistently performs well in FL contexts for detecting physiological states related to stress, particularly when client-specific data availability is limited. Nonetheless, SVM requires careful parameter tuning to handle non-linear and noisy data, frequently encountered in stress analysis from wearable sensors. To evaluate such challenges in practical environments, researchers propose physical testbeds with frameworks like Flower and embedded hardware to analyze model resilience under adverse conditions \cite{hao_huang_8976046f}.
-
-\textbf{Challenges:} Complex hyperparameter tuning and sensitivity to outliers.
+SVM is widely recognized for effectively classifying complex data by establishing clear separation hyperplanes between classes. This method consistently performs well in FL contexts for detecting physiological states related to stress, particularly when client-specific data availability is limited. Nonetheless, SVM requires careful parameter tuning to handle non-linear and noisy data, frequently encountered in stress analysis from wearable sensors, and it can be sensitive to outliers. To evaluate such challenges in practical environments, researchers propose physical testbeds with frameworks like Flower and embedded hardware to analyze model resilience under adverse conditions \cite{hao_huang_8976046f}.
 
 \subsubsection{k-Nearest Neighbors (k-NN)}
 
-The k-NN algorithm is a simple yet effective method that classifies new data points based on the labels of their \textit{k} nearest neighbors. In federated learning, its simplicity and low computational cost are particularly valuable, facilitating direct implementation on wearable devices with limited resources. However, challenges such as noisy data, local distribution heterogeneity, and class imbalance must be managed carefully to ensure reliable results. Advanced techniques, such as SMOTE or SMOTEENN, can mitigate imbalance issues that could compromise accuracy \cite{abdulrahman_alahmadi_32bc288c}.
-
-\textbf{Challenges:} High computational cost during prediction with large datasets.
+The k-NN algorithm is a simple yet effective method that classifies new data points based on the labels of their \textit{k} nearest neighbors. In federated learning, its simplicity and low computational cost are particularly valuable, facilitating direct implementation on wearable devices with limited resources. However, challenges such as noisy data, local distribution heterogeneity, and class imbalance must be managed carefully to ensure reliable results, and prediction can become computationally expensive as the dataset grows. Advanced techniques, such as SMOTE or SMOTEENN, can mitigate imbalance issues that could compromise accuracy \cite{abdulrahman_alahmadi_32bc288c}.
 
 \subsubsection{Logistic Regression (LR)}
 
-Logistic Regression is a classic method for binary classification problems, modeling the probability that a data point belongs to a class based on explanatory variables. In FL, its primary advantage is simplicity, fast training, and low computational requirement, aspects that facilitate deployment on distributed devices. Nevertheless, it is sensitive to data balance and representativeness, demanding careful parameter tuning and additional strategies to prevent overfitting. Its applicability in federated environments is mainly explored when straightforward interpretation of variables is required \cite{abdulrahman_alahmadi_32bc288c}.
+Logistic Regression is a classic method for binary classification problems, modeling the probability that a data point belongs to a class based on explanatory variables. In FL, its primary advantage is simplicity, fast training, and low computational requirement, aspects that facilitate deployment on distributed devices. Nevertheless, it is sensitive to data balance and representativeness, which is especially relevant in stress datasets with imbalanced affective states, demanding careful parameter tuning and additional strategies to prevent overfitting. Its applicability in federated environments is mainly explored when straightforward interpretation of variables is required \cite{abdulrahman_alahmadi_32bc288c}.
 
-\textbf{Challenges:} Sensitive to data imbalance.
 
 \subsubsection{Other Relevant Algorithms}
 
-Beyond the mentioned techniques, there is growing interest in using more complex algorithms, such as Convolutional Neural Networks (CNN) and Recurrent Neural Networks (RNN), specifically designed for analyzing sequential and temporal data acquired by wearable sensors \cite{yekta_said_can_3e1184b6} [Direta]. Hybrid techniques and Multi-task Learning (MTL) methods have also been proposed to enhance federated model accuracy and robustness by sharing representations across related tasks\cite{mohamed_benouis_35501772} [Parcial].
+Beyond the mentioned techniques, there is growing interest in using more complex algorithms, such as Convolutional Neural Networks (CNN) and Recurrent Neural Networks (RNN), specifically designed for analyzing sequential and temporal data acquired by wearable sensors \cite{yekta_said_can_3e1184b6}. Hybrid techniques and Multi-task Learning (MTL) methods have also been proposed to enhance federated model accuracy and robustness by sharing representations across related tasks\cite{mohamed_benouis_35501772}.
 
 Ensemble learning techniques, like Gradient Boosting Machines and AdaBoost, are also highlighted for significantly improving predictive performance by combining multiple individual models, thus enhancing generalization capability in heterogeneous federated data scenarios \cite{alaa_abd-alrazaq_e52622}.
 
@@ -446,7 +432,7 @@ Federated learning, while promising, faces significant challenges in real-world 
 
 Communication constraints, particularly in scenarios with limited bandwidth or intermittent connectivity, pose challenges for model aggregation and distribution \cite{tian_li_4bd16a66}. Addressing statistical heterogeneity, also known as non-IID (independent and identically distributed) data, is paramount in federated learning because the distribution of local data across different clients can vary significantly due to diverse occupational environments and individual differences, which impacts model convergence and performance. 
 
-Furthermore, the computational capabilities of edge devices used for local training can vary widely, creating additional challenges for deploying complex models and algorithms \cite{neha_gahlan_d8b04f5d} [Parcial].  Moreover, security and privacy considerations are paramount, necessitating robust mechanisms to defend against adversarial attacks such as data poisoning and inference attacks, while simultaneously ensuring adherence to stringent data protection regulations such as GDPR and HIPAA, which mandate the safeguarding of sensitive health information \cite{bouacida2021vulnerabilities,adam_sadilek_c59c73f4} [Contextual].
+Furthermore, the computational capabilities of edge devices used for local training can vary widely, creating additional challenges for deploying complex models and algorithms \cite{neha_gahlan_d8b04f5d}.  Moreover, security and privacy considerations are paramount, necessitating robust mechanisms to defend against adversarial attacks such as data poisoning and inference attacks, while simultaneously ensuring adherence to stringent data protection regulations such as GDPR and HIPAA, which mandate the safeguarding of sensitive health information \cite{bouacida2021vulnerabilities,adam_sadilek_c59c73f4}.
 
 The trustworthiness of federated learning systems is also a major concern, requiring careful attention to issues such as data quality, provenance, and bias detection to ensure reliable and equitable outcomes \cite{jie_xu_193cbfb6}.
 
@@ -457,20 +443,20 @@ Therefore, addressing these challenges requires interdisciplinary collaboration 
 
 \subsection{\textit{RQ4}: How can federated learning be integrated with wearable technology for continuous and personalized occupational stress monitoring?}
 
-Federated learning can be seamlessly integrated with wearable technology to enable continuous and personalized occupational stress monitoring, offering numerous advantages over traditional centralized approaches. By processing data locally on wearable devices, federated learning minimizes the need to transmit sensitive physiological data to a central server, thereby reducing the risk of data breaches and privacy violations \cite{jessica_chia_liu_cd0e0973} [Contextual]. Wearable devices, equipped with sensors such as heart rate monitors and electrodermal activity sensors, continuously collect physiological data, which is then pre-processed and analyzed locally using lightweight machine learning models. 
+Federated learning can be seamlessly integrated with wearable technology to enable continuous and personalized occupational stress monitoring, offering numerous advantages over traditional centralized approaches. By processing data locally on wearable devices, federated learning minimizes the need to transmit sensitive physiological data to a central server, thereby reducing the risk of data breaches and privacy violations \cite{jessica_chia_liu_cd0e0973}. Wearable devices, equipped with sensors such as heart rate monitors and electrodermal activity sensors, continuously collect physiological data, which is then pre-processed and analyzed locally using lightweight machine learning models. 
 
-FL operates by training models locally on individual wearable devices or edge devices such as smartphones. Each device can collect physiological signals such as BVP/PPG, EDA, respiration, skin temperature, ECG, or EMG, depending on the wearable configuration; these signals are commonly explored as indicators of stress-related physiological responses \cite{abdulrahman_alahmadi_32bc288c} [Direta]. 
+FL operates by training models locally on individual wearable devices or edge devices such as smartphones. Each device can collect physiological signals such as BVP/PPG, EDA, respiration, skin temperature, ECG, or EMG, depending on the wearable configuration; these signals are commonly explored as indicators of stress-related physiological responses \cite{abdulrahman_alahmadi_32bc288c}. 
 
 These models are trained using algorithms such as federated averaging, which aggregates model updates from multiple devices to create a global model without directly accessing the raw data.  
 
-Additionally, the effectiveness of these technologies depends on their ability to accurately capture and interpret physiological signals indicative of stress \cite{ahmad_almadhor_8cc2e670} [Direta].
+Additionally, the effectiveness of these technologies depends on their ability to accurately capture and interpret physiological signals indicative of stress \cite{ahmad_almadhor_8cc2e670}.
 
 Federated learning further preserves data privacy and promotes real-time distribution of models and learning by enabling devices to collaboratively train and evaluate a shared model while keeping personal data on site. Moreover, federated learning enables personalized stress models that adapt to individual physiological characteristics and work patterns, leading to more accurate and timely stress detection. The integration of federated learning with wearable technology requires careful consideration of factors such as device heterogeneity, communication bandwidth, and energy efficiency to ensure optimal performance and user experience.
 
 \subsection{\textit{RQ5}: What are the main challenges and the corresponding solutions found in applying federated learning for occupational stress monitoring?}
 
 
-Applying federated learning to occupational stress monitoring presents several challenges related to data quality, privacy, and computational resources, which necessitate innovative solutions to ensure effective and reliable monitoring \cite{ahmad_almadhor_8cc2e670} [Direta], \cite{abdulrahman_alahmadi_32bc288c} [Direta]. Data quality can be affected by sensor noise, missing values, and individual variations in physiological responses, which can impact the accuracy of stress detection models. 
+Applying federated learning to occupational stress monitoring presents several challenges related to data quality, privacy, and computational resources, which necessitate innovative solutions to ensure effective and reliable monitoring \cite{ahmad_almadhor_8cc2e670}, \cite{abdulrahman_alahmadi_32bc288c}. Data quality can be affected by sensor noise, missing values, and individual variations in physiological responses, which can impact the accuracy of stress detection models. 
 
 To address these challenges, robust data preprocessing techniques such as filtering, imputation, and normalization are essential to improve the quality and consistency of the data used for training federated learning models. Differential privacy mechanisms, such as adding noise to model updates, can be employed to protect sensitive data from inference attacks, but this must be done carefully to avoid compromising model accuracy. 
 
@@ -484,7 +470,7 @@ Despite these challenges, federated learning has been found to hold great promis
 
 \section{Challenges Encountered and Solutions Implemented}
 
-During the practical phase of this research, the original architecture, in which ESP32 devices would communicate directly with a local MQTT gateway and then traverse the Tor network, was refined. The final prototype delegates network-intensive operations to a mobile application, which acts as an intermediary between wearable sensors and the local training node hosted at a healthcare institution. This decision reflects hardware constraints on embedded devices, which cannot efficiently run a full Tor client for continuous operation, while preserving the privacy goals outlined in the literature review.
+During the practical phase of this research, the original architecture, in which ESP32 devices would communicate directly with a local MQTT gateway and then traverse the Tor network, was refined. The final prototype delegates network-intensive operations to a mobile application, which acts as an intermediary between wearable sensors and the local training node hosted at a healthcare institution. This decision reflects hardware constraints on embedded devices, which cannot efficiently run a full Tor client for continuous operation, while preserving the privacy goals outlined in the rapid literature review.
 
 \subsection{Embedded Device and Network Constraints}
 
@@ -545,7 +531,7 @@ Training is not started by the HTTP request itself; it is executed later by the 
 
 \subsection{Evolved System Architecture}
 
-The practical prototype consolidates six operational layers, as summarized in Table~\ref{tab:architecture_layers} and Figure~\ref{fig:architecture}. Compared with the initial design, the most significant change is the insertion of a mobile application between the ESP32-based wearables and the local training node hosted by the healthcare institution. Rather than requiring each embedded device to establish an anonymized connection, physiological data are first received by the smartphone, which then performs secure forwarding through the Tor network toward the institution's local server.
+The practical prototype consolidates six operational layers, as summarized in Table~\ref{tab:architecture_layers}. Compared with the initial design, the most significant change is the insertion of a mobile application between the ESP32-based sensing unit and the local training node hosted by the healthcare institution. Rather than requiring each embedded device to establish an anonymized connection, physiological windows are first received by the smartphone, which then performs secure forwarding through the Tor network toward the institution's local server.
 
 \begin{table}[htbp]
 \centering
@@ -555,8 +541,8 @@ The practical prototype consolidates six operational layers, as summarized in Ta
 \begin{tabular}{p{2.8cm} p{3.2cm} p{4.5cm} p{4.5cm}}
 \toprule
 \textbf{Layer} & \textbf{Component} & \textbf{Primary Function} & \textbf{Privacy Measure} \\ \midrule
-IoMT Devices & ESP32 and wearable sensors & Simulated physiological data transmission & Device pseudonyms; authenticated BLE bonding; single-owner access control \\ \midrule
-Mobile Gateway & React Native application & Reception of sensor data and secure forwarding & Local secure storage; Tor client on the smartphone \\ \midrule
+IoMT Devices & ESP32 test boards & Replay of pre-recorded WESAD windows through BLE & Device pseudonyms; authenticated BLE bonding; single-owner access control \\ \midrule
+Mobile Gateway & React Native application & Reception of ESP32 windows and secure forwarding & Local secure storage; Tor client on the smartphone \\ \midrule
 Network Anonymization & Tor hidden service (\texttt{.onion}) & Concealment of the network path between the phone and the institution & Onion routing; origin IP masking \\ \midrule
 Application Authentication & HMAC-SHA256 middleware & Request integrity and client authorization & Shared secret; signed JSON payload \\ \midrule
 Local Training Node & Hospital server / edge node & Local persistence, preprocessing, and Flower client execution & Raw physiological data remain on-premises \\ \midrule
@@ -568,33 +554,33 @@ Federated Coordination & Flower server using gRPC & Global model aggregation thr
 The end-to-end flow proceeds as follows:
 
 \begin{enumerate}[leftmargin=*]
-\item Wearable sensors connected to a single ESP32 relay pre-stored physiological windows and transmit them to the authorized mobile device through an authenticated Bluetooth Low Energy bond.
+\item The ESP32 test boards replay pre-recorded WESAD physiological windows and transmit them to the authorized mobile device through an authenticated Bluetooth Low Energy bond.
 \item The mobile application stores configuration credentials locally and prepares a signed HTTP request.
 \item The request traverses the Tor network and reaches the hidden service exposed by the local training node.
 \item The local API validates the HMAC signature and persists the received data in the institution's database.
 \item During a federated training round, the local Flower client reads these stored records, trains locally, and returns only updated model parameters to the global server.
 \end{enumerate}
 
-The ESP32 does not capture live physiological readings from sensors. Instead, pre-recorded WESAD signal windows are stored in the microcontroller's FLASH memory. Every 30 seconds, a new window is read from FLASH into a RAM buffer, simulating real sensor sampling. When the smartphone requests data over BLE, the entire buffer is flushed to the mobile gateway. This pipeline, shown in Figure~\ref{fig:physical_setup}, validates the transmission and processing chain, not the physiological data acquisition itself.
+The physical setup shown in Figure~\ref{fig:physical_setup} consists of two ESP32 development boards connected to the notebook by USB, the mobile application acting as the BLE central device, and the notebook running the Dockerized services used by the prototype. The USB connections provide power to the ESP32 boards and support firmware/fixture loading. In the current evaluation, the ESP32 does not capture live physiological readings from sensors. Instead, pre-recorded WESAD signal windows are loaded into the microcontroller's FLASH memory. Every 30 seconds, a new window is read from FLASH into a RAM buffer, simulating periodic sensor sampling. When the smartphone requests data over BLE, the buffered window is transmitted to the mobile gateway. Therefore, this setup validates the ESP32-to-mobile communication, buffering, BLE transmission, mobile ingestion path, and local Dockerized execution environment, not live physiological data acquisition.
 
 \begin{figure}[htbp]
 \centering
 \safeincludegraphics[width=0.8\textwidth]{imagens/architeture/setup_fisico.png}
-\caption{Real prototype setup showing the ESP32 microcontroller, wearable sensors, and mobile application interface. The ESP32 simulates physiological data transmission: pre-stored signal windows in FLASH memory are accumulated in a RAM buffer and flushed via BLE when requested by the smartphone. This validates the end-to-end transmission pipeline, not live physiological data collection. The physiological data for classifier validation (Sections~5.8--5.10) originate from the WESAD dataset. For the complete system integration across multiple institutions, see Figure~\ref{fig:federated_integration_architecture}.}
+\caption{Physical prototype setup with two ESP32 development boards connected to the notebook by USB, the mobile application open on the device screen, and the notebook running the Dockerized prototype services. The setup validates BLE communication and mobile ingestion using pre-recorded WESAD windows, not live sensor acquisition.}
 \label{fig:physical_setup}
 \end{figure}
 
-Figure~\ref{fig:architecture} provides a visual overview of these layers and their interactions. Figure~\ref{fig:federated_integration_architecture} illustrates the complete multi-institutional integration.
+Figure~\ref{fig:architecture} provides a visual overview of the operational layers and their interactions.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \safeincludegraphics[width=0.85\textwidth]{imagens/architeture/Evolved System Architecture.png}
-\caption{Evolved IoMT architecture for privacy-preserving occupational stress monitoring. Physiological data flow from a single ESP32 connected to wearable sensors to the owner-authorized mobile gateway through authenticated Bluetooth Low Energy bonding, then traverse Tor with HMAC-authenticated requests, and are processed locally at the healthcare institution before federated model aggregation.}
+\caption{Evolved IoMT architecture for privacy-preserving occupational stress monitoring. In the current prototype, pre-recorded physiological windows flow from the ESP32 sensing unit to the owner-authorized mobile gateway through authenticated Bluetooth Low Energy bonding, then traverse Tor with HMAC-authenticated requests, and are processed locally at the healthcare institution before federated model aggregation.}
 \label{fig:architecture}
 \end{figure}
 
 \FloatBarrier
-
+\newpage
 \subsection{Bluetooth Pairing and Sensor Ownership}
 
 The communication between the sensing unit and the mobile gateway was also protected through a device-ownership mechanism at the Bluetooth Low Energy layer. In this design, the sensing unit operates as a peripheral device and the smartphone acts as the central device. The first smartphone that completes authenticated pairing with a previously unclaimed sensing unit becomes its trusted owner. Subsequent access to physiological readings and acknowledgement commands is accepted only when the active Bluetooth connection corresponds to this bonded owner.
@@ -681,7 +667,8 @@ In operational terms, the mobile client connects to a hidden service address (\t
 
 While Tor addresses anonymity at the network layer, it does not verify whether an incoming request originates from an authorized federated client. To close this gap, the system employs HMAC-SHA256 \cite{rfc2104} (\textit{Hash-based Message Authentication Code}) at the application layer. HMAC combines a shared secret key with the message content through a cryptographic hash function, producing a deterministic signature that allows the server to verify both authenticity and integrity of each request.
 
-The authentication contract operates as follows. The local training node generates a QR code containing two fields: \texttt{address}, corresponding to the \texttt{.onion} hidden service URL, and \texttt{password}, a shared secret known only to the institution and the authorized mobile client. When submitting data, the mobile application computes:
+The authentication contract\footnote{In software and web development, a contract is the agreed interface between components, such as required fields, payload schemas, endpoints, authentication rules, and expected responses.} operates as follows. The local training node generates a QR code containing two fields: \texttt{address}, corresponding to the \texttt{.onion} hidden service URL, and \texttt{password}, a shared secret known only to the institution and the authorized mobile client. When submitting data, the mobile application computes:
+
 
 \begin{equation}
 \text{signature} = \text{HMAC-SHA256}(\text{password}, \text{raw JSON body})
@@ -822,7 +809,7 @@ Optimization was performed with AdamW\cite{loshchilov2019decoupled}, using an in
 
 The loss function was class-weighted cross-entropy \cite{goodfellow2016deep}. Cross-entropy is suitable for this task because the model outputs one score for each target class, corresponding to \textit{amusement}, \textit{baseline}, and \textit{stress}. The class weights are computed from the training-label frequencies, assigning a larger penalty to errors in less frequent classes. This prevents the optimization process from being dominated only by the most common affective state. An additional sampling-based rebalancing strategy was also evaluated, in which less frequent classes are sampled more often during training. It was not adopted as the default strategy because combining this sampling policy with class-weighted loss can overcompensate minority classes in small datasets.
 
-Model selection was based on validation macro F1-score\cite{sokolova2009systematic}, not on accuracy. Macro F1 computes the F1-score independently for each class and then averages the three values, giving equal weight to all affective states. This criterion is more appropriate for the WESAD experiments because the objective is not merely to maximize the number of correct predictions, but to maintain balanced performance across \textit{amusement}, \textit{baseline}, and \textit{stress}. The model retained for comparison is therefore the one obtained at the epoch with the highest validation macro F1-score, subject to a minimum improvement threshold of $10^{-4}$.
+Model selection was based on validation macro F1-score \cite{sokolova2009systematic}, not on accuracy. Macro F1 computes the F1-score independently for each class and then averages the three values, giving equal weight to all affective states. This criterion is more appropriate for the WESAD experiments because the objective is not merely to maximize the number of correct predictions, but to maintain balanced performance across \textit{amusement}, \textit{baseline}, and \textit{stress}. The model retained for comparison is therefore the one obtained at the epoch with the highest validation macro F1-score, subject to a minimum improvement threshold of $10^{-4}$.
 
 The training procedure also includes mechanisms to control convergence\cite{goodfellow2016deep}. The learning rate is reduced by a factor of 0.5 when validation macro F1-score stops improving for 15 consecutive epochs, with a minimum learning rate of $10^{-6}$. Early stopping interrupts training when validation macro F1-score does not improve for 50 epochs, avoiding unnecessary optimization after the model has saturated. Finally, gradient clipping limits the gradient norm to 1.0, reducing the risk of unstable parameter updates during backpropagation.
 
@@ -888,7 +875,7 @@ Figure~\ref{fig:wesad_val_loss} complements this analysis by tracking validation
 
 \subsection{Experimental Classification Results}
 
-Eleven training configurations were evaluated to separate model quality, privacy-oriented feature selection, preprocessing reproducibility, and embedded feasibility. These configurations address four experimental questions. The original baseline establishes whether a simple MLP is already sufficient for the extracted features, providing a reproducible reference point. The New full configuration measures the best local validation performance with all features and standardization, serving as the upper local-performance reference. The no-demographics and no-scaler variants quantify the cost of privacy-oriented and deployment-oriented constraints, removing quasi-identifiers and avoiding scaler synchronization across services. The ESP-friendly configurations estimate the feasibility of simplified sensor-side processing using a reduced feature set.
+Eleven training configurations were evaluated to separate model quality, privacy-oriented feature selection, preprocessing reproducibility, and embedded feasibility. These configurations address four experimental questions. The original baseline establishes whether a simple MLP is already sufficient for the extracted features, providing a reproducible reference point. The \textit{New full} configuration measures the best local validation performance with all features and standardization, serving as the upper local-performance reference. The no-demographics and no-scaler variants quantify the cost of privacy-oriented and deployment-oriented constraints, removing quasi-identifiers and avoiding scaler synchronization across services. The ESP-friendly configurations estimate the feasibility of simplified sensor-side processing using a reduced feature set.
 
 Table~\ref{tab:wesad_results} summarizes the best validation performance achieved by each configuration, ranked by validation macro F1-score. The New full model reached its optimum at epoch 77 out of a maximum of 300, terminating at epoch 127 due to early stopping. The selected no-scaler model peaked later at epoch 117 and stopped at epoch 167. These values indicate that convergence typically required between 77 and 117 epochs across configurations, with the no-scaler variant needing more iterations due to the absence of standardization. Figure~\ref{fig:wesad_core_metrics} compares accuracy, precision, recall, and macro F1 at the best epoch of each experiment.
 
@@ -983,34 +970,32 @@ The model redistribution path shown in Figure~\ref{fig:federated_integration_arc
 
 Publishing the model in ONNX reduces coupling between the mobile application and the internal PyTorch representation used during training. The mobile side can download a stable inference artifact and validate its metadata before using it locally, while the Flower server remains free to store internal checkpoints in PyTorch format. This design closes the federated loop proposed by the architecture: the mobile gateway contributes labeled physiological windows to the local institution, the local Flower client uses those records for local training, the global Flower server aggregates model updates across institutions, and the Global Model API returns the newest global model to the mobile application for local inference.
 
-In the current prototype, the local WESAD experiments validate the quality and trade-offs of the model family that each local Flower client is expected to train, and the implemented Flower components define the operational path for federated rounds and global model publication. The selected integration model is not the highest-scoring local model; it is the no-demographics, no-scaler variant chosen because its preprocessing contract can be reproduced across the complete system. A full multi-institutional benchmark with independent hospital datasets remains a future evaluation step, but the integration already establishes the principal software contracts required for privacy-preserving federated learning: local-only data storage, parameter-based communication, global aggregation, versioned model export, and mobile-oriented model distribution.
+In the current prototype, the local WESAD experiments validate the quality and trade-offs of the model family that each local Flower client is expected to train, and the implemented Flower components define the operational path for federated rounds and global model publication. The selected integration model is not the highest-scoring local model; it is the no-demographics, no-scaler variant chosen because its preprocessing contract can be reproduced across the complete system. A full multi-institutional benchmark with independent hospital datasets was not part of the current evaluation, but the integration already establishes the principal software contracts required for privacy-preserving federated learning: local-only data storage, parameter-based communication, global aggregation, versioned model export, and mobile-oriented model distribution.
 
 \FloatBarrier
 
 \subsection{Limitations of the Current Evaluation}
 
-Five limitations warrant explicit acknowledgment:
+Six limitations warrant explicit acknowledgment:
 
 \begin{enumerate}[leftmargin=*]
 \item \textbf{Window-level split:} the WESAD train/validation split was performed at the window level rather than the subject level, meaning windows from the same participant may appear in both partitions. This may moderately inflate validation metrics relative to true out-of-subject generalization.
 
 \item \textbf{No-scaler performance trade-off:} the selected no-scaler model achieved lower local validation performance than the best scaled model. This was an intentional engineering trade-off: removing \texttt{StandardScaler} reduced local macro F1-score but avoided a preprocessing dependency that was not reliably reproducible across embedded and simulated data paths, local training clients, server validation, and mobile inference.
 
-\item \textbf{Controlled transmission tests:} the mobile-to-Tor transmission path was validated with controlled test payloads. Live integration with continuous ESP32 physiological streams remains an ongoing deployment step.
+\item \textbf{Controlled transmission tests:} the mobile-to-Tor transmission path was validated with controlled test payloads rather than continuous ESP32 physiological streams.
 
-\item \textbf{No multi-institutional benchmark yet:} although the local Flower client and global Flower server components define the federated execution path, the present evaluation does not yet report a multi-institutional experiment with independent hospital nodes and heterogeneous local distributions.
+\item \textbf{Absence of multi-institutional benchmark:} although the local Flower client and global Flower server components define the federated execution path, the present evaluation does not report a multi-institutional experiment with independent hospital nodes and heterogeneous local distributions.
 
-\item \textbf{Absence of personalization:} the model was trained in an aggregated cross-subject manner without individual calibration or fine-tuning. Since physiological stress thresholds (e.g., EDA, heart rate variability, temperature) vary across individuals, a one-size-fits-all model may not correctly capture the stress/non-stress boundary for each person. Future work should investigate personalization strategies such as per-subject local fine-tuning within the federated client, which is architecturally compatible with the proposed federated framework \cite{ereno2025avaliando}.
+\item \textbf{Absence of personalization:} the model was trained in an aggregated cross-subject manner without individual calibration or fine-tuning. Since physiological stress thresholds (e.g., EDA, heart rate variability, temperature) vary across individuals, a one-size-fits-all model may not correctly capture the stress/non-stress boundary for each person.
 
-\item \textbf{Mobile gateway as single point of failure:} the current architecture routes all physiological data through the mobile application. If the gateway device goes offline or loses network connectivity, data transmission to the local training node is interrupted. Future work should investigate fault-tolerant designs, such as store-and-forward mechanisms on the ESP32 side or multi-gateway redundancy, to mitigate this limitation.
+\item \textbf{Mobile gateway as single point of failure:} the current architecture routes all physiological data through the mobile application. If the gateway device goes offline or loses network connectivity, data transmission to the local training node is interrupted, creating an availability limitation not mitigated by the current prototype.
 
 \end{enumerate}
 
-Future work will address subject-level cross-validation, end-to-end latency characterization under Tor routing, and federated evaluation across multiple participating nodes.
-
 \section{Discussion of the Implications Discovered}
 
-The practical results reinforce the central thesis of this research: occupational stress monitoring can be pursued through a layered privacy architecture that combines federated learning with complementary anonymization and authentication mechanisms. Four implications emerge from the implementation.
+The practical results reinforce the central thesis of this research: occupational stress monitoring can be pursued through a layered privacy architecture that combines federated learning with complementary anonymization and authentication mechanisms. Five implications emerge from the implementation.
 
 First, the prototype shows that privacy preservation must begin before data reach the smartphone. The Bluetooth sensing channel was not treated as a neutral transport link; instead, it was constrained by authenticated bonding, persistent ownership, and authorization checks before physiological records or acknowledgement commands could be exchanged.
 
@@ -1020,13 +1005,15 @@ Third, the combination of Tor and HMAC demonstrates that network anonymity and a
 
 Fourth, the classification experiments indicate that a regularized tabular MLP achieves strong stress detection performance on window-aggregated physiological features. The scaled privacy-oriented variant, excluding demographic attributes, retained over 98\% of the full model's macro F1-score, while the selected no-scaler variant traded part of this local performance for a preprocessing contract that can be reproduced across embedded and simulated data paths, local training clients, server validation, and mobile inference. This finding supports the feasibility of deploying local models at healthcare institutions without relying on quasi-identifying attributes, while also showing that deployment consistency must be considered alongside validation metrics.
 
-Fifth, the scope clarifications above carry concrete methodological consequences. The stress detection validated in this work corresponds to general physiological arousal under controlled conditions, not to occupational stressors encountered in real work environments. Extrapolating these results to occupational stress monitoring requires caution and further validation in workplace settings. Additionally, the cross-subject aggregated training approach, while practical for initial validation, does not account for the inter-individual variability of physiological stress responses. The federated architecture proposed in this project is, however, inherently compatible with personalization strategies: each client could perform local fine-tuning on subject-specific data, improving the adequacy of stress thresholds for individual users. This direction should be explored in future work.
+Fifth, the scope clarifications above carry concrete methodological consequences. The stress detection validated in this work corresponds to general physiological arousal under controlled conditions, not to occupational stressors encountered in real work environments. Extrapolating these results to occupational stress monitoring therefore requires caution, because the current validation does not cover workplace settings. Additionally, the cross-subject aggregated training approach, while practical for initial validation, does not account for the inter-individual variability of physiological stress responses. The federated architecture proposed in this project is, however, inherently compatible with personalization strategies: each client could perform local fine-tuning on subject-specific data, improving the adequacy of stress thresholds for individual users.
 
 \section{Conclusion}
 
 This study investigated federated learning as a privacy-preserving approach motivated by occupational stress monitoring, combining a literature review with a practical prototype whose stress classification component was validated for general physiological stress detection (three affective states from the WESAD protocol) rather than for specific occupational stressors. This distinction should be considered when interpreting the findings. The literature review confirmed that federated learning, differential privacy, and secure aggregation techniques are central to protecting sensitive physiological data in distributed health applications. The practical implementation evolved from an ESP32-centric gateway model to a mobile-mediated architecture, in which authenticated Bluetooth bonding restricts local sensor access to the enrolled smartphone, Tor provides topological anonymity, and HMAC-SHA256 ensures authenticated, tamper-evident data submission to local training nodes hosted at healthcare institutions.
 
-Experimental validation on the WESAD dataset demonstrated that the scaled TabularMLP classifier achieves a validation macro F1-score of 0.9565 for three-class affective state classification, outperforming a simpler baseline while maintaining low overfitting. For the federated prototype, the selected no-demographics, no-scaler variant prioritizes reproducible preprocessing across the embedded sensing, simulated data, local training, server validation, and mobile inference paths. Future work will complete live ESP32 stream integration, subject-level cross-validation, Tor latency evaluation, and multi-institutional federated training rounds.
+Experimental validation on the WESAD dataset demonstrated that the scaled TabularMLP classifier achieves a validation macro F1-score of 0.9565 for three-class affective state classification, outperforming a simpler baseline while maintaining low overfitting. For the federated prototype, the selected no-demographics, no-scaler variant prioritizes reproducible preprocessing across the embedded sensing, simulated data, local training, server validation, and mobile inference paths.
+
+Future work should extend the present evaluation by completing live ESP32 stream integration, performing subject-level cross-validation, characterizing end-to-end latency under Tor routing, and conducting multi-institutional federated training rounds with independent hospital nodes and heterogeneous local distributions. Additional directions include investigating personalization strategies such as per-subject local fine-tuning within the federated client \cite{ereno2025avaliando}, as well as fault-tolerant gateway designs such as ESP32-side store-and-forward mechanisms or multi-gateway redundancy.
 
 \section*{Use of Artificial Intelligence Tools}
 The development of this work involved the use of artificial intelligence tools as assistants in specific stages, as detailed below. All AI-assisted content was reviewed and validated by the authors, who assume full responsibility for the intellectual content of this manuscript.
@@ -1072,13 +1059,13 @@ ESP32 & Low-cost microcontroller with wireless communication capabilities. & Loc
 
 Bluetooth Low Energy (BLE) bonding & Persistent authenticated pairing between a peripheral device and a central device. & Restricts local sensor access to the smartphone that completed authenticated enrollment with the sensing unit. \\ \midrule
 
-BVP, EDA, TEMP, Resp & Physiological signals related to blood volume pulse, electrodermal activity, skin temperature, and respiration. & Basis for stress-related feature extraction and classification. \\ \midrule
+BVP, EDA, TEMP, Resp & Physiological signals related to blood volume pulse, electrodermal activity, skin temperature, and respiration. & Basis for stress-related feature extraction and classification. In the WESAD benchmark, these signals were collected with wearable devices under a controlled laboratory protocol; in the prototype, pre-recorded WESAD windows are stored in the ESP32 FLASH memory and transmitted via BLE to simulate sensor acquisition. \\ \midrule
 
 Mobile Gateway & Smartphone application that mediates communication between the sensing layer and the institutional node. & Receives ESP32 data, stores credentials, signs requests, routes traffic through Tor, and supports user interaction. \\ \midrule
 
 Tor & An anonymity network based on onion routing. & Hides the network origin of requests sent by the mobile application to the hospital-side hidden service. \\ \midrule
 
-HMAC-SHA256 & Cryptographic message authentication mechanism based on a shared secret and SHA-256 hashing. & Verifies request authenticity and integrity before physiological data are accepted by the local API. \\ \midrule
+HMAC-SHA256 & Cryptographic message authentication mechanism based on a shared secret and SHA-256 hashing. & Verifies request authenticity and integrity before physiological data are accepted by the local API. It was selected as a lightweight symmetric authentication mechanism, avoiding the higher computational overhead of asymmetric cryptographic signatures in resource-constrained IoT-style communication while preserving message integrity and authenticity \cite{okpu2026iothealthcare}. \\ \midrule
 
 PostgreSQL & Relational database management system. & Stores authenticated physiological windows locally inside the institutional environment. \\ \midrule
 
